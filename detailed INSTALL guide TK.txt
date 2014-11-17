@@ -1,0 +1,42 @@
+[This tutorial presumes you know how to edit environment variables, and how not to delete the content of existing ones.]
+
+Visual Studio
+Install Visual Studio. (When installation halts at the last percent, bring up task manager, and select [end process] on explorer.exe. After installation has resumed, [File]>[Run...]>explorer.exe )
+Check what version you have installed, 10.0, 11.0 or 12.0 probably.
+Boost
+Download the boost directory from the sourceforge download page.
+Boost-binaries > [latest version]
+Then select the .exe with the correct c++ version and for 32 bit systems. (The filename has the format "boost_[LATEST_VERSION]-msvc-[VC.VERSION]-[32/64bit].exe").
+Stick to one particular version of vc throughout this tutorial.
+Run the file and choose to extract at "C:\lib\boost[VERSION]" for example.
+
+Create an environment variable called "BOOST_DIR" pointing to the root directory of boost (e.g. "C:\lib\boost_1_57_0\") - this is the directory containing the file "INSTALL".
+Furthermore it should contain a folder named "lib[32/64bit]-msvc-[VC.VERSION]".
+Add the fully qualified path to this folder to the environment variable called "PATH". (e.g. "C:\lib\boost_1_57_0\lib32-msvc-12.0")
+OpenCV
+Do not confuse VC (Visual C) with CV (Computer Vision)!!!
+
+Download OpenCV 2.4.9 (not the latest version!) and extract, for example to "C:\lib\opencv-2.4.9".
+Create an environment variable called "OPENCV_DIR" pointing to the root of the library, which is the folder containing the folders [build] and [sources].
+Also add something similar to the following to the PATH environment variable: "C:\lib\opencv-2.4.9\build\x86\vc12\bin", where you should use x64 when trying to get a 64bit application working and where you should use vcXX in case you will be using visual C++ version XX instead of 12.0.
+
+Project
+(RE)START Visual Studio after having changed the environment variables.
+
+Create a new 32bit console application. Select a good name and location. Next > next > next > finish.... skip skip skip, hit [I Agree] along the way somewhere ;)
+Right click the project in the left tab > Properties > VC++ directories
+Add to following to the following:
+Include directories: "$(OPENCV_DIR)build\include;$(BOOST_DIR);"
+Library directories: "$(OPENCV_DIR)build\x86\vc12\lib;$(BOOST_DIR)lib32-msvc-12.0;" (Verify your vc-version and mind that x86=32bit, x64=64bit)
+Source directories: "$(OPENCV_DIR)sources\modules\core\src;$(OPENCV_DIR)sources\modules\imgproc\src;$(OPENCV_DIR)sources\modules\highgui\src;"
+verify these paths point to actual locations. (Perhaps the folder 'sources' is skipped?)
+
+Furthermore in Properties > Linker > Input
+at [Additional dependencies] add  "opencv_core249d.lib;opencv_highgui249d.lib;opencv_imgproc249d.lib;opencv_calib3d249d.lib;opencv_contrib249d.lib;OpenGL32.lib;Glu32.lib;boost_filesystem-vc120-mt-gd-1_57.lib;boost_regex-vc120-mt-gd-1_57.lib;boost_system-vc120-mt-gd-1_57.lib"
+
+again, mind that vc120 stands for vc-version 12.0 and 1_57 is the version of boost.
+
+
+
+
+When running the compiler, the error "Cannot find or open the PDB file." is to be expected and non-fatal.

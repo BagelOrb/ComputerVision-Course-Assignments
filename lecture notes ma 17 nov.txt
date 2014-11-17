@@ -1,0 +1,119 @@
+Silhouette-based volume reconstruction  |  [Part 1]
+----------------------------------------+----------
+
+2d point in image = line in 3d
+
+triangulation : intersect the two lines corresponding to two corresponding pixels/points
+
+multiple view stereo : stereo vision for each pair of two camera's
+=> extrinsics and inricsics estimated simultaneously with depth extraction 
+
+shape from motion : ... from video
+
+
+
+
+silhouette carving
+------------------
+carve a mesh by intersecting volumes corresponding to 2d polygons in the pictures
+=> computationally expesive!
+
+rather use voxels
+
+typically 64x64x64
+=> 256k volume
+(RAM expensive (?))
+computationally fast ==> oct-trees
+
+
+look-up table : mapping from voxels to pixels (?)
+
+
+limitations:
+- typically small number of views
+- cavaties not reconstructed (TK: only the convex hull)
+- ...?!
+- conservative: actual shape is smaller than the estimate
+- incorrect background substraction leeds to noisy silhouettes (omission of parts, and addition)
+
+
+'algorithm':
+1.calibrate
+2.background subtraction
+3.carve
+
+
+common assumptions:
+-background distinguishable by color (green screen)
+-background is static
+
+
+
+challenges:
+- color variation over time
+- overlap in color betwen fore and background
+- shadows > colors of background affected by foreground
+- moving background
+- 
+
+(have a different threshold for darker colors than for lighter pixels)
+
+shadows (typically) don't change the hue!
+
+aliasing = the averaging of neighboring pixel values
+=> has more effect where the contrast is high
+
+
+
+noise reduction:
+----------------
+- erosion (eat away white pixels)
+- dilation (fill black holes)
+
+
+
+Gaussian mixture models
+-----------------------
+keep more info than just 'THE' color of a pixel
+
+-> fit normal distribution of a pixel
+
+set threshold in terms of number of standard deviations
+
+not a single snapshot of background, but multiple frames
+
+
+problem : red light that is on half of the time
+solution: gaussian mixture model!
+
+=> one normal for off, one for on
+
+can be used for shadows as well
+... reflections..
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
