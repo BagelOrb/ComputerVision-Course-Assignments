@@ -24,20 +24,32 @@ using namespace cv;
 using namespace std;
 
 
-
+vector<vector<Point3f> > getChessboardPoints()
+{
+}
 
 bool processImage(Mat img)
 {
 	vector<Point2f> corners; //this will be filled by the detected corners
 	bool found = findChessboardCorners(img, Size(6, 9), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
-	if (found)
-	{
-		for (Point2f p : corners)
-			circle(img, p, 5, Scalar(255., 0, 0));
+	if (!found) return false;
+	
+	//for (Point2f p : corners)
+	//	circle(img, p, 2, Scalar(255., 0, 0));
 
-		
-	}
-	return found;
+	drawChessboardCorners(img, Size(6,9), Mat(corners), found);
+
+	Mat intrinsics, distortion;
+
+
+
+	calibrateCamera()
+	
+
+
+
+
+	return true;
 }
 
 VideoCapture cap(0);
