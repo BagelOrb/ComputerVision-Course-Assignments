@@ -20,9 +20,6 @@
 #include <GL/glu.h>
 #endif
 
-using namespace cv;
-using namespace std;
-
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <windows.h>
@@ -36,8 +33,7 @@ VideoCapture cap(0);
 Mat frame;
 void main()
 {
-
-	char key;
+	
 	namedWindow("imag", WINDOW_AUTOSIZE);
 	// Sleep(1000);
 
@@ -64,57 +60,3 @@ void main()
 
 	}
 }
-/*
-std::shared_ptr<cv::Mat> matrix;
-
-int main(int argc, char** argv)
-{
-	
-	VideoCapture cap(0); // open the default camera
-	if (!cap.isOpened())  // check if we succeeded
-	{
-		cout << "Coulnt open cam" << endl;
-		return -1;
-	}
-	
-	bool success = cap.grab();
-	cout << success << endl;
-
-	Mat img;
-
-	cap.retrieve(img);
-	
-	Range colR;
-	img.colRange(colR);
-	Range rowR;
-	img.rowRange(rowR);
-
-
-	cout << colR.end <<"-"<< colR.start << " x " << rowR.end<<"-"<<rowR.start << endl;
-
-	if (success)
-	{
-		namedWindow("img", 1);
-		while (waitKey(30) < 0)
-			imshow("img", img);
-
-	}
-
-
-	Mat edges;
-	namedWindow("edges", 1);
-	for (;;)
-	{
-		Mat frame;
-		cap >> frame; // get a new frame from camera
-		
-		cvtColor(frame, edges, CV_BGR2GRAY);
-		GaussianBlur(edges, edges, Size(7, 7), 1.5, 1.5);
-		Canny(edges, edges, 0, 30, 3);
-		imshow("edges", edges);
-		if (waitKey(30) >= 0) break;
-	} 
-	// the camera will be deinitialized automatically in VideoCapture destructor
-	return 0;
-}
-*/
