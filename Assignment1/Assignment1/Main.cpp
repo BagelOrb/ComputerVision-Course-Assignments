@@ -26,6 +26,7 @@ using namespace std;
 
 vector<vector<Point3f> > getChessboardPoints()
 {
+	
 }
 
 bool processImage(Mat img)
@@ -41,9 +42,18 @@ bool processImage(Mat img)
 
 	Mat intrinsics, distortion;
 
+	vector<vector<Point2f>> imagePoints;
+	imagePoints.push_back(corners);
+
+	vector<vector<Point2f>> realityPoints;
+	realityPoints.push_back(getChessboardPoints(Size(6, 9), 3.0));
 
 
-	calibrateCamera()
+	Mat cameraMatrix;
+	Mat distCoeffs;
+	vector<Mat> rvecs;
+	vector<Mat> tvecs;
+	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 	
 
 
