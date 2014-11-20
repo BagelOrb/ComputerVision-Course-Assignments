@@ -1,9 +1,4 @@
-/*
-* main.cpp
-*
-*  Created on: 10 Nov 2014
-*      Author: coert
-*/
+
 #include "stdafx.h"
 
 #include <memory>
@@ -28,10 +23,46 @@
 using namespace cv;
 using namespace std;
 
-VideoCapture cap(0);
 
+
+
+bool processImage(Mat img)
+{
+	vector<Point2f> corners; //this will be filled by the detected corners
+	bool found = findChessboardCorners(img, Size(6, 9), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
+	if (found)
+	{
+		for (Point2f p : corners)
+			circle(img, p, 5, Scalar(255., 0, 0));
+
+		
+	}
+	return found;
+}
+
+VideoCapture cap(0);
 Mat frame;
-void main()
+
+
+void capImg(char* file)
+{
+
+	namedWindow("imag", WINDOW_AUTOSIZE);
+
+	//processImage(img);
+	Mat img = imread(file);// "photo.png");
+	processImage(img);
+	imshow("imag", img);
+
+	if (!img.empty())
+	{
+		cout << "yay!" << endl;
+		waitKey(0);
+	}
+	else cout << ":C" << endl;
+}
+
+void capVideo()
 {
 	
 	namedWindow("imag", WINDOW_AUTOSIZE);
@@ -52,11 +83,21 @@ void main()
 
 		if (!frame.empty())
 		{
-			GaussianBlur(frame, frame, Size(17, 17), 15, 15);
-			Canny(frame, frame, 0, 30, 3);
+			//GaussianBlur(frame, frame, Size(17, 17), 15, 15);
+			//Canny(frame, frame, 0, 30, 3);
+			processImage(frame);
 			imshow("imag", frame);
-		}
-		if (waitKey(30) >= 0) break;
 
+		}
+		
+
+		if (waitKey(30) >= 0) break;
 	}
+}
+
+
+void main(int argc, char** argv)
+{
+	capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
+
 }
