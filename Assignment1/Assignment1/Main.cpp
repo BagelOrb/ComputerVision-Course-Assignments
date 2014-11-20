@@ -24,9 +24,19 @@ using namespace cv;
 using namespace std;
 
 
-vector<vector<Point3f> > getChessboardPoints()
+vector<Point3f> getChessboardPoints(Size size, double factor)			// function that gets the size of a chessboard and the size of one square(factor) and returns a vector of Point3fs where the coordinates are saved.
 {
-	
+	vector<Point3f> vectorPoint;										// initialize Object vectorPoint of type vector<Point3f>
+	int count = 0;														// counter
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			vectorPoint[count] = Point3f(i * factor, j * factor, 0);	// write coordinates in each point
+			count++;
+		}
+	}
+	return vectorPoint;													// returns vectorPoint
 }
 
 bool processImage(Mat img)
@@ -121,5 +131,6 @@ void capVideo()
 void main(int argc, char** argv)
 {
 	capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
+	//capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
 
 }
