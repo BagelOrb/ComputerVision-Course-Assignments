@@ -1,0 +1,113 @@
+ Silhouette-based volume reconstruction  |  [Part 2]
+-----------------------------------------+----------
+
+
+    Colors    |
+--------------+
+= mixture of wavelengths (often)
+
+intensity (shadows) affect R G and B simultaneously
+RGB = 3D cube
+
+Hue Saturation Value colorspace
+= cone
+at value =approx 0 all saturation values will give similar colors
+therefore we represent the colorspace in a cone
+
+
+CIELab colorspace:
+L: intensity
+A: red-green
+B: blue-yellow
+ 
+ 
+
+DISTANCES |
+----------+ 
+background/foreground distance over 3 channels:
+
+- manhattan distance : sum over abs dists
+
+- Euclidean : root of sum squareds
+ 
+- Mahalanobis distance : based on fitted normal distribution
+ 
+* different thresholds over different channels
+
+* thresholds on ratios between channels
+	(TK: ==> saturation/value!)
+	
+.
+
+
+
+
+
+
+  Volume Reconstruction  |
+-------------------------+
+
+for now : voxels are bernoulli
+
+for simplicity : map a voxel to a single pixel 
+
+look-up table: 
+for each voxel V:
+project V into image plane of camera C: P
+store V, C and P
+
+
+
+
+erosion and dilation in 3D
+voxel = removed/added when at least X pixels are off/on
+
+
+
+
+      SPEED      |
+-----------------+
+=> VIDEO 
+
+
+only check changes between two frames
+
+use XOR between two images!
+
+
+Octtree for storing voxels
+=> saves storing space, but less speed
+subdivision = "octant"
+
+mark OCTANTs as on or off isntead of separate voxels!
+
+
+
+Voxels to mesh
+--------------
+Marching Cubes:
+smoothes areas of 2x2x2 voxels
+(corners of cube on slides are centers of voxels)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
