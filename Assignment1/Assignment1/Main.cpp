@@ -24,9 +24,19 @@ using namespace cv;
 using namespace std;
 
 
-vector<vector<Point3f> > getChessboardPoints()
+vector<Point3f> getChessboardPoints(Size size)			// function that gets the size of a chessboard and returns a vector of Point3fs where the coordinates are saved.
 {
-	
+	vector<Point3f> vectorPoint;						// initialize Object vectorPoint of type vector<Point3f>
+	int count = 0;										// counter
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			vectorPoint[count] = Point3f(i, j, 0);		// write coordinates in each point
+			count++;
+		}
+	}
+	return vectorPoint;									// returns vectorPoint
 }
 
 bool processImage(Mat img)
