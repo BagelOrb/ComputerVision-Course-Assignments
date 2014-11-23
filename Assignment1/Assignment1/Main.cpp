@@ -4,11 +4,16 @@
 #include "Main.h"
 
 
-#include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp> // antialiased line
 
-#include <boost/filesystem.hpp>
+#include <boost/filesystem.hpp> // check if image file exists
 
+// +---------------------------------------------------+
+// | Most functions are explained in the header file,  |
+// | though some global functions are explained below. |
+// +---------------------------------------------------+
+
+// \begin[copied code from example]
 #ifdef _WIN32
 #include <windows.h>
 #include <GL/gl.h>
@@ -18,6 +23,7 @@
 #include <GL/glut.h>
 #include <GL/glu.h>
 #endif
+// \end[copied code from example]
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -29,37 +35,40 @@ using namespace std;
 
 
 
+string windowName = "Chess or Checkers?"; //!< the name and title of the window displayed
+
+bool startVideo = false; //!< a flag used for communication between the mouse callback and Asgn1::capVideo
+
+/*!
+A callback function used to make the video capture respond to mouse clicks.
+Toggle chessboard recognition with a simple click!
+*/
+void CallBackFunc(int event, int x, int y, int flags, void* userdata)
+{
+	if (event == EVENT_LBUTTONDOWN)
+	{
+		startVideo = !startVideo; //  !Asgn1::startVideo;
+	}
+}
+
+
 void Asgn1::putTextAt(Mat img, Point3f loc, Scalar color, string text)
 {
 	vector<Point3f> x; x.push_back(loc);
 	vector<Point2f> imagePoints;
 	projectPoints(x, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
-	putText(img, text, imagePoints[0], FONT_HERSHEY_TRIPLEX, 1, color, 1, 8);
+	putText(img, text, imagePoints[0] + Point2f(-10,10), FONT_HERSHEY_TRIPLEX, 1, color, 1, 8);
 }
 
 
 void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
 {
-	vector<Point2f> imagePoints;
-	vector<Point3f> startV; startV.push_back(start);
 
-
-	projectPoints(startV, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
-	Point2f last = imagePoints[0];
-	for (int seg = 1; seg <= numberOfSegments; seg++)
-	{
-		Point3f next = start + seg / numberOfSegments*(end - start);
-		vector<Point3f> nextV; nextV.push_back(next);
-		projectPoints(nextV, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
-		line(img, last, imagePoints[0], colour, thickness, CV_AA);
-		last = imagePoints[0];
-	}
 
 }
 
-void Asgn1::drawCube(Mat img, float s)
+void Asgn1::drawCube(Mat img, float s, int thickness)
 {	
-	int thickness = 1;
 	Scalar clr(0, 255, 255);
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, clr, thickness);
@@ -74,16 +83,13 @@ void Asgn1::drawCube(Mat img, float s)
 	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, s, s), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(0, s, s), 10, clr, thickness);
 }
-void Asgn1::drawBasis(Mat img, float s)
+void Asgn1::drawBasis(Mat img, float s, int thickness)
 {	
-	int thickness = 2;
-	putTextAt(img, Point3f(s, 0, 0), Scalar(255, 0, 0), "X");
+	putTextAt(img, Point3f(s, 0, 0), Scalar(200, 50, 50), "X");
+	putTextAt(img, Point3f(0, s, 0), Scalar(50, 200, 50), "Y");
+	putTextAt(img, Point3f(0, 0, s), Scalar(50, 50, 200), "Z");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(255, 0, 0), thickness);
-
-	putTextAt(img, Point3f(0, s, 0), Scalar(0, 255, 0), "Y");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 255, 0), thickness);
-
-	putTextAt(img, Point3f(0, 0, s), Scalar(0, 0, 255), "Z");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 255), thickness);
 
 }
@@ -108,10 +114,9 @@ bool Asgn1::processImage(Mat img)
 	bool found = findChessboardCorners(img, Size(6, 9), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
 	if (!found) return false;
 
-	//for (Point2f p : corners)
-	//	circle(img, p, 2, Scalar(255., 0, 0));
-
-	drawChessboardCorners(img, Size(6, 9), Mat(corners), found);
+	for (Point2f p : corners)
+		circle(img, p, 2, Scalar(255., 255., 0), 2, CV_AA);
+	//drawChessboardCorners(img, Size(6, 9), Mat(corners), found);
 
 	Mat intrinsics, distortion;
 
@@ -124,15 +129,12 @@ bool Asgn1::processImage(Mat img)
 
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-	drawBasis(img, 20);
-	//drawCube(img, 7);
+	drawBasis(img, 20, 2);
+	drawCube(img, 7, 3);
 
 	return true;
 }
 
-VideoCapture cap(0);
-
-string windowName = "Chess or Checkers?";
 
 void Asgn1::capImg(char* file)
 {
@@ -157,15 +159,7 @@ void Asgn1::capImg(char* file)
 	}
 }
 
-bool startVideo = false; 
 
-void CallBackFunc(int event, int x, int y, int flags, void* userdata)
-{
-	if (event == EVENT_LBUTTONDOWN)
-	{
-		startVideo = !startVideo; //  !Asgn1::startVideo;
-	}
-}
 
 void Asgn1::capVideo()
 {
@@ -173,6 +167,8 @@ void Asgn1::capVideo()
 	namedWindow(windowName, WINDOW_AUTOSIZE);
 
 	setMouseCallback(windowName, CallBackFunc, NULL);
+
+	VideoCapture cap(0);
 
 	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('B', 'G', 'R', '3'));
 
@@ -201,8 +197,8 @@ void main(int argc, char** argv)
 {
 	Asgn1 ass;
 	if (argc <= 1)
-		ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
-	//ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+		ass.capVideo();
+	//ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
 	//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)

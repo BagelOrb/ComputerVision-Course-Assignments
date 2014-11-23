@@ -27,14 +27,26 @@ public:
 	vector<Mat> rvecs;
 	vector<Mat> tvecs;
 
+	//! put text on the image near a point in 3D
 	void putTextAt(Mat img, Point3f loc, Scalar color, string text);
 
+	//! draw an approximate curve corresponding toi a straight line in 3D space
 	void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness);
 
-	void drawCube(Mat img, float size);
+	/*! draw the cube which has one vertex at the origin
+	\param img the image on which to draw
+	\param size the size (in world space) of each side of the cube 
+	\param thickness the thickness (2D) of the lines drawn
+	*/
+	void drawCube(Mat img, float size, int thickness);
 
-	void drawBasis(Mat img, float size);
-	//static bool startVideo;
+	/*! draw the basis of the world coordinate system (and the axis names)
+	\param img the image on which to draw
+	\param size the length (in world space) of the line to be drawn along each axis
+	\param thickness the width in 2D image space of the line drawn
+	*/
+	void drawBasis(Mat img, float size, int thickness);
+
 	/*!
 	Returns a vector of 3D points corresponding to the junctions in a grid of the given size, at Z=0.
 	\param size the grid dimensions
@@ -51,7 +63,6 @@ public:
 	void capImg(char* file);
 
 
-	//void CallBackFunc(int event, int x, int y, int flags, void* userdata);
 	/*!
 	Perform the assignment for the standard video stream
 	*/
