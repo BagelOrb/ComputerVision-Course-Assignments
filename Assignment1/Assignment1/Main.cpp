@@ -32,7 +32,8 @@ void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int number
 	objectPoints.push_back(start);
 	objectPoints.push_back(end);
 	vector<Point2f> imagePoints;
-	projectPoints(objectPoints, rvecs, tvecs, cameraMatrix, distCoeffs, imagePoints);
+	projectPoints(objectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+	
 	for (int i = 1; i < imagePoints.size(); i++)
 	{
 		line(img, imagePoints[i - 1], imagePoints[i], colour);
@@ -52,9 +53,9 @@ void Asgn1::drawCube(Mat img, float s)
 }
 void Asgn1::drawBasis(Mat img, float s)
 {
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(1, 0, 0));
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 1, 0));
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 1));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(255, 0, 0));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 255, 0));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 255));
 
 }
 
@@ -94,8 +95,8 @@ bool Asgn1::processImage(Mat img)
 
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-	drawBasis(img, 2);
-	drawCube(img, 1);
+	drawBasis(img, 10);
+	//drawCube(img, 1);
 
 	return true;
 }
@@ -164,8 +165,8 @@ void main(int argc, char** argv)
 {
 	Asgn1 ass;
 	if (argc <= 1)
-		ass.capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
-		Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
+		ass.capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+		//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
 		ass.capVideo();
