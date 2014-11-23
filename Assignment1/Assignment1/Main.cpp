@@ -90,24 +90,14 @@ void Asgn1::capImg(char* file)
 	}
 }
 
+bool startVideo = false; 
+
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
 	if (event == EVENT_LBUTTONDOWN)
 	{
 		cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
-	}
-	else if (event == EVENT_RBUTTONDOWN)
-	{
-		cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
-	}
-	else if (event == EVENT_MBUTTONDOWN)
-	{
-		cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
-	}
-	else if (event == EVENT_MOUSEMOVE)
-	{
-		cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
-
+		startVideo = true; //  !Asgn1::startVideo;
 	}
 }
 
@@ -120,18 +110,20 @@ void Asgn1::capVideo()
 
 	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('B', 'G', 'R', '3'));
 
-	Mat frame;
+	Mat img;
 
 	while (1)
 	{
 
-		cap >> frame;
+		cap >> img;
 
 
-		if (!frame.empty())
+		if (!img.empty())
 		{
-			processImage(frame);
-			imshow(windowName, frame);
+			if (startVideo) processImage(img);
+			else putText(img, "Click to start calibration", Point(0, 20), FONT_HERSHEY_SCRIPT_SIMPLEX, 1,
+				Scalar::all(255), 3, 8);
+			imshow(windowName, img);
 		}
 		
 		if (waitKey(30) >= 0) break;
@@ -141,13 +133,16 @@ void Asgn1::capVideo()
 
 void main(int argc, char** argv)
 {
-	if (argc == 0)
-		cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
-	else if (argv[0] == "-v")
+	if (argc <= 1)
+		Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
+		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
+	else if (strcmp(argv[1], "-v") == 0)
 		Asgn1::capVideo();
-	else if (argv[0] == "-f")
-		Asgn1::capImg(argv[1]);// argv[1]);
-	else 
+	else if (strcmp(argv[1], "-f") == 0)
+		Asgn1::capImg(argv[2]);// argv[1]);
+	else
+	{
+		cout << "incorrect argument \"" << argv[1] << "\"" << endl;
 		cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
-	//capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
+	}
 }
