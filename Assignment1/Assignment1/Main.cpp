@@ -1,10 +1,9 @@
 
 #include "stdafx.h"
 
-#include <memory>
+#include "Main.h"
 
-#include <opencv2/opencv.hpp>
-#include <boost/filesystem.hpp>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <GL/gl.h>
@@ -24,58 +23,38 @@ using namespace cv;
 using namespace std;
 
 
-void drawApproximatedLine(Mat img,Point3f start, Point3f end, int numberOfSegments, Scalar colour, vector<Mat> rvec, vector<Mat> tvec, Mat cameraMatrix, Mat distCoeffs)
-{
-	vector<Point3f> objectPoints;
-	objectPoints.push_back(start);
-	objectPoints.push_back(end);
-	vector<Point2f> imagePoints;
-	projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs,imagePoints);
-	for (int i = 0; i < imagePoints.size(); i++)
-	{
-		line(img, imagePoints[i], imagePoints[i + 1], colour);
 
-	}
-			
-
-
-
-}
-
-
-vector<Point3f> getChessboardPoints(Size size, double factor)			// function that gets the size of a chessboard and the size of one square(factor) and returns a vector of Point3fs where the coordinates are saved.
+vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 {
 	vector<Point3f> vectorPoint;										// initialize Object vectorPoint of type vector<Point3f>
-	int count = 0;														// counter
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			vectorPoint[count] = Point3f(i * factor, j * factor, 0);	// write coordinates in each point
-			count++;
+			vectorPoint.push_back(Point3f(i * gridDistance, j * gridDistance, 0));	// write coordinates in each point
 		}
 	}
 	return vectorPoint;													// returns vectorPoint
 }
 
-bool processImage(Mat img)
+bool Asgn1::processImage(Mat img)
 {
 	vector<Point2f> corners; //this will be filled by the detected corners
 	bool found = findChessboardCorners(img, Size(6, 9), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
 	if (!found) return false;
-	
+
 	//for (Point2f p : corners)
 	//	circle(img, p, 2, Scalar(255., 0, 0));
 
-	drawChessboardCorners(img, Size(6,9), Mat(corners), found);
+	drawChessboardCorners(img, Size(6, 9), Mat(corners), found);
 
 	Mat intrinsics, distortion;
 
 	vector<vector<Point2f>> imagePoints;
 	imagePoints.push_back(corners);
 
-	vector<vector<Point2f>> realityPoints;
-	realityPoints.push_back(getChessboardPoints(Size(6, 9), 3.0));
+	vector<vector<Point3f>> realityPoints;
+	realityPoints.push_back(Asgn1::getChessboardPoints(Size(6, 9), 3.0));
 
 
 	Mat cameraMatrix;
@@ -84,8 +63,7 @@ bool processImage(Mat img)
 	vector<Mat> tvecs;
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-	vector<int> lineColour = { 0, 0, 0 };
-	//drawApproximatedLine(img, , , 4, lineColour, rvecs, tvecs, cameraMatrix, distCoeffs, imagePoints);
+
 
 
 
@@ -93,39 +71,56 @@ bool processImage(Mat img)
 }
 
 VideoCapture cap(0);
-Mat frame;
 
+string windowName = "Chess or checkers?";
 
-void capImg(char* file)
+void Asgn1::capImg(char* file)
 {
 
-	namedWindow("imag", WINDOW_AUTOSIZE);
+	namedWindow(windowName, WINDOW_AUTOSIZE);
 
 	//processImage(img);
 	Mat img = imread(file);// "photo.png");
 	processImage(img);
-	imshow("imag", img);
+	imshow(windowName, img);
 
 	if (!img.empty())
 	{
-		cout << "yay!" << endl;
 		waitKey(0);
 	}
-	else cout << ":C" << endl;
 }
 
-void capVideo()
+void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
-	
-	namedWindow("imag", WINDOW_AUTOSIZE);
-	// Sleep(1000);
+	if (event == EVENT_LBUTTONDOWN)
+	{
+		cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+	}
+	else if (event == EVENT_RBUTTONDOWN)
+	{
+		cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+	}
+	else if (event == EVENT_MBUTTONDOWN)
+	{
+		cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+	}
+	else if (event == EVENT_MOUSEMOVE)
+	{
+		cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
 
+	}
+}
 
-	//cap.set(CV_CAP_PROP_FRAME_WIDTH, 160);
-	//cap.set(CV_CAP_PROP_FRAME_HEIGHT, 120);
-	//cap.set(CV_CAP_PROP_FPS, 15);
+void Asgn1::capVideo()
+{
+
+	namedWindow(windowName, WINDOW_AUTOSIZE);
+
+	setMouseCallback(windowName, CallBackFunc, NULL);
+
 	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('B', 'G', 'R', '3'));
 
+	Mat frame;
 
 	while (1)
 	{
@@ -135,13 +130,9 @@ void capVideo()
 
 		if (!frame.empty())
 		{
-			//GaussianBlur(frame, frame, Size(17, 17), 15, 15);
-			//Canny(frame, frame, 0, 30, 3);
 			processImage(frame);
-			imshow("imag", frame);
-
+			imshow(windowName, frame);
 		}
-		
 
 		if (waitKey(30) >= 0) break;
 	}
@@ -150,7 +141,13 @@ void capVideo()
 
 void main(int argc, char** argv)
 {
-	capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
+	if (argc == 0)
+		cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
+	else if (argv[0] == "-v")
+		Asgn1::capVideo();
+	else if (argv[0] == "-f")
+		Asgn1::capImg(argv[1]);// argv[1]);
+	else
+		cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	//capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
-
 }
