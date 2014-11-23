@@ -1,3 +1,8 @@
+/*
+Marinus Burger F132726
+Tim Kuipers F141459
+*/
+
 #pragma once
 
 #include "stdafx.h"
