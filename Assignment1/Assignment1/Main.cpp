@@ -39,8 +39,8 @@ string windowName = "Chess or Checkers?"; //!< the name and title of the window 
 
 bool startVideo = false; //!< a flag used for communication between the mouse callback and Asgn1::capVideo
 
-bool savePic = false;
-int pictureName = 0;
+bool savePic = false; //!< a flag used for communication between the mouse callback and Asgn1::capVideo
+int pictureName = 0; //!< a counter to get a semi-unique file name (not unique-unique, cause it will overwrite pics from the preveous session)
 
 /*!
 A callback function used to make the video capture respond to mouse clicks.
@@ -64,29 +64,24 @@ void Asgn1::putTextAt(Mat img, Point3f loc, Scalar color, string text)
 	vector<Point3f> x; x.push_back(loc);
 	vector<Point2f> imagePoints;
 	projectPoints(x, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
-	putText(img, text, imagePoints[0] + Point2f(-10, 10), FONT_HERSHEY_TRIPLEX, 1, color, 1, 8);
+	putText(img, text, imagePoints[0] + Point2f(-10, 10), FONT_HERSHEY_TRIPLEX, 1, color, 2, 8);
 }
 
 
 void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
 {
-	vector<Point3f> objectPoints;
-	objectPoints.push_back(start);
-	objectPoints.push_back(end);
 	vector<Point2f> imagePoints;
 	vector<Point3f> distortedObjectPoints;
-	distortedObjectPoints.push_back(objectPoints[0]);
-	for (int seg = 1; seg <= numberOfSegments; seg++)
+	for (int seg = 0; seg <= numberOfSegments; seg++)
 	{
-		distortedObjectPoints.push_back(((objectPoints[1] - objectPoints[0]) * (seg / numberOfSegments)) + objectPoints[0]);
+		distortedObjectPoints.push_back(((end - start) * (double(seg) / double(numberOfSegments))) + start);
 	}
 
-	projectPoints(distortedObjectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+	projectPoints(distortedObjectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints); // project 3D points into image plane
 
 	for (int i = 1; i < imagePoints.size(); i++)
 	{
 		line(img, imagePoints[i - 1], imagePoints[i], colour, thickness);
-
 	}
 
 }
@@ -229,8 +224,8 @@ void main(int argc, char** argv)
 {
 	Asgn1 ass;
 	if (argc <= 1)
-		ass.capVideo();
-	//ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+		//ass.capVideo();
+		ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
 	//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
