@@ -22,6 +22,8 @@ Extra:
 class Asgn1
 {
 public:
+
+	//static bool startVideo;
 	/*!
 	Returns a vector of 3D points corresponding to the junctions in a grid of the given size, at Z=0.
 	\param size the grid dimensions
@@ -36,6 +38,9 @@ public:
 	Perform the assignment for a single image
 	*/
 	static void capImg(char* file);
+
+
+	//void CallBackFunc(int event, int x, int y, int flags, void* userdata);
 	/*!
 	Perform the assignment for the standard video stream
 	*/
