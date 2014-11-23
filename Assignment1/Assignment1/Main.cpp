@@ -1,10 +1,9 @@
 
 #include "stdafx.h"
 
-#include <memory>
+#include "Main.h"
 
-#include <opencv2/opencv.hpp>
-#include <boost/filesystem.hpp>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <GL/gl.h>
@@ -24,22 +23,21 @@ using namespace cv;
 using namespace std;
 
 
-vector<Point3f> getChessboardPoints(Size size, double factor)			// function that gets the size of a chessboard and the size of one square(factor) and returns a vector of Point3fs where the coordinates are saved.
+
+vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 {
 	vector<Point3f> vectorPoint;										// initialize Object vectorPoint of type vector<Point3f>
-	int count = 0;														// counter
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			vectorPoint[count] = Point3f(i * factor, j * factor, 0);	// write coordinates in each point
-			count++;
+			vectorPoint.push_back(Point3f(i * gridDistance, j * gridDistance, 0));	// write coordinates in each point
 		}
 	}
 	return vectorPoint;													// returns vectorPoint
 }
 
-bool processImage(Mat img)
+bool Asgn1::processImage(Mat img)
 {
 	vector<Point2f> corners; //this will be filled by the detected corners
 	bool found = findChessboardCorners(img, Size(6, 9), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
@@ -55,8 +53,8 @@ bool processImage(Mat img)
 	vector<vector<Point2f>> imagePoints;
 	imagePoints.push_back(corners);
 
-	vector<vector<Point2f>> realityPoints;
-	realityPoints.push_back(getChessboardPoints(Size(6, 9), 3.0));
+	vector<vector<Point3f>> realityPoints;
+	realityPoints.push_back(Asgn1::getChessboardPoints(Size(6, 9), 3.0));
 
 
 	Mat cameraMatrix;
@@ -76,7 +74,7 @@ VideoCapture cap(0);
 Mat frame;
 
 
-void capImg(char* file)
+void Asgn1::capImg(char* file)
 {
 
 	namedWindow("imag", WINDOW_AUTOSIZE);
@@ -94,7 +92,7 @@ void capImg(char* file)
 	else cout << ":C" << endl;
 }
 
-void capVideo()
+void Asgn1::capVideo()
 {
 	
 	namedWindow("imag", WINDOW_AUTOSIZE);
@@ -130,7 +128,7 @@ void capVideo()
 
 void main(int argc, char** argv)
 {
-	capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
+	//capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
 	//capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
-
+	Asgn1::capVideo();
 }
