@@ -27,6 +27,8 @@ public:
 	vector<Mat> rvecs;
 	vector<Mat> tvecs;
 
+	void putTextAt(Mat img, Point3f loc, Scalar color, string text);
+
 	void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness);
 
 	void drawCube(Mat img, float size);

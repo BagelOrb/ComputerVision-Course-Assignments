@@ -4,6 +4,11 @@
 #include "Main.h"
 
 
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/core.hpp> // antialiased line
+
+#include <boost/filesystem.hpp>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <GL/gl.h>
@@ -24,6 +29,13 @@ using namespace std;
 
 
 
+void Asgn1::putTextAt(Mat img, Point3f loc, Scalar color, string text)
+{
+	vector<Point3f> x; x.push_back(loc);
+	vector<Point2f> imagePoints;
+	projectPoints(x, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+	putText(img, text, imagePoints[0] + Point2f(-10, 10), FONT_HERSHEY_TRIPLEX, 1, color, 1, 8);
+}
 
 
 void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
@@ -36,22 +48,23 @@ void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int number
 	distortedObjectPoints.push_back(objectPoints[0]);
 	for (int seg = 1; seg <= numberOfSegments; seg++)
 	{
-		distortedObjectPoints.push_back(((objectPoints[1] - objectPoints[0]) * (seg/numberOfSegments)) + objectPoints[0]);
+		distortedObjectPoints.push_back(((objectPoints[1] - objectPoints[0]) * (seg / numberOfSegments)) + objectPoints[0]);
 	}
 
 	projectPoints(distortedObjectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
-	
+
 	for (int i = 1; i < imagePoints.size(); i++)
 	{
 		line(img, imagePoints[i - 1], imagePoints[i], colour, thickness);
 
 	}
-	
+
 }
+
 
 void Asgn1::drawCube(Mat img, float s)
 {	
-	int thickness = 2;
+	int thickness = 1;
 	Scalar clr(0, 255, 255);
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, clr, thickness);
@@ -70,8 +83,13 @@ void Asgn1::drawCube(Mat img, float s)
 void Asgn1::drawBasis(Mat img, float s)
 {	
 	int thickness = 2;
+	putTextAt(img, Point3f(s, 0, 0), Scalar(255, 0, 0), "X");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(255, 0, 0), thickness);
+
+	putTextAt(img, Point3f(0, s, 0), Scalar(0, 255, 0), "Y");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 255, 0), thickness);
+
+	putTextAt(img, Point3f(0, 0, s), Scalar(0, 0, 255), "Z");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 255), thickness);
 
 }
@@ -113,7 +131,7 @@ bool Asgn1::processImage(Mat img)
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
 	drawBasis(img, 20);
-	drawCube(img, 7);
+	//drawCube(img, 7);
 
 
 	return true;
@@ -121,10 +139,17 @@ bool Asgn1::processImage(Mat img)
 
 VideoCapture cap(0);
 
-string windowName = "Chess or checkers?";
+string windowName = "Chess or Checkers?";
 
 void Asgn1::capImg(char* file)
 {
+
+	if (!boost::filesystem::exists(file))
+	{
+		cout << "File doesn't exist!" << endl;
+		return;
+	}
+
 
 	namedWindow(windowName, WINDOW_AUTOSIZE);
 
@@ -196,8 +221,9 @@ void main(int argc, char** argv)
 {
 	Asgn1 ass;
 	if (argc <= 1)
-		ass.capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
-		//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
+		ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+	//ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+	//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
 		ass.capVideo();
