@@ -24,6 +24,25 @@ using namespace cv;
 using namespace std;
 
 
+void drawApproximatedLine(Mat img,Point3f start, Point3f end, int numberOfSegments, Scalar colour, vector<Mat> rvec, vector<Mat> tvec, Mat cameraMatrix, Mat distCoeffs)
+{
+	vector<Point3f> objectPoints;
+	objectPoints.push_back(start);
+	objectPoints.push_back(end);
+	vector<Point2f> imagePoints;
+	projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs,imagePoints);
+	for (int i = 0; i < imagePoints.size(); i++)
+	{
+		line(img, imagePoints[i], imagePoints[i + 1], colour);
+
+	}
+			
+
+
+
+}
+
+
 vector<Point3f> getChessboardPoints(Size size, double factor)			// function that gets the size of a chessboard and the size of one square(factor) and returns a vector of Point3fs where the coordinates are saved.
 {
 	vector<Point3f> vectorPoint;										// initialize Object vectorPoint of type vector<Point3f>
@@ -64,8 +83,9 @@ bool processImage(Mat img)
 	vector<Mat> rvecs;
 	vector<Mat> tvecs;
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
-	
 
+	vector<int> lineColour = { 0, 0, 0 };
+	//drawApproximatedLine(img, , , 4, lineColour, rvecs, tvecs, cameraMatrix, distCoeffs, imagePoints);
 
 
 
