@@ -49,6 +49,10 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 	{
 		startVideo = !startVideo; //  !Asgn1::startVideo;
 	}
+	else if (event == EVENT_RBUTTONDOWN)
+	{
+		savePic = true;
+	}
 }
 
 
@@ -57,13 +61,30 @@ void Asgn1::putTextAt(Mat img, Point3f loc, Scalar color, string text)
 	vector<Point3f> x; x.push_back(loc);
 	vector<Point2f> imagePoints;
 	projectPoints(x, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
-	putText(img, text, imagePoints[0] + Point2f(-10,10), FONT_HERSHEY_TRIPLEX, 1, color, 1, 8);
+	putText(img, text, imagePoints[0] + Point2f(-10, 10), FONT_HERSHEY_TRIPLEX, 1, color, 1, 8);
 }
 
 
 void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
 {
+	vector<Point3f> objectPoints;
+	objectPoints.push_back(start);
+	objectPoints.push_back(end);
+	vector<Point2f> imagePoints;
+	vector<Point3f> distortedObjectPoints;
+	distortedObjectPoints.push_back(objectPoints[0]);
+	for (int seg = 1; seg <= numberOfSegments; seg++)
+	{
+		distortedObjectPoints.push_back(((objectPoints[1] - objectPoints[0]) * (seg / numberOfSegments)) + objectPoints[0]);
+	}
 
+	projectPoints(distortedObjectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+
+	for (int i = 1; i < imagePoints.size(); i++)
+	{
+		line(img, imagePoints[i - 1], imagePoints[i], colour, thickness);
+
+	}
 
 }
 
@@ -79,8 +100,8 @@ void Asgn1::drawCube(Mat img, float s, int thickness)
 	drawApproximatedLine(img, Point3f(s, 0, 0), Point3f(s, s, 0), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(s, 0, s), Point3f(s, s, s), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(s, s, 0), Point3f(s, s, s), 10, clr, thickness);
-	drawApproximatedLine(img, Point3f(s, s, 0), Point3f(0, s, 0), 10, clr, thickness);
-	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, s, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(s, s, 0), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, s, s), Point3f(s, s, s), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(0, s, s), 10, clr, thickness);
 }
 void Asgn1::drawBasis(Mat img, float s, int thickness)
@@ -132,6 +153,7 @@ bool Asgn1::processImage(Mat img)
 	drawBasis(img, 20, 2);
 	drawCube(img, 7, 3);
 
+
 	return true;
 }
 
@@ -159,6 +181,8 @@ void Asgn1::capImg(char* file)
 	}
 }
 
+bool savePic = false;
+int pictureName = 0;
 
 
 void Asgn1::capVideo()
@@ -186,6 +210,13 @@ void Asgn1::capVideo()
 			else putText(img, "Click to start calibration", Point(0, 30), FONT_HERSHEY_TRIPLEX, 1,
 				Scalar::all(255), 1, 8);
 			imshow(windowName, img);
+			if (savePic){
+				string save = "../" + to_string(pictureName) + ".jpg";
+				imwrite(save, img);
+				pictureName++;
+				cout << "img saved!" << endl;
+				savePic = false;
+			}
 		}
 
 		if (waitKey(30) >= 0) break;
