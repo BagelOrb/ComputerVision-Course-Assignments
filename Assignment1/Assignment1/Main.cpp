@@ -3,6 +3,7 @@
 
 #include "Main.h"
 
+#include <boost/filesystem.hpp>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -116,6 +117,13 @@ string windowName = "Chess or checkers?";
 void Asgn1::capImg(char* file)
 {
 
+	if (!boost::filesystem::exists(file))
+	{
+		cout << "File doesn't exist!" << endl;
+		return;
+	}
+
+
 	namedWindow(windowName, WINDOW_AUTOSIZE);
 
 	//processImage(img);
@@ -173,8 +181,9 @@ void main(int argc, char** argv)
 {
 	Asgn1 ass;
 	if (argc <= 1)
-		ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
-		//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
+		ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+	//ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+	//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
 		ass.capVideo();
