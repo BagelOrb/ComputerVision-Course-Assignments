@@ -44,7 +44,8 @@ int pictureName = 0; //!< a counter to get a semi-unique file name (not unique-u
 
 /*!
 A callback function used to make the video capture respond to mouse clicks.
-Toggle chessboard recognition with a simple click!
+Toggle chessboard recognition with a simple left mouseclick!
+Take a snapshot with a right mouseclick!
 */
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
@@ -67,7 +68,6 @@ void Asgn1::putTextAt(Mat img, Point3f loc, Scalar color, string text)
 	putText(img, text, imagePoints[0] + Point2f(-10, 10), FONT_HERSHEY_TRIPLEX, 1, color, 2, 8);
 }
 
-
 void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
 {
 	vector<Point2f> imagePoints;
@@ -83,7 +83,6 @@ void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int number
 	{
 		line(img, imagePoints[i - 1], imagePoints[i], colour, thickness);
 	}
-
 }
 
 void Asgn1::drawCube(Mat img, float s, int thickness)
@@ -102,6 +101,7 @@ void Asgn1::drawCube(Mat img, float s, int thickness)
 	drawApproximatedLine(img, Point3f(0, s, s), Point3f(s, s, s), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(0, s, s), 10, clr, thickness);
 }
+
 void Asgn1::drawBasis(Mat img, float s, int thickness)
 {	
 	putTextAt(img, Point3f(s, 0, 0), Scalar(200, 50, 50), "X");
@@ -112,7 +112,6 @@ void Asgn1::drawBasis(Mat img, float s, int thickness)
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 255), thickness);
 
 }
-
 
 vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 {
@@ -155,7 +154,6 @@ bool Asgn1::processImage(Mat img)
 	return true;
 }
 
-
 void Asgn1::capImg(char* file)
 {
 
@@ -178,8 +176,6 @@ void Asgn1::capImg(char* file)
 		waitKey(0);
 	}
 }
-
-
 
 void Asgn1::capVideo()
 {
@@ -218,7 +214,6 @@ void Asgn1::capVideo()
 		if (waitKey(30) >= 0) break;
 	}
 }
-
 
 void main(int argc, char** argv)
 {
