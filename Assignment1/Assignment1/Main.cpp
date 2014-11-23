@@ -3,6 +3,10 @@
 
 #include "Main.h"
 
+
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/core.hpp> // antialiased line
+
 #include <boost/filesystem.hpp>
 
 #ifdef _WIN32
@@ -25,38 +29,37 @@ using namespace std;
 
 
 
+void Asgn1::putTextAt(Mat img, Point3f loc, Scalar color, string text)
+{
+	vector<Point3f> x; x.push_back(loc);
+	vector<Point2f> imagePoints;
+	projectPoints(x, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+	putText(img, text, imagePoints[0], FONT_HERSHEY_TRIPLEX, 1, color, 1, 8);
+}
 
 
 void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
 {
-	vector<Point3f> objectPoints;
-	objectPoints.push_back(start);
-	objectPoints.push_back(end);
 	vector<Point2f> imagePoints;
-	vector<Point3f> distortedObjectPoints;
-	for (int i = 1; i <= numberOfSegments; i++)
+	vector<Point3f> startV; startV.push_back(start);
+
+
+	projectPoints(startV, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+	Point2f last = imagePoints[0];
+	for (int seg = 1; seg <= numberOfSegments; seg++)
 	{
-		distortedObjectPoints.push_back();
+		Point3f next = start + seg / numberOfSegments*(end - start);
+		vector<Point3f> nextV; nextV.push_back(next);
+		projectPoints(nextV, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+		line(img, last, imagePoints[0], colour, thickness, CV_AA);
+		last = imagePoints[0];
 	}
 
-
-
-
-	//cout << objectPoints[0] << endl;
-	//cout << objectPoints[1] << endl;
-	projectPoints(objectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
-	
-	for (int i = 1; i < imagePoints.size(); i++)
-	{
-		line(img, imagePoints[i - 1], imagePoints[i], colour, thickness);
-
-	}
-	
 }
 
 void Asgn1::drawCube(Mat img, float s)
 {	
-	int thickness = 2;
+	int thickness = 1;
 	Scalar clr(0, 255, 255);
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, clr, thickness);
@@ -74,8 +77,13 @@ void Asgn1::drawCube(Mat img, float s)
 void Asgn1::drawBasis(Mat img, float s)
 {	
 	int thickness = 2;
+	putTextAt(img, Point3f(s, 0, 0), Scalar(255, 0, 0), "X");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(255, 0, 0), thickness);
+
+	putTextAt(img, Point3f(0, s, 0), Scalar(0, 255, 0), "Y");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 255, 0), thickness);
+
+	putTextAt(img, Point3f(0, 0, s), Scalar(0, 0, 255), "Z");
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 255), thickness);
 
 }
@@ -117,14 +125,14 @@ bool Asgn1::processImage(Mat img)
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
 	drawBasis(img, 20);
-	drawCube(img, 7);
+	//drawCube(img, 7);
 
 	return true;
 }
 
 VideoCapture cap(0);
 
-string windowName = "Chess or checkers?";
+string windowName = "Chess or Checkers?";
 
 void Asgn1::capImg(char* file)
 {
