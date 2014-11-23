@@ -39,6 +39,9 @@ string windowName = "Chess or Checkers?"; //!< the name and title of the window 
 
 bool startVideo = false; //!< a flag used for communication between the mouse callback and Asgn1::capVideo
 
+bool savePic = false;
+int pictureName = 0;
+
 /*!
 A callback function used to make the video capture respond to mouse clicks.
 Toggle chessboard recognition with a simple click!
@@ -181,8 +184,6 @@ void Asgn1::capImg(char* file)
 	}
 }
 
-bool savePic = false;
-int pictureName = 0;
 
 
 void Asgn1::capVideo()
