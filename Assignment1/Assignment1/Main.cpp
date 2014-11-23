@@ -36,7 +36,7 @@ void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int number
 	
 	for (int i = 1; i < imagePoints.size(); i++)
 	{
-		line(img, imagePoints[i - 1], imagePoints[i], colour);
+		line(img, imagePoints[i - 1], imagePoints[i], colour, 3);
 
 	}
 	
@@ -44,6 +44,14 @@ void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int number
 
 void Asgn1::drawCube(Mat img, float s)
 {
+	Scalar clr(0, 255, 255);
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, clr);
+	
+	
+	
+	
+	
+	/**/
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(.5, .5, .5));
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(.5, .5, .5));
 	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(.5, .5, .5));
@@ -95,8 +103,8 @@ bool Asgn1::processImage(Mat img)
 
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-	drawBasis(img, 10);
-	//drawCube(img, 1);
+	//drawBasis(img, 10);
+	drawCube(img, 4);
 
 	return true;
 }
