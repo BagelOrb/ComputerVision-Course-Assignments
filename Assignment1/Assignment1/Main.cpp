@@ -33,11 +33,12 @@ void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegme
 	objectPoints.push_back(end);
 	vector<Point2f> imagePoints;
 	projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs, imagePoints);
-	for (int i = 0; i < imagePoints.size(); i++)
+	for (int i = 1; i <= imagePoints.size(); i++)
 	{
-		line(img, imagePoints[i], imagePoints[i + 1], colour);
+		line(img, imagePoints[i - 1], imagePoints[i], colour);
 
 	}
+	
 }
 
 
@@ -81,7 +82,10 @@ bool Asgn1::processImage(Mat img)
 	vector<Mat> tvecs;
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-	drawApproximatedLine(img, , , 4, Scalar(0, 0, 0), rvecs, tvecs, cameraMatrix, distCoeffs);
+	cout << realityPoints[0][0];
+	cout << imagePoints.size();
+	
+	drawApproximatedLine(img, { 0.0, 0.0, 0.0 }, { 2.0, 2.0, 2.0 }, 4, Scalar(0, 0, 0), rvecs, tvecs, cameraMatrix, distCoeffs);
 
 
 
@@ -152,7 +156,8 @@ void Asgn1::capVideo()
 void main(int argc, char** argv)
 {
 	if (argc <= 1)
-		Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
+		//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
+		Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
 		Asgn1::capVideo();
