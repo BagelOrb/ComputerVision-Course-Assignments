@@ -1,3 +1,7 @@
+/*
+Marinus Burger F132726
+Tim Kuipers F141459
+*/
 
 #include "stdafx.h"
 
@@ -8,10 +12,10 @@
 
 #include <boost/filesystem.hpp> // check if image file exists
 
-// +---------------------------------------------------+
-// | Most functions are explained in the header file,  |
-// | though some global functions are explained below. |
-// +---------------------------------------------------+
+//  +---------------------------------------------------+
+//  | Most functions are explained in the header file,  |
+//  | though some global functions are explained below. |
+//  +---------------------------------------------------+
 
 // \begin[copied code from example]
 #ifdef _WIN32
@@ -166,8 +170,7 @@ void Asgn1::capImg(char* file)
 
 	namedWindow(windowName, WINDOW_AUTOSIZE);
 
-	//processImage(img);
-	Mat img = imread(file);// "photo.png");
+	Mat img = imread(file);
 	processImage(img);
 	imshow(windowName, img);
 
@@ -182,11 +185,11 @@ void Asgn1::capVideo()
 
 	namedWindow(windowName, WINDOW_AUTOSIZE);
 
-	setMouseCallback(windowName, CallBackFunc, NULL);
+	setMouseCallback(windowName, CallBackFunc, NULL); // make the window listen to the mouse
 
 	VideoCapture cap(0);
 
-	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('B', 'G', 'R', '3'));
+	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('B', 'G', 'R', '3')); // set teh type of camera
 
 	Mat img;
 
@@ -219,10 +222,10 @@ void main(int argc, char** argv)
 {
 	Asgn1 ass;
 	if (argc <= 1)
+		cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 		//ass.capVideo();
-		ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
+		//ass.capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
 	//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
-		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
 		ass.capVideo();
 	else if (strcmp(argv[1], "-f") == 0)
