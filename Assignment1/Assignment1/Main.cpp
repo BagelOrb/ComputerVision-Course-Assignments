@@ -24,6 +24,24 @@ using namespace std;
 
 
 
+
+
+void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, vector<Mat> rvec, vector<Mat> tvec, Mat cameraMatrix, Mat distCoeffs)
+{
+	vector<Point3f> objectPoints;
+	objectPoints.push_back(start);
+	objectPoints.push_back(end);
+	vector<Point2f> imagePoints;
+	projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs, imagePoints);
+	for (int i = 0; i < imagePoints.size(); i++)
+	{
+		line(img, imagePoints[i], imagePoints[i + 1], colour);
+
+	}
+}
+
+
+
 vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 {
 	vector<Point3f> vectorPoint;										// initialize Object vectorPoint of type vector<Point3f>
@@ -42,11 +60,11 @@ bool Asgn1::processImage(Mat img)
 	vector<Point2f> corners; //this will be filled by the detected corners
 	bool found = findChessboardCorners(img, Size(6, 9), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
 	if (!found) return false;
-	
+
 	//for (Point2f p : corners)
 	//	circle(img, p, 2, Scalar(255., 0, 0));
 
-	drawChessboardCorners(img, Size(6,9), Mat(corners), found);
+	drawChessboardCorners(img, Size(6, 9), Mat(corners), found);
 
 	Mat intrinsics, distortion;
 
@@ -62,7 +80,7 @@ bool Asgn1::processImage(Mat img)
 	vector<Mat> rvecs;
 	vector<Mat> tvecs;
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
-	
+
 
 
 
@@ -103,7 +121,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 
 void Asgn1::capVideo()
 {
-	
+
 	namedWindow(windowName, WINDOW_AUTOSIZE);
 
 	setMouseCallback(windowName, CallBackFunc, NULL);
@@ -125,7 +143,7 @@ void Asgn1::capVideo()
 				Scalar::all(255), 3, 8);
 			imshow(windowName, img);
 		}
-		
+
 		if (waitKey(30) >= 0) break;
 	}
 }
