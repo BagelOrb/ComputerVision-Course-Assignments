@@ -97,15 +97,15 @@ void Asgn1::drawBasis(Mat img, float s, int thickness)
 
 vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 {
-	vector<Point3f> vectorPoint;										// initialize Object vectorPoint of type vector<Point3f>
+	vector<Point3f> vectorPoint;	
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			vectorPoint.push_back(Point3f(i * gridDistance, j * gridDistance, 0));	// write coordinates in each point
+			vectorPoint.push_back(Point3f(i * gridDistance, j * gridDistance, 0));	
 		}
 	}
-	return vectorPoint;													// returns vectorPoint
+	return vectorPoint;	
 }
 
 bool Asgn1::processImage(Mat img)

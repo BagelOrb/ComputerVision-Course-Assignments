@@ -18,10 +18,12 @@ Assignment 1 of the course Computer Vision:
 
 Extra:
 - Approximate curved lines of the cube and basis, so that the lines curves as much as the fisheye lens effect
+- Support for both image files, as well as live video capture (command line option "-f [file]" or "-v")
 */
 class Asgn1
 {
 public:
+	// the camera intrinsics and extrinsics obtained by calibrateCamera
 	Mat cameraMatrix;
 	Mat distCoeffs;
 	vector<Mat> rvecs;
@@ -51,12 +53,16 @@ public:
 	Returns a vector of 3D points corresponding to the junctions in a grid of the given size, at Z=0.
 	\param size the grid dimensions
 	\param gridDistance the distance betwee two neighboring junction points
+	\return the list of chessboard points
 	*/
 	static vector<Point3f> getChessboardPoints(Size size, double gridDistance);
+
 	/*!
 	Recognizes a 6x9 chessboard (and displays it) and displays the basis of the coordinate system and a cube located at the origin
+	\return Whether the calibration board has been found!
 	*/
 	bool processImage(Mat img);
+
 	/*!
 	Perform the assignment for a single image
 	*/
