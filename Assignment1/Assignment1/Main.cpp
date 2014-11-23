@@ -24,6 +24,24 @@ using namespace std;
 
 
 
+
+
+void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, vector<Mat> rvec, vector<Mat> tvec, Mat cameraMatrix, Mat distCoeffs)
+{
+	vector<Point3f> objectPoints;
+	objectPoints.push_back(start);
+	objectPoints.push_back(end);
+	vector<Point2f> imagePoints;
+	projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs, imagePoints);
+	for (int i = 0; i < imagePoints.size(); i++)
+	{
+		line(img, imagePoints[i], imagePoints[i + 1], colour);
+
+	}
+}
+
+
+
 vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 {
 	vector<Point3f> vectorPoint;										// initialize Object vectorPoint of type vector<Point3f>
