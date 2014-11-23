@@ -81,7 +81,7 @@ bool Asgn1::processImage(Mat img)
 	vector<Mat> tvecs;
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-
+	drawApproximatedLine(img, , , 4, Scalar(0, 0, 0), rvecs, tvecs, cameraMatrix, distCoeffs);
 
 
 
