@@ -27,44 +27,56 @@ using namespace std;
 
 
 
-void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour)
+void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
 {
 	vector<Point3f> objectPoints;
 	objectPoints.push_back(start);
 	objectPoints.push_back(end);
 	vector<Point2f> imagePoints;
+	vector<Point3f> distortedObjectPoints;
+	for (int i = 1; i <= numberOfSegments; i++)
+	{
+		distortedObjectPoints.push_back();
+	}
+
+
+
+
+	//cout << objectPoints[0] << endl;
+	//cout << objectPoints[1] << endl;
 	projectPoints(objectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
 	
 	for (int i = 1; i < imagePoints.size(); i++)
 	{
-		line(img, imagePoints[i - 1], imagePoints[i], colour, 3);
+		line(img, imagePoints[i - 1], imagePoints[i], colour, thickness);
 
 	}
 	
 }
 
 void Asgn1::drawCube(Mat img, float s)
-{
+{	
+	int thickness = 2;
 	Scalar clr(0, 255, 255);
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, clr);
-	
-	
-	
-	
-	
-	/**/
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(.5, .5, .5));
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(.5, .5, .5));
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(.5, .5, .5));
-	drawApproximatedLine(img, Point3f(s, s, s), Point3f(s, 0, 0), 10, Scalar(.5, .5, .5));
-	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, s, 0), 10, Scalar(.5, .5, .5));
-	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, 0, s), 10, Scalar(.5, .5, .5));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, 0, s), Point3f(s, 0, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, 0, s), Point3f(0, s, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(s, 0, 0), Point3f(s, 0, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(s, 0, 0), Point3f(s, s, 0), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(s, 0, s), Point3f(s, s, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(s, s, 0), Point3f(s, s, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(s, s, 0), Point3f(0, s, 0), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, s, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(0, s, s), 10, clr, thickness);
 }
 void Asgn1::drawBasis(Mat img, float s)
-{
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(255, 0, 0));
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 255, 0));
-	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 255));
+{	
+	int thickness = 2;
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(255, 0, 0), thickness);
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 255, 0), thickness);
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 255), thickness);
 
 }
 
@@ -104,8 +116,8 @@ bool Asgn1::processImage(Mat img)
 
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-	//drawBasis(img, 10);
-	drawCube(img, 4);
+	drawBasis(img, 20);
+	drawCube(img, 7);
 
 	return true;
 }
