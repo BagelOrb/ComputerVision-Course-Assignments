@@ -33,17 +33,13 @@ void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int number
 	objectPoints.push_back(end);
 	vector<Point2f> imagePoints;
 	vector<Point3f> distortedObjectPoints;
-	for (int i = 1; i <= numberOfSegments; i++)
+	distortedObjectPoints.push_back(objectPoints[0]);
+	for (int seg = 1; seg <= numberOfSegments; seg++)
 	{
-		distortedObjectPoints.push_back();
+		distortedObjectPoints.push_back(((objectPoints[1] - objectPoints[0]) * (seg/numberOfSegments)) + objectPoints[0]);
 	}
 
-
-
-
-	//cout << objectPoints[0] << endl;
-	//cout << objectPoints[1] << endl;
-	projectPoints(objectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
+	projectPoints(distortedObjectPoints, rvecs[0], tvecs[0], cameraMatrix, distCoeffs, imagePoints);
 	
 	for (int i = 1; i < imagePoints.size(); i++)
 	{
@@ -66,10 +62,11 @@ void Asgn1::drawCube(Mat img, float s)
 	drawApproximatedLine(img, Point3f(s, 0, 0), Point3f(s, s, 0), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(s, 0, s), Point3f(s, s, s), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(s, s, 0), Point3f(s, s, s), 10, clr, thickness);
-	drawApproximatedLine(img, Point3f(s, s, 0), Point3f(0, s, 0), 10, clr, thickness);
-	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, s, s), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(s, s, 0), 10, clr, thickness);
+	drawApproximatedLine(img, Point3f(0, s, s), Point3f(s, s, s), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(0, s, s), 10, clr, thickness);
 }
+
 void Asgn1::drawBasis(Mat img, float s)
 {	
 	int thickness = 2;
@@ -118,6 +115,7 @@ bool Asgn1::processImage(Mat img)
 	drawBasis(img, 20);
 	drawCube(img, 7);
 
+
 	return true;
 }
 
@@ -142,12 +140,18 @@ void Asgn1::capImg(char* file)
 }
 
 bool startVideo = false; 
+bool savePic = false;
+int pictureName = 0;
 
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
 	if (event == EVENT_LBUTTONDOWN)
 	{
 		startVideo = !startVideo; //  !Asgn1::startVideo;
+	}
+	else if (event == EVENT_RBUTTONDOWN)
+	{
+		savePic = true;
 	}
 }
 
@@ -174,6 +178,13 @@ void Asgn1::capVideo()
 			else putText(img, "Click to start calibration", Point(0, 30), FONT_HERSHEY_TRIPLEX, 1,
 				Scalar::all(255), 1, 8);
 			imshow(windowName, img);
+			if (savePic){
+				string save = "../" + to_string(pictureName) + ".jpg";
+				imwrite(save, img);
+				pictureName++;
+				cout << "img saved!" << endl;
+				savePic = false;
+			}
 		}
 
 		if (waitKey(30) >= 0) break;
@@ -185,7 +196,7 @@ void main(int argc, char** argv)
 {
 	Asgn1 ass;
 	if (argc <= 1)
-		ass.capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board.png");
+		ass.capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
 		//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
