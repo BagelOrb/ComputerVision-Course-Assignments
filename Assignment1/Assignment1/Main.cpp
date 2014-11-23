@@ -71,39 +71,56 @@ bool Asgn1::processImage(Mat img)
 }
 
 VideoCapture cap(0);
-Mat frame;
 
+string windowName = "Chess or checkers?";
 
 void Asgn1::capImg(char* file)
 {
 
-	namedWindow("imag", WINDOW_AUTOSIZE);
+	namedWindow(windowName, WINDOW_AUTOSIZE);
 
 	//processImage(img);
 	Mat img = imread(file);// "photo.png");
 	processImage(img);
-	imshow("imag", img);
+	imshow(windowName, img);
 
 	if (!img.empty())
 	{
-		cout << "yay!" << endl;
 		waitKey(0);
 	}
-	else cout << ":C" << endl;
+}
+
+void CallBackFunc(int event, int x, int y, int flags, void* userdata)
+{
+	if (event == EVENT_LBUTTONDOWN)
+	{
+		cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+	}
+	else if (event == EVENT_RBUTTONDOWN)
+	{
+		cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+	}
+	else if (event == EVENT_MBUTTONDOWN)
+	{
+		cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+	}
+	else if (event == EVENT_MOUSEMOVE)
+	{
+		cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
+
+	}
 }
 
 void Asgn1::capVideo()
 {
 	
-	namedWindow("imag", WINDOW_AUTOSIZE);
-	// Sleep(1000);
+	namedWindow(windowName, WINDOW_AUTOSIZE);
 
+	setMouseCallback(windowName, CallBackFunc, NULL);
 
-	//cap.set(CV_CAP_PROP_FRAME_WIDTH, 160);
-	//cap.set(CV_CAP_PROP_FRAME_HEIGHT, 120);
-	//cap.set(CV_CAP_PROP_FPS, 15);
 	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('B', 'G', 'R', '3'));
 
+	Mat frame;
 
 	while (1)
 	{
@@ -113,14 +130,10 @@ void Asgn1::capVideo()
 
 		if (!frame.empty())
 		{
-			//GaussianBlur(frame, frame, Size(17, 17), 15, 15);
-			//Canny(frame, frame, 0, 30, 3);
 			processImage(frame);
-			imshow("imag", frame);
-
+			imshow(windowName, frame);
 		}
 		
-
 		if (waitKey(30) >= 0) break;
 	}
 }
@@ -128,7 +141,13 @@ void Asgn1::capVideo()
 
 void main(int argc, char** argv)
 {
-	//capImg("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
+	if (argc == 0)
+		cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
+	else if (argv[0] == "-v")
+		Asgn1::capVideo();
+	else if (argv[0] == "-f")
+		Asgn1::capImg(argv[1]);// argv[1]);
+	else 
+		cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	//capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\photo.png");// argv[1]);
-	Asgn1::capVideo();
 }
