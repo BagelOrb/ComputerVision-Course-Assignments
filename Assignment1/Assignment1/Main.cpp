@@ -26,14 +26,14 @@ using namespace std;
 
 
 
-void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, vector<Mat> rvec, vector<Mat> tvec, Mat cameraMatrix, Mat distCoeffs)
+void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour)
 {
 	vector<Point3f> objectPoints;
 	objectPoints.push_back(start);
 	objectPoints.push_back(end);
 	vector<Point2f> imagePoints;
-	projectPoints(objectPoints, rvec, tvec, cameraMatrix, distCoeffs, imagePoints);
-	for (int i = 1; i <= imagePoints.size(); i++)
+	projectPoints(objectPoints, rvecs, tvecs, cameraMatrix, distCoeffs, imagePoints);
+	for (int i = 1; i < imagePoints.size(); i++)
 	{
 		line(img, imagePoints[i - 1], imagePoints[i], colour);
 
@@ -41,6 +41,22 @@ void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegme
 	
 }
 
+void Asgn1::drawCube(Mat img, float s)
+{
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(.5, .5, .5));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(.5, .5, .5));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(.5, .5, .5));
+	drawApproximatedLine(img, Point3f(s, s, s), Point3f(s, 0, 0), 10, Scalar(.5, .5, .5));
+	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, s, 0), 10, Scalar(.5, .5, .5));
+	drawApproximatedLine(img, Point3f(s, s, s), Point3f(0, 0, s), 10, Scalar(.5, .5, .5));
+}
+void Asgn1::drawBasis(Mat img, float s)
+{
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(s, 0, 0), 10, Scalar(1, 0, 0));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, s, 0), 10, Scalar(0, 1, 0));
+	drawApproximatedLine(img, Point3f(0, 0, 0), Point3f(0, 0, s), 10, Scalar(0, 0, 1));
+
+}
 
 
 vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
@@ -76,18 +92,10 @@ bool Asgn1::processImage(Mat img)
 	realityPoints.push_back(Asgn1::getChessboardPoints(Size(6, 9), 3.0));
 
 
-	Mat cameraMatrix;
-	Mat distCoeffs;
-	vector<Mat> rvecs;
-	vector<Mat> tvecs;
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
 
-	cout << realityPoints[0][0];
-	cout << imagePoints.size();
-	
-	drawApproximatedLine(img, { 0.0, 0.0, 0.0 }, { 2.0, 2.0, 2.0 }, 4, Scalar(0, 0, 0), rvecs, tvecs, cameraMatrix, distCoeffs);
-
-
+	drawBasis(img, 2);
+	drawCube(img, 1);
 
 	return true;
 }
@@ -118,8 +126,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
 	if (event == EVENT_LBUTTONDOWN)
 	{
-		cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
-		startVideo = true; //  !Asgn1::startVideo;
+		startVideo = !startVideo; //  !Asgn1::startVideo;
 	}
 }
 
@@ -143,8 +150,8 @@ void Asgn1::capVideo()
 		if (!img.empty())
 		{
 			if (startVideo) processImage(img);
-			else putText(img, "Click to start calibration", Point(0, 20), FONT_HERSHEY_SCRIPT_SIMPLEX, 1,
-				Scalar::all(255), 3, 8);
+			else putText(img, "Click to start calibration", Point(0, 30), FONT_HERSHEY_TRIPLEX, 1,
+				Scalar::all(255), 1, 8);
 			imshow(windowName, img);
 		}
 
@@ -155,14 +162,15 @@ void Asgn1::capVideo()
 
 void main(int argc, char** argv)
 {
+	Asgn1 ass;
 	if (argc <= 1)
-		//Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
+		ass.capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\Assignment1\\Debug\\board_fisheye.png");
 		Asgn1::capImg("C:\\Users\\Marinus\\Documents\\Computer Vision\\Assignments\\ComputerVision-Course-Assignments\\data\\photo.png");
 		//cout << "use argument -v to use the standard video capture, and -f [filename] to process a single image" << endl;
 	else if (strcmp(argv[1], "-v") == 0)
-		Asgn1::capVideo();
+		ass.capVideo();
 	else if (strcmp(argv[1], "-f") == 0)
-		Asgn1::capImg(argv[2]);// argv[1]);
+		ass.capImg(argv[2]);// argv[1]);
 	else
 	{
 		cout << "incorrect argument \"" << argv[1] << "\"" << endl;

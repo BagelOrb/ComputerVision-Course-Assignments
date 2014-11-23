@@ -22,7 +22,16 @@ Extra:
 class Asgn1
 {
 public:
+	Mat cameraMatrix;
+	Mat distCoeffs;
+	vector<Mat> rvecs;
+	vector<Mat> tvecs;
 
+	void drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour);
+
+	void drawCube(Mat img, float size);
+
+	void drawBasis(Mat img, float size);
 	//static bool startVideo;
 	/*!
 	Returns a vector of 3D points corresponding to the junctions in a grid of the given size, at Z=0.
@@ -33,18 +42,18 @@ public:
 	/*!
 	Recognizes a 6x9 chessboard (and displays it) and displays the basis of the coordinate system and a cube located at the origin
 	*/
-	static bool processImage(Mat img);
+	bool processImage(Mat img);
 	/*!
 	Perform the assignment for a single image
 	*/
-	static void capImg(char* file);
+	void capImg(char* file);
 
 
 	//void CallBackFunc(int event, int x, int y, int flags, void* userdata);
 	/*!
 	Perform the assignment for the standard video stream
 	*/
-	static void capVideo();
+	void capVideo();
 
 
 
