@@ -48,8 +48,7 @@ int pictureName = 0; //!< a counter to get a semi-unique file name (not unique-u
 
 /*!
 A callback function used to make the video capture respond to mouse clicks.
-Toggle chessboard recognition with a simple left mouseclick!
-Take a snapshot with a right mouseclick!
+Toggle chessboard recognition with a simple click!
 */
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
@@ -72,6 +71,7 @@ void Asgn1::putTextAt(Mat img, Point3f loc, Scalar color, string text)
 	putText(img, text, imagePoints[0] + Point2f(-10, 10), FONT_HERSHEY_TRIPLEX, 1, color, 2, 8);
 }
 
+
 void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int numberOfSegments, Scalar colour, int thickness)
 {
 	vector<Point2f> imagePoints;
@@ -87,6 +87,7 @@ void Asgn1::drawApproximatedLine(Mat img, Point3f start, Point3f end, int number
 	{
 		line(img, imagePoints[i - 1], imagePoints[i], colour, thickness);
 	}
+
 }
 
 void Asgn1::drawCube(Mat img, float s, int thickness)
@@ -105,7 +106,6 @@ void Asgn1::drawCube(Mat img, float s, int thickness)
 	drawApproximatedLine(img, Point3f(0, s, s), Point3f(s, s, s), 10, clr, thickness);
 	drawApproximatedLine(img, Point3f(0, s, 0), Point3f(0, s, s), 10, clr, thickness);
 }
-
 void Asgn1::drawBasis(Mat img, float s, int thickness)
 {	
 	putTextAt(img, Point3f(s, 0, 0), Scalar(200, 50, 50), "X");
@@ -117,10 +117,11 @@ void Asgn1::drawBasis(Mat img, float s, int thickness)
 
 }
 
+
 vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 {
 	vector<Point3f> vectorPoint;	
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
@@ -133,7 +134,7 @@ vector<Point3f> Asgn1::getChessboardPoints(Size size, double gridDistance)
 bool Asgn1::processImage(Mat img)
 {
 	vector<Point2f> corners; //this will be filled by the detected corners
-	bool found = findChessboardCorners(img, Size(6, 9), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
+	bool found = findChessboardCorners(img, Size(6, 8), corners, CV_CALIB_CB_ADAPTIVE_THRESH);
 	if (!found) return false;
 
 	for (Point2f p : corners)
@@ -146,10 +147,27 @@ bool Asgn1::processImage(Mat img)
 	imagePoints.push_back(corners);
 
 	vector<vector<Point3f>> realityPoints;
-	realityPoints.push_back(Asgn1::getChessboardPoints(Size(6, 9), 3.0));
+	realityPoints.push_back(Asgn1::getChessboardPoints(Size(6, 8), 11.5));
 
 
 	calibrateCamera(realityPoints, imagePoints, img.size(), cameraMatrix, distCoeffs, rvecs, tvecs);
+
+	ofstream intrinsics1("intrinsics1a_new.txt");
+	if (intrinsics1.is_open())
+	{
+		intrinsics1 << "Camera intrinsics are saved here:\n";
+		intrinsics1 << cameraMatrix << "\n";
+		intrinsics1 << "-----------------------" << "\n";
+		intrinsics1 << distCoeffs << "\n";
+		intrinsics1 << "-----------------------" << "\n";
+		intrinsics1 << rvecs[0] << "\n";
+		intrinsics1 << "-----------------------" << "\n";
+		intrinsics1 << tvecs[0] << "\n";
+		intrinsics1.close();
+	}
+	else cout << "Unable to open file";
+
+
 
 	drawBasis(img, 20, 2);
 	drawCube(img, 7, 3);
@@ -157,6 +175,7 @@ bool Asgn1::processImage(Mat img)
 
 	return true;
 }
+
 
 void Asgn1::capImg(char* file)
 {
@@ -179,6 +198,8 @@ void Asgn1::capImg(char* file)
 		waitKey(0);
 	}
 }
+
+
 
 void Asgn1::capVideo()
 {
@@ -217,6 +238,7 @@ void Asgn1::capVideo()
 		if (waitKey(30) >= 0) break;
 	}
 }
+
 
 void main(int argc, char** argv)
 {
