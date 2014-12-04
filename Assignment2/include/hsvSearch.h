@@ -57,7 +57,6 @@ public:
 
 		nl_uu_science_gmt::Scene3DRenderer::processForegroundImproved(frame752, background, computed_foreground, params);
 
-
 		cv::Mat differenceMatrix = optimal752 - computed_foreground; //!< A matrix containing 0 for matching pixels, 1 for pixels that should have been 1 but are 0 (person classified as background), and -1 for pixels that should have been 0 but are 1 (background classified as person)
 
 		//! Penalty for background classified as person, higher is more bad
