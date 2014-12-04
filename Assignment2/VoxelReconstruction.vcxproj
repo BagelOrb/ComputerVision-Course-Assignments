@@ -165,6 +165,7 @@
     <ClCompile Include="src\utilities\EuclideanColorModel.cpp" />
     <ClCompile Include="src\utilities\General.cpp" />
     <ClCompile Include="src\utilities\hsvSearch.cpp" />
+    <ClCompile Include="src\utilities\HSV_Threshold.cpp" />
     <ClCompile Include="src\utilities\MixtureModelBeamSearch.cpp" />
     <ClCompile Include="src\utilities\Utils.cpp" />
     <ClCompile Include="src\VoxelReconstruction.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="include\General.h" />
     <ClInclude Include="include\Glut.h" />
     <ClInclude Include="include\hsvSearch.h" />
+    <ClInclude Include="include\HSV_Threshold.h" />
     <ClInclude Include="include\MixtureModelBeamSearch.h" />
     <ClInclude Include="include\Reconstructor.h" />
     <ClInclude Include="include\Scene3DRenderer.h" />

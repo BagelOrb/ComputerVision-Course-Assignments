@@ -51,6 +51,9 @@
     <ClCompile Include="src\utilities\MixtureModelBeamSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\HSV_Threshold.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\arcball.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MixtureModelBeamSearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HSV_Threshold.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

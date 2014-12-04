@@ -1,35 +1,12 @@
 #pragma once
 #include <opencv2/opencv.hpp>
-#include <chrono>
-#include <random>
 #include <math.h> // exp
+
+#include "Scene3DRenderer.h"
+#include "HSV_Threshold.h"
 
 using namespace std;
 
-
-class HSV_State
-{
-
-public:
-	uchar h;
-	uchar s;
-	uchar v;
-
-	HSV_State(uchar h_, uchar s_, uchar v_)
-		: h(h_), s(s_), v(v_)
-	{};
-
-	HSV_State* getNearbyRandom(double std_dev, std::default_random_engine& gen)
-	{
-		std::normal_distribution<double> dist(0, std_dev);
-		HSV_State* ret = new HSV_State(h + dist(gen), s + dist(gen), v + dist(gen));
-		
-
-		return ret;
-	};
-
-
-};
 
 
 class HSV_Evaluator_Test 
@@ -78,6 +55,9 @@ public:
 		
 		cv::Mat computed_foreground;
 
+		nl_uu_science_gmt::Scene3DRenderer::processForegroundImproved(frame752, background, computed_foreground, params);
+
+
 		cv::Mat differenceMatrix = optimal752 - computed_foreground; //!< A matrix containing 0 for matching pixels, 1 for pixels that should have been 1 but are 0 (person classified as background), and -1 for pixels that should have been 0 but are 1 (background classified as person)
 
 		//! Penalty for background classified as person, higher is more bad
@@ -110,4 +90,11 @@ public:
 
 		return (1.0 / distance);
 	};
+};
+
+
+struct HSV_Search
+{
+	static int main_hsvSearch();
+
 };
