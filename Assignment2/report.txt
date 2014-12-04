@@ -1,13 +1,16 @@
    Report - Assignment 2 Computer Vision 2014-2015
 `~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 
-	Marinus Burger (drop out?)
+	Marinus Burger ([student number]) 
+		calibration, drop out..?
 	
-	Tim Kuipers
+	Tim Kuipers (3149099 (old) or F141459 (new)) 
+		innovative stuff, see below
 	
-	Jeroen van de Ven (a little help)
+	Jeroen van de Ven (F141192) 
+		performance of predicted foreground vs by-hand coloured foreground
 
-														written by Tim Kuipers
+														written by Tim Kuipers 
 =======================================================
 
 III.2d )
@@ -161,11 +164,18 @@ hsvSearch
 
 (also added HSV_Threshold.h, which is not so interesting)
 
+---
 
+You can also take a look at the doxygen-generated documentation...
+documentation/html/index.html
 
+---
 
+Marinus Burger did the calibration stuff
 
+Jeroern van de Ven implemented and drew the by-hand coloured image and subtraction from the prediction.
 
+Tim Kuipers did the rest.
 
 
 
