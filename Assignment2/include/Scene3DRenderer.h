@@ -81,6 +81,10 @@ public:
 	virtual ~Scene3DRenderer();
 
 	void processForeground(Camera*);
+	void processForegroundCorrected(Camera*);
+	void processForegroundHSL(Camera*);
+	void processForegroundImproved(Camera*);
+	void processForegroundImproved2(Camera*);
 
 	bool processFrame();
 	void setCamera(int);

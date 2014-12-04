@@ -1,37 +1,25 @@
-﻿Build started 26.11.2014 18:15:57.
-     1>Project "C:\Users\Marinus\Documents\Computer Vision\Assignments\ComputerVision-Course-Assignments\Assignment2\Provided Code\VoxelReconstruction.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 4-12-2014 1:13:58.
+     1>Project "C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment2\VoxelReconstruction.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         F:\Visual Studio Professional 2013 with Update 3 (x86) INSTALLATION\VC\bin\CL.exe /c /Iinclude /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /openmp- /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt src\controllers\arcball.cpp src\controllers\Camera.cpp src\controllers\Glut.cpp src\controllers\Reconstructor.cpp src\controllers\Scene3DRenderer.cpp src\main.cpp src\utilities\General.cpp src\VoxelReconstruction.cpp
-         VoxelReconstruction.cpp
-         General.cpp
-         main.cpp
-         Scene3DRenderer.cpp
-         Reconstructor.cpp
-         Glut.cpp
-         Camera.cpp
-         arcball.cpp
-     1>src\controllers\arcball.cpp(50): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>src\controllers\arcball.cpp(59): warning C4244: '=' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>src\controllers\arcball.cpp(86): warning C4244: 'argument' : conversion from 'GLint' to 'GLfloat', possible loss of data
-     1>src\controllers\arcball.cpp(88): warning C4244: 'argument' : conversion from 'GLint' to 'GLfloat', possible loss of data
-     1>src\controllers\arcball.cpp(180): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>src\controllers\arcball.cpp(200): warning C4244: 'initializing' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>src\controllers\arcball.cpp(251): warning C4244: 'initializing' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>src\controllers\arcball.cpp(278): warning C4244: 'initializing' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>src\controllers\arcball.cpp(279): warning C4244: 'initializing' : conversion from 'double' to 'GLfloat', possible loss of data
-         Generating Code...
+         C:\Progs\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Iinclude /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /openmp- /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt src\utilities\hsvSearch.cpp
+         hsvSearch.cpp
+     1>C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment2\include\hsvSearch.h(31): warning C4244: 'argument' : conversion from 'double' to 'uchar', possible loss of data
        Link:
-         F:\Visual Studio Professional 2013 with Update 3 (x86) INSTALLATION\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marinus\Documents\Computer Vision\Assignments\ComputerVision-Course-Assignments\Assignment2\Provided Code\Debug\VoxelReconstruction.exe" /INCREMENTAL /NOLOGO /LIBPATH:lib opencv_core249d.lib opencv_highgui249d.lib opencv_imgproc249d.lib opencv_calib3d249d.lib OpenGL32.lib Glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marinus\Documents\Computer Vision\Assignments\ComputerVision-Course-Assignments\Assignment2\Provided Code\Debug\VoxelReconstruction.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Marinus\Documents\Computer Vision\Assignments\ComputerVision-Course-Assignments\Assignment2\Provided Code\Debug\VoxelReconstruction.lib" /MACHINE:X86 Debug\arcball.obj
+         C:\Progs\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment2\Debug\VoxelReconstruction.exe" /INCREMENTAL /NOLOGO /LIBPATH:lib "boost_random-vc120-mt-gd-1_57.lib" "boost_filesystem-vc120-mt-gd-1_57.lib" "boost_regex-vc120-mt-gd-1_57.lib" "boost_system-vc120-mt-gd-1_57.lib" opencv_core249d.lib opencv_highgui249d.lib opencv_imgproc249d.lib opencv_calib3d249d.lib OpenGL32.lib Glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment2\Debug\VoxelReconstruction.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment2\Debug\VoxelReconstruction.lib" /MACHINE:X86 Debug\arcball.obj
          Debug\Camera.obj
          Debug\Glut.obj
          Debug\Reconstructor.obj
          Debug\Scene3DRenderer.obj
          Debug\main.obj
+         Debug\EuclideanColorModel.obj
          Debug\General.obj
+         Debug\hsvSearch.obj
+         Debug\MixtureModelBeamSearch.obj
+         Debug\Utils.obj
          Debug\VoxelReconstruction.obj
-         VoxelReconstruction.vcxproj -> C:\Users\Marinus\Documents\Computer Vision\Assignments\ComputerVision-Course-Assignments\Assignment2\Provided Code\Debug\VoxelReconstruction.exe
-     1>Done Building Project "C:\Users\Marinus\Documents\Computer Vision\Assignments\ComputerVision-Course-Assignments\Assignment2\Provided Code\VoxelReconstruction.vcxproj" (Rebuild target(s)).
+         VoxelReconstruction.vcxproj -> C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment2\Debug\VoxelReconstruction.exe
+     1>Done Building Project "C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment2\VoxelReconstruction.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:15.07
+Time Elapsed 00:00:04.68

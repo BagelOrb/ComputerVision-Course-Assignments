@@ -27,7 +27,9 @@ class Camera
 	const std::string _cam_prop;
 	const int _id;
 
+	cv::Mat bg_image; // TK 
 	std::vector<cv::Mat> _bg_hsv_channels;
+	std::vector<cv::Mat> _bg_hls_channels;
 	cv::Mat _foreground_image;
 
 	cv::VideoCapture _video;
@@ -101,9 +103,19 @@ public:
 		return _frames;
 	}
 
+	const cv::Mat& getBgImage() const
+	{
+		return bg_image;
+	}
+
 	const std::vector<cv::Mat>& getBgHsvChannels() const
 	{
 		return _bg_hsv_channels;
+	}
+
+	const std::vector<cv::Mat>& getBgHlsChannels() const
+	{
+		return _bg_hls_channels;
 	}
 
 	bool isInitialized() const

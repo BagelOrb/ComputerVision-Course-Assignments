@@ -61,9 +61,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(OPENCV_DIR)\build\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(BOOST_DIR);$(OPENCV_DIR)\build\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(OPENCV_DIR)\modules\core\src;$(OPENCV_DIR)\modules\imgproc\src;$(OPENCV_DIR)\modules\highgui\src;$(VCInstallDir)atlmfc\src\mfc;$(VCInstallDir)atlmfc\src\mfcm;$(VCInstallDir)atlmfc\src\atl;$(VCInstallDir)crt\src;</SourcePath>
-    <LibraryPath>$(OPENCV_DIR)\build\x86\vc11\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <LibraryPath>$(BOOST_DIR)lib32-msvc-12.0;$(OPENCV_DIR)\build\x86\vc11\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -97,7 +97,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>opencv_core249d.lib;opencv_highgui249d.lib;opencv_imgproc249d.lib;opencv_calib3d249d.lib;OpenGL32.lib;Glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>boost_random-vc120-mt-gd-1_57.lib;boost_filesystem-vc120-mt-gd-1_57.lib;boost_regex-vc120-mt-gd-1_57.lib;boost_system-vc120-mt-gd-1_57.lib;opencv_core249d.lib;opencv_highgui249d.lib;opencv_imgproc249d.lib;opencv_calib3d249d.lib;OpenGL32.lib;Glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -162,16 +162,23 @@
     <ClCompile Include="src\controllers\Reconstructor.cpp" />
     <ClCompile Include="src\controllers\Scene3DRenderer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\utilities\EuclideanColorModel.cpp" />
     <ClCompile Include="src\utilities\General.cpp" />
+    <ClCompile Include="src\utilities\hsvSearch.cpp" />
+    <ClCompile Include="src\utilities\MixtureModelBeamSearch.cpp" />
+    <ClCompile Include="src\utilities\Utils.cpp" />
     <ClCompile Include="src\VoxelReconstruction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\arcball.h" />
-    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\EuclideanColorModel.h" />
     <ClInclude Include="include\General.h" />
     <ClInclude Include="include\Glut.h" />
+    <ClInclude Include="include\hsvSearch.h" />
+    <ClInclude Include="include\MixtureModelBeamSearch.h" />
     <ClInclude Include="include\Reconstructor.h" />
     <ClInclude Include="include\Scene3DRenderer.h" />
+    <ClInclude Include="include\Utils.h" />
     <ClInclude Include="include\VoxelReconstruction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

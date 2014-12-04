@@ -47,7 +47,7 @@ bool Camera::initialize()
 {
 	_initialized = true;
 
-	Mat bg_image;
+	//Mat bg_image; // TK : I made this a member variable
 	if (General::fexists(_data_path + General::BackgroundImageFile))
 	{
 		bg_image = imread(_data_path + General::BackgroundImageFile);
@@ -83,6 +83,11 @@ bool Camera::initialize()
 	Mat bg_hsv_im;
 	cvtColor(bg_image, bg_hsv_im, CV_BGR2HSV);
 	split(bg_hsv_im, _bg_hsv_channels);
+
+	// Disect the background image in HLS-color space (TK)
+	Mat bg_hls_im;
+	cvtColor(bg_image, bg_hls_im, CV_BGR2HLS);
+	split(bg_hls_im, _bg_hls_channels);
 
 	// Open the video for this camera
 	_video = VideoCapture(_data_path + General::VideoFile);
@@ -420,7 +425,7 @@ void Camera::initCamLoc()
 			*camera_mat.ptr<float>(2, 2) + *camera_mat.ptr<float>(3, 2));
 
 	cout << "Camera " << _id + 1 << " " << _camera_location << endl;
-
+	
 	_rt = rotation;
 	Mat t_sub = _rt(Rect(3, 0, 1, 3));
 	_translation_values.copyTo(t_sub);

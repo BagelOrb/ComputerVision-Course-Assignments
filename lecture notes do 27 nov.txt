@@ -1,0 +1,168 @@
+do 27 nov 
++===========+
+| Tracking  |
++===========+
+
+
+track state space
+
+example includes bounding box in 2D of red players
+example 2 : feature points in 2D, in 3D
+
+
+batch tracking:
+estimating whole sequence afterwards
+=> can interpolate for frames which are unclear
+
+
+
+online tracking:
+---------------
+predicts next state
+
+mistakes are propagated forward
+
+
+
+
+
+
+--------------------------
+Kalman filters
+-----------
+current sttate based on prev state
+
+error = gaussian (?!)
+
+observations: cluster center (noisy!)
+state: position, and speed
+
+Kalman filter filters the noise and estimate smoothly the speed and pos
+
+
+observation wrong vs prediction wrong
+---
+based on the covariance matrix of the error (?!)
+
+covariance determines teh Kalman gian (?!)
+
+
+
+state propagation
+------
+prediction: new pos = old pos + speed (+ acceleration)
+acceleration is difficult
+
+gaussian on current position predicted
+
+x^-_k : "^-" = initial guess! at time k
+
+
+Kalman gain determines the impact of the update
+when observation is unlikely it is not weighed as much
+
+
+
+
+
+
+
+
+Particle filter
+----------------------\
+
+alternative tracks
+
+estimating cluster labels immediately
+
+n particles : n possible tracks of one person
+
+patch = bounding box (2D)
+
+particle weight : how good the estimate is based on for example color information
+	overlap between actual voxels and estimated voxels (3D cylinder at estimated location)
+	=> state includes 3D (simple) model
+.	
+	
+3 alternatives:
+	- take best particle
+	- use the weighted average of all particles (distadvantage from outliers, and from other people)
+	- estimate distribution model over particles
+	  \/
+
+Gaussian mixtue model
+problem: weighted particles are generally not normally distributed
+
+
+
+
+where to place the particles?
+-----
+alternatives:
+	stay uniformly distributed
+	further away particles are resampled
+		particles move along the direction of the subject
+
+Sequential Importance Resampling
+------------------------------
+normalize weights to sum up to 1
+use weights as prob distr?!
+
+see slides!!!
+
+add a bit of noise/.....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

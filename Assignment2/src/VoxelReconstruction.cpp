@@ -39,6 +39,11 @@ VoxelReconstruction::VoxelReconstruction(const string &dp, const int cva) :
 		 * Assert that there's a background image or video file and \
 		 * that there's a video file
 		 */
+		if (!((General::fexists(full_path.str() + General::BackgroundImageFile) ||
+			General::fexists(full_path.str() + General::BackgroundVideoFile))
+			&&
+			General::fexists(full_path.str() + General::VideoFile)))
+			cout << "not found! : (" << full_path.str() + General::BackgroundImageFile << endl << " OR " << full_path.str() + General::BackgroundVideoFile << ")" << endl << " and " << full_path.str() + General::VideoFile << endl;
 		assert(
 			(General::fexists(full_path.str() + General::BackgroundImageFile)  ||
 				General::fexists(full_path.str() + General::BackgroundVideoFile))

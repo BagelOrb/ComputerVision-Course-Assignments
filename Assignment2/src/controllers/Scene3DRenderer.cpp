@@ -8,10 +8,14 @@
 #include <opencv2/opencv.hpp>
 
 #include "Scene3DRenderer.h"
+#include "EuclideanColorModel.h" // TK : new background subtraction algorithm
+#include "Utils.h" // TK : (TODO remove)
 
 #include <stddef.h>
 #include <cassert>
 #include <string>
+#include <algorithm> // TK:  transform
+
 
 using namespace std;
 using namespace cv;
@@ -102,15 +106,15 @@ bool Scene3DRenderer::processFrame()
 			_cameras[c]->getVideoFrame(_current_frame);
 		}
 		assert(_cameras[c] != nullptr);
-		processForeground(_cameras[c]);
+		processForegroundImproved(_cameras[c]);
 	}
 	return true;
 }
 
 /**
- * Separate the background from the foreground
- * ie.: Create an 8 bit image where only the foreground of the scene is white
- */
+* Separate the background from the foreground
+* ie.: Create an 8 bit image where only the foreground of the scene is white
+*/
 void Scene3DRenderer::processForeground(Camera* camera)
 {
 	assert(!camera->getFrame().empty());
@@ -134,6 +138,140 @@ void Scene3DRenderer::processForeground(Camera* camera)
 	absdiff(channels[2], camera->getBgHsvChannels().at(2), tmp);
 	threshold(tmp, background, _v_threshold, 255, CV_THRESH_BINARY);
 	bitwise_or(foreground, background, foreground);
+
+	// Improve the foreground image
+
+	camera->setForegroundImage(foreground);
+}
+/**
+* Separate the background from the foreground
+* ie.: Create an 8 bit image where only the foreground of the scene is white
+*/
+void Scene3DRenderer::processForegroundCorrected(Camera* camera)
+{
+	assert(!camera->getFrame().empty());
+	Mat hsv_image;
+	cvtColor(camera->getFrame(), hsv_image, CV_BGR2HSV);  // from BGR to HSV color space
+
+	vector<Mat> channels;
+	split(hsv_image, channels);  // Split the HSV-channels for further analysis
+
+	Mat tmp, foregroundH1, foregroundH2, foregroundS, foregroundV, foreground;
+	// Background subtraction H
+	absdiff(channels[0], camera->getBgHsvChannels().at(0), tmp);
+	threshold(tmp, foregroundH1, _h_threshold, 255, CV_THRESH_BINARY);
+	threshold(tmp, foregroundH2, 255 - _s_threshold, 255, CV_THRESH_BINARY_INV); //TK
+	bitwise_and(foregroundH1, foregroundH2, foreground); //TK : hue-wrap-around
+
+	// Background subtraction S
+	absdiff(channels[1], camera->getBgHsvChannels().at(1), tmp);
+	threshold(tmp, foregroundS, _s_threshold, 255, CV_THRESH_BINARY);
+	bitwise_and(foregroundS, foreground, foreground);
+
+	// Background subtraction V
+	absdiff(channels[2], camera->getBgHsvChannels().at(2), tmp);
+	threshold(tmp, foregroundV, _v_threshold, 255, CV_THRESH_BINARY);
+	bitwise_or(foregroundV, foreground, foreground);
+
+	// Improve the foreground image
+
+	camera->setForegroundImage(foreground);
+}
+/**
+* Separate the background from the foreground
+* ie.: Create an 8 bit image where only the foreground of the scene is white
+*/
+void Scene3DRenderer::processForegroundHSL(Camera* camera)
+{
+	assert(!camera->getFrame().empty());
+	Mat hsv_image;
+	cvtColor(camera->getFrame(), hsv_image, CV_BGR2HLS);  // from BGR to HSV color space
+
+	vector<Mat> channels;
+	split(hsv_image, channels);  // Split the HSV-channels for further analysis
+
+	Mat tmp, foregroundH1, foregroundH2, foregroundS, foregroundL, foreground;
+	// Background subtraction H
+	absdiff(channels[0], camera->getBgHlsChannels().at(0), tmp);
+	threshold(tmp, foregroundH1, _h_threshold, 255, CV_THRESH_BINARY);
+	threshold(tmp, foregroundH2, 255 - _s_threshold, 255, CV_THRESH_BINARY_INV); //TK
+	bitwise_and(foregroundH1, foregroundH2, foreground); //TK : hue-wrap-around
+
+	// Background subtraction L
+	absdiff(channels[1], camera->getBgHlsChannels().at(1), tmp);
+	threshold(tmp, foregroundL, _v_threshold, 255, CV_THRESH_BINARY);
+	bitwise_and(foregroundL, foreground, foreground);
+
+	// Background subtraction S
+	absdiff(channels[2], camera->getBgHlsChannels().at(2), tmp);
+	threshold(tmp, foregroundS, _s_threshold, 255, CV_THRESH_BINARY);
+	bitwise_or(foregroundS, foreground, foreground);
+
+	// Improve the foreground image
+
+	camera->setForegroundImage(foreground);
+}
+/**
+* Separate the background from the foreground
+* ie.: Create an 8 bit image where only the foreground of the scene is white
+*/
+void Scene3DRenderer::processForegroundImproved(Camera* camera)
+{
+	assert(!camera->getFrame().empty());
+	Mat hsv_image;
+	cvtColor(camera->getFrame(), hsv_image, CV_BGR2HLS);  // from BGR to HSV color space
+
+	vector<Mat> channels;
+	split(hsv_image, channels);  // Split the HSV-channels for further analysis
+
+
+
+
+	HLSconditionalColorDistance comp(_h_threshold, _v_threshold, _s_threshold); // h=h, l=v, s=s
+	//cout << comp.weight_h << ", " << comp.weight_l << ", " << comp.weight_s << endl;
+
+	Mat foreground, bg_hls_im;
+	cvtColor(camera->getBgImage(), bg_hls_im, CV_BGR2HLS);
+
+	Mat dists = channels[0].clone(); // initialize the same type and dimensions as a single color channel mat 
+
+	std::transform(hsv_image.begin<Vec3b>(), hsv_image.end<Vec3b>(), bg_hls_im.begin<Vec3b>(), dists.begin<uchar>(), comp);
+
+	threshold(dists, foreground, 10, 255, CV_THRESH_BINARY);
+
+	//cout << "next"<<endl;
+
+
+	// Improve the foreground image
+
+	camera->setForegroundImage(foreground);
+}
+void Scene3DRenderer::processForegroundImproved2(Camera* camera)
+{
+	assert(!camera->getFrame().empty());
+	Mat hsv_image;
+	cvtColor(camera->getFrame(), hsv_image, CV_BGR2HLS);  // from BGR to HSV color space
+
+	vector<Mat> channels;
+	split(hsv_image, channels);  // Split the HSV-channels for further analysis
+
+
+
+
+	DoubleConeColorModel comp(_h_threshold * 4. / 255.);
+
+
+	Mat foreground, bg_hls_im;
+	cvtColor(camera->getBgImage(), bg_hls_im, CV_BGR2HLS);
+
+	Mat dists = channels[0].clone(); // initialize the same type and dimensions as a single color channel mat 
+
+	std::transform(hsv_image.begin<Vec3b>(), hsv_image.end<Vec3b>(), bg_hls_im.begin<Vec3b>(), dists.begin<uchar>(), comp);
+
+	threshold(dists, foreground, _s_threshold, 255, CV_THRESH_BINARY);
+
+
+
 
 	// Improve the foreground image
 
