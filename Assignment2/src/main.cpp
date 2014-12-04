@@ -21,5 +21,6 @@ int main_(int argc, char** argv)
 int main(int argc, char** argv)
 {
 	//HSV_Search_Test::main_hsvSearch_test();
-	main_(argc, argv);
+	HSV_Search::main_hsvSearch();
+	//main_(argc, argv);
 }
