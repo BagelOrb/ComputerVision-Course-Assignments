@@ -141,7 +141,7 @@ void Scene3DRenderer::processForeground(Camera* camera)
 		Point(size, size));
 
 	erode(foreground, foreground, kernel, Point(-1, -1), 1); // remove white specks
-	dilate(foreground, foreground, kernel, Point(-1, -1), 2); // go back and remove black wholes
+	dilate(foreground, foreground, kernel, Point(-1, -1), 2); // go back and remove black holes
 	erode(foreground, foreground, kernel, Point(-1, -1), 1); // go back
 
 
@@ -173,10 +173,7 @@ void Scene3DRenderer::processForegroundOriginal(Mat& hsv_image, vector<Mat>& bgH
 	bitwise_or(foreground, background, foreground);
 
 }
-/**
-* Separate the background from the foreground
-* ie.: Create an 8 bit image where only the foreground of the scene is white
-*/
+
 void Scene3DRenderer::processForegroundCorrected(Mat& hsv_image, vector<Mat>& bgHsvChannels, Mat& foreground, HSV_State& hsv_thresh)
 {
 
@@ -201,10 +198,7 @@ void Scene3DRenderer::processForegroundCorrected(Mat& hsv_image, vector<Mat>& bg
 	bitwise_or(foregroundV, foreground, foreground);
 
 }
-/**
-* Separate the background from the foreground
-* ie.: Create an 8 bit image where only the foreground of the scene is white
-*/
+
 void Scene3DRenderer::processForegroundHSL(Mat& bgr_image, vector<Mat>& bgHlsChannels, Mat& foreground, HSV_State& hsv_thresh)
 {
 	Mat hsv_image;
@@ -232,10 +226,7 @@ void Scene3DRenderer::processForegroundHSL(Mat& bgr_image, vector<Mat>& bgHlsCha
 
 
 }
-/**
-* Separate the background from the foreground
-* ie.: Create an 8 bit image where only the foreground of the scene is white
-*/
+
 void Scene3DRenderer::processForegroundImproved(const Mat& bgr_image, Mat& bg_image, Mat& foreground, HSV_State& hsv_thresh)
 {
 	Mat hsv_image;

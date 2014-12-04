@@ -70,7 +70,18 @@ public:
 		
 		cv::Mat computed_foreground;
 
-		nl_uu_science_gmt::Scene3DRenderer::processForegroundImproved(frame752, background, computed_foreground, params);
+		bool useImproved = true;
+		if (useImproved) {
+			nl_uu_science_gmt::Scene3DRenderer::processForegroundImproved(frame752, background, computed_foreground, params);
+		} else {
+			cv::Mat hsv_image;
+			cvtColor(background, hsv_image, CV_BGR2HLS);  // TK: from BGR to HSV color space
+
+			vector<cv::Mat> channels;
+			split(hsv_image, channels);  // Split the HSV-channels for further analysis
+
+			nl_uu_science_gmt::Scene3DRenderer::processForegroundCorrected(frame752, channels, computed_foreground, params);
+		}
 
 
 		cv::Mat differenceMatrix, computed_foreground_int; 

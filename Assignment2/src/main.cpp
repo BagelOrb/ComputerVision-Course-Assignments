@@ -21,6 +21,6 @@ int main_(int argc, char** argv)
 int main(int argc, char** argv)
 {
 	//HSV_Search_Test::main_hsvSearch_test(); // TK: test Mixture Model Beam Search
-	//HSV_Search::main_hsvSearch(); // TK: find the optimal values for the H S and V slider
-	main_(argc, argv);
+	HSV_Search::main_hsvSearch(); // TK: find the optimal values for the H S and V slider
+	//main_(argc, argv);
 }

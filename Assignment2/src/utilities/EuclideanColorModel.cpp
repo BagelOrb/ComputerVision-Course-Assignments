@@ -59,7 +59,7 @@ uchar HLSconditionalColorDistance::getDistance(Vec3b hls1, Vec3b hls2)
 	double abs_dh = min(abs(h1 - h2), 1.- abs(h1 - h2)); // hue-wrap-around
 	double abs_dl = abs(l1 - l2);
 	double abs_ds = abs(s1 - s2);
-	double l_modifier = (min(l1 * (1 - l1), l2 * (1 - l2)) * 4); // value between 0 and 1, indicating in what respect hue and saturation play a role in the determination of the color of fg or bg
+	double l_modifier = min(l1 * (1 - l1), l2 * (1 - l2)) * 4; // value between 0 and 1, indicating in what respect hue and saturation play a role in the determination of the color of fg or bg
 	double s_modifier = min(s1, s2);// value between 0 and 1, indicating in what respect hue plays a role in the determination of the color of fg or bg
 
 	double dist = l_modifier * (s_modifier * abs_dh * weight_h * 4 + (1-s_modifier) * abs_ds * weight_s) + (1. - l_modifier) * abs_dl * weight_l;

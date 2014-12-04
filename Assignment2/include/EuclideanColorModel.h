@@ -39,7 +39,7 @@ public:
 };
 
 /*!
-A color model which maps two colors (int HLS-format) to a distance.
+A color model which maps two colors (in HLS-format) to a distance.
 It can be seen as a soft approximation of the following rule:
 	- if the lightness is saturated (black or white), ignore hue and saturation.
 	- else if either color is a grayscale color, ignore hue.
