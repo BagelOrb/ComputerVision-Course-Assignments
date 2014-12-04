@@ -6,15 +6,6 @@
 
 using namespace std;
 
-/*
-class ParamState
-{
-public:
-	virtual ParamState* getNearbyRandom(double std_dev, std::default_random_engine& gen);
-
-
-};
-*/
 
 class HSV_State 
 {
@@ -39,14 +30,6 @@ public:
 
 };
 
-/*
-template<class ParamStateType>
-class PerformanceEvaluator_Base
-{
-public:
-	virtual double evaluate(ParamStateType& params);
-};
-*/
 
 class HSV_Evaluator_Test 
 {
@@ -59,6 +42,12 @@ public:
 		v = static_cast<double>(params.v);
 		return exp((h * (100.0 - h) + s * (100.0 - s) + v * (100.0 - v)) / 10000.0);
 	};
+};
+
+struct HSV_Search_Test
+{
+	static int main_hsvSearch_test();
+
 };
 
 class HSV_Evaluator 
