@@ -105,17 +105,25 @@ public:
 	Result perform(double std_dev_start, double std_dev_decrement_factor)
 	{
 		double std_dev = std_dev_start;
-		for (int depth = 1; depth < max_depth; depth++)
+		for (int depth = 0; depth < max_depth; depth++)
 		{
 			getNewSamples(std_dev);
+
 			purgeResults();
 
 			std_dev *= std_dev_decrement_factor;
 
-			Result result = state.bestN[0];
-			cout << static_cast<int>(result.params->h) << ", " << static_cast<int>(result.params->s) << ", " << static_cast<int>(result.params->v)<< endl;
+			cout << "purged at depth "<< depth <<":" << endl;
+			for (Result result : state.bestN)
+				cout << static_cast<int>(result.params->h) << ", \t" << static_cast<int>(result.params->s) << ", \t" << static_cast<int>(result.params->v) << ": \t" << result.performance << endl;
 
 		}
+
+//		cout << "all eventual:" << endl;
+//		for (Result result : state.bestN)
+//			cout << static_cast<int>(result.params->h) << ", \t" << static_cast<int>(result.params->s) << ", \t" << static_cast<int>(result.params->v) << ": \t" << result.performance << endl;
+
+
 
 		return state.bestN[0];
 	}

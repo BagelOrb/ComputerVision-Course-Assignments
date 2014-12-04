@@ -22,21 +22,21 @@ double HSV_Evaluator::evaluate(HSV_State& params)
 };
 */
 
-int main_3()
+int main_hsvSearch_test()
 {
-	MMBeamSearch<HSV_State, HSV_Evaluator> search(10, 20, 20, HSV_Evaluator());
+	MMBeamSearch<HSV_State, HSV_Evaluator_Test> search(10, 50, 20, HSV_Evaluator_Test());
 	vector<HSV_State*> initials;
 
-	HSV_State* first = new HSV_State(1, 2, 3); // delete called by MMBeamSearch::Result
+	HSV_State* first = new HSV_State(1,2,3); // delete called by MMBeamSearch::Result
 
 	initials.push_back(first);
 
 	search.initialize(initials);
 
-	auto result = search.perform(5, .8);
+	auto result = search.perform(100, .8);
 
 	cout << " best result : " << endl;
-	cout << static_cast<int>(result.params->h) << ", " << static_cast<int>(result.params->s) << ", " << static_cast<int>(result.params->v ) << endl;
+	cout << static_cast<int>(result.params->h) << ", " << static_cast<int>(result.params->s) << ", " << static_cast<int>(result.params->v ) << ": " << result.performance << endl;
 
 	return 0;
 };
