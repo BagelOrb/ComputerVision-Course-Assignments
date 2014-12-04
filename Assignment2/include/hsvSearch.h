@@ -7,8 +7,9 @@
 using namespace std;
 
 
-class HSV_State 
+class HSV_State
 {
+
 public:
 	uchar h;
 	uchar s;
@@ -52,13 +53,27 @@ struct HSV_Search_Test
 
 class HSV_Evaluator 
 {
+
+	cv::Mat optimal752;
+
 public:
+
+	//! Reads the optimal background subtraction result and stores it as a binary matrix
+	HSV_Evaluator() {
+		cv::Mat optimalimage = cv::imread("data/cam1frame752-manualforeground.bmp");
+
+		vector<cv::Mat> channels;
+		cv::split(optimalimage, channels);  // Split the HSV-channels for further analysis
+
+		cv::threshold(channels[0], optimal752, 1, 255, CV_THRESH_BINARY);
+	}
+
 	double evaluate(HSV_State& params)
 	{
 		
-		cv::Mat computed_foreground, optimal_foreground;
+		cv::Mat computed_foreground;
 
-		cv::Mat differenceMatrix = optimal_foreground - computed_foreground; //!< A matrix containing 0 for matching pixels, 1 for pixels that should have been 1 but are 0 (person classified as background), and -1 for pixels that should have been 0 but are 1 (background classified as person)
+		cv::Mat differenceMatrix = optimal752 - computed_foreground; //!< A matrix containing 0 for matching pixels, 1 for pixels that should have been 1 but are 0 (person classified as background), and -1 for pixels that should have been 0 but are 1 (background classified as person)
 
 		//! Penalty for background classified as person, higher is more bad
 		const int false_person = 1;
