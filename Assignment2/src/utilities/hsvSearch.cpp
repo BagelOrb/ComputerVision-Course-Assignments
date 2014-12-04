@@ -42,7 +42,7 @@ int HSV_Search_Test::main_hsvSearch_test()
 
 int HSV_Search::main_hsvSearch()
 {
-	MMBeamSearch<HSV_State, HSV_Evaluator> search(10, 50, 20, HSV_Evaluator());
+	MMBeamSearch<HSV_State, HSV_Evaluator> search(1, 1, 1, HSV_Evaluator());
 	vector<HSV_State*> initials;
 
 	HSV_State* first = new HSV_State(127, 127, 127); // delete called by MMBeamSearch::Result
