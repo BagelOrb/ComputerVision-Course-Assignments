@@ -33,8 +33,9 @@ Beam search:
 		- prune all parameter states to a number of beam-width (keep the [beam-width] best ones)
 
 Mixture Model Beam Search expands on the current set of parameter states by sampling a parameter state from the existing ones, 
-based on the performance of the parameter states.
-It does this by applying a discrete distribution over the parameter settings, where the probabilities are proportional to the performances.
+based on the performance or rank of the parameter states.
+It does this by applying a discrete distribution over the parameter settings, 
+where the probabilities are proportional to the performances or to the ranks in the ordered list of results.
 
 The sampled parameter state is then used to sample a new nearby parameter state, based on the standard deviation at the current epoch.
 The standard deviation is set by hand by MMBeamSearch, instead of fitted to the parameter states.
@@ -53,6 +54,11 @@ In case this function uses a Gaussion distribution, each Mixture Model Beam Sear
 template<class ParamstateType, class PerformanceEvaluator>
 class MMBeamSearch
 {
+public:
+	enum MixType { BY_RANK, BY_PERFORMANCE };
+
+	MixType mixType = BY_RANK;
+
 	//! A simple construct pairing a parameter state with its performance
 	struct Result 
 	{
@@ -77,13 +83,21 @@ class MMBeamSearch
 		vector<Result> bestN;	
 
 		//! sample random result from a discrete distribution over all current results
-		Result sampleRandomResult() // sample Result from the mixture of results
+		Result sampleRandomResult(MixType mixType) // sample Result from the mixture of results
 		{
 			typedef MMBeamSearch<ParamstateType, PerformanceEvaluator>::Result Result;
 			vector<double> perfs;
-			for (Result r : bestN)
-				perfs.push_back(r.performance);
+			for (int r = 0; r < bestN.size(); r++)
+			{
+				Result res = bestN[r];
+				switch (mixType) {
+				case BY_PERFORMANCE:
+					perfs.push_back(res.performance); break;
+				case BY_RANK:
+					perfs.push_back(1. / r); break;
+				}
 
+			}
 			boost::random::discrete_distribution<int> dist(perfs.begin(), perfs.end());
 
 			default_random_engine generator;
@@ -175,7 +189,7 @@ protected:
 		vector<Result> new_results;
 		for (int i = 0; i < sample_size; i++)
 		{
-			Result r = state.sampleRandomResult();
+			Result r = state.sampleRandomResult(mixType);
 			ParamstateType* new_params = r.params->getNearbyRandom(std_dev, generator);
 			double performance = evaluator.evaluate(*new_params);
 			new_results.push_back(Result(new_params, performance));

@@ -42,7 +42,7 @@ int HSV_Search_Test::main_hsvSearch_test()
 
 int HSV_Search::main_hsvSearch()
 {
-	MMBeamSearch<HSV_State, HSV_Evaluator> search(20, 30, 15, HSV_Evaluator());
+	MMBeamSearch<HSV_State, HSV_Evaluator> search(20, 30, 20, HSV_Evaluator());
 	vector<HSV_State*> initials;
 
 	HSV_State* first = new HSV_State(127, 127, 127); // delete called by MMBeamSearch::Result
@@ -51,7 +51,7 @@ int HSV_Search::main_hsvSearch()
 
 	search.initialize(initials);
 
-	auto result = search.perform(127, .7);
+	auto result = search.perform(127, .8);
 
 	cout << " best result : " << endl;
 	cout << static_cast<int>(result.params->h) << ", " << static_cast<int>(result.params->s) << ", " << static_cast<int>(result.params->v) << ": " << result.performance << endl;

@@ -61,9 +61,12 @@ Scene3DRenderer::Scene3DRenderer(Reconstructor &r, const vector<Camera*> &cs) :
 	_current_frame = 0;
 	_previous_frame = -1;
 
-	const int H = 0;
-	const int S = 0;
-	const int V = 0;
+	const int H = 183;// 167; // (different hyperparameter settings)
+	const int S = 149;// 138;
+	const int V = 90;// 75;
+	//const int H = 174;// (different hyperparameter settings)
+	//const int S = 130;// 
+	//const int V = 65;// 
 	_h_threshold = H;
 	_ph_threshold = H;
 	_s_threshold = S;
@@ -130,6 +133,19 @@ void Scene3DRenderer::processForeground(Camera* camera)
 
 	//processForegroundOriginal(hsv_image, bgHsvChannels, foreground);
 	processForegroundImproved(camera->getFrame(), bg_image, foreground, HSV_State(_h_threshold, _s_threshold, _v_threshold));
+
+
+	int size = 2;
+	Mat kernel = getStructuringElement(MORPH_RECT,
+		Size(2 * size + 1, 2 * size + 1),
+		Point(size, size));
+
+	erode(foreground, foreground, kernel, Point(-1, -1), 1); // remove white specks
+	dilate(foreground, foreground, kernel, Point(-1, -1), 2); // go back and remove black wholes
+	erode(foreground, foreground, kernel, Point(-1, -1), 1); // go back
+
+
+
 
 	// Improve the foreground image
 
