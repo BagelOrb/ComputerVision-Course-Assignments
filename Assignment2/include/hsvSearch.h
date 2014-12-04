@@ -56,6 +56,38 @@ public:
 	double evaluate(HSV_State& params)
 	{
 		
-		return 0;
+		cv::Mat computed_foreground, optimal_foreground;
+
+		cv::Mat differenceMatrix = optimal_foreground - computed_foreground; //!< A matrix containing 0 for matching pixels, 1 for pixels that should have been 1 but are 0 (person classified as background), and -1 for pixels that should have been 0 but are 1 (background classified as person)
+
+		//! Penalty for background classified as person, higher is more bad
+		const int false_person = 1;
+
+		//! Penalty for person classified as background, higher is more bad
+		const int false_background = 3;
+		
+
+		for (int i = 0; i < differenceMatrix.rows; i++) {
+			for (int j = 0; j < differenceMatrix.cols; j++)
+			{
+				int val = differenceMatrix.at<int>(i, j);
+
+				//! Apply weighted penalties to the two different ways in which a pixel can differ
+				if (val == -1) { //!< background classified as person
+					val = false_person;
+					differenceMatrix.at<uchar>(i, j) = val;
+
+				}
+				else if (val == 1) { //!< person classified as background
+					val = false_background;
+					differenceMatrix.at<uchar>(i, j) = val;
+				}
+			}
+		}
+
+		//! Add up all the penalties
+		auto distance = cv::sum(differenceMatrix)[0];
+
+		return (1.0 / distance);
 	};
 };
