@@ -143,7 +143,7 @@ public:
 	/*!
 	Perform the beam search algorithm.
 
-	@param std_dev_start the initial 
+	@param std_dev_start the initial standard deviation for sampling from a (decorrelated) gaussian
 	*/
 	Result perform(double std_dev_start, double std_dev_decrement_factor)
 	{
@@ -162,17 +162,12 @@ public:
 
 		}
 
-//		cout << "all eventual:" << endl;
-//		for (Result result : state.bestN)
-//			cout << static_cast<int>(result.params->h) << ", \t" << static_cast<int>(result.params->s) << ", \t" << static_cast<int>(result.params->v) << ": \t" << result.performance << endl;
-
-
-
 		return state.bestN[0];
 	}
 
 protected:
 	//void getFirstSamples(); // uniform over parameter space
+	//! function to sample new parameter settings
 	void getNewSamples(double std_dev)
 	{
 		typedef MMBeamSearch<ParamstateType, PerformanceEvaluator>::Result Result;
@@ -189,12 +184,7 @@ protected:
 		state.bestN.insert(state.bestN.end(), new_results.begin(), new_results.end());
 
 	}
-
-private:
-	//! used in purgeResults()
-	//bool compareResults(Result& a, Result& b) { return a.performance > b.performance; };
-
-protected:
+	//! only keep the [beam-width] best results
 	void purgeResults()
 	{
 		std::sort(state.bestN.begin(), state.bestN.end());// , &compareResults);

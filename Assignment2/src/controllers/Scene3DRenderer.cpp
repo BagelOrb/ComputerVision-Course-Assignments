@@ -192,7 +192,7 @@ void Scene3DRenderer::processForegroundCorrected(Mat& hsv_image, vector<Mat>& bg
 void Scene3DRenderer::processForegroundHSL(Mat& bgr_image, vector<Mat>& bgHlsChannels, Mat& foreground)
 {
 	Mat hsv_image;
-	cvtColor(bgr_image, hsv_image, CV_BGR2HLS);  // from BGR to HSV color space
+	cvtColor(bgr_image, hsv_image, CV_BGR2HLS);  // TK: from BGR to HLS color space
 
 	vector<Mat> channels;
 	split(hsv_image, channels);  // Split the HSV-channels for further analysis
