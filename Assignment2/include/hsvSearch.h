@@ -32,6 +32,8 @@ class HSV_Evaluator
 {
 
 	cv::Mat optimal752;
+	cv::Mat background;
+	cv::Mat frame752;
 
 public:
 
@@ -43,6 +45,9 @@ public:
 		cv::split(optimalimage, channels);  // Split the HSV-channels for further analysis
 
 		cv::threshold(channels[0], optimal752, 1, 255, CV_THRESH_BINARY);
+
+		frame752 = cv::imread("data/cam1frame752-original.jpg");
+		background = cv::imread("data/background.bmp");
 	}
 
 	double evaluate(HSV_State& params)
