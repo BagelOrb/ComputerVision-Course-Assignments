@@ -72,8 +72,6 @@ public:
 		//! Penalty for person classified as background, higher is more bad
 		const int false_background = 3;
 		
-		cout << differenceMatrix.rows << endl;
-		cout << differenceMatrix.cols << endl;
 
 		for (int i = 0; i < differenceMatrix.rows; i++) {
 			for (int j = 0; j < differenceMatrix.cols; j++)
@@ -97,7 +95,7 @@ public:
 		//! Add up all the penalties
 		auto distance = cv::sum(differenceMatrix)[0];
 
-		return (1.0 / distance);
+		return (1000.0 / distance);
 	};
 };
 
