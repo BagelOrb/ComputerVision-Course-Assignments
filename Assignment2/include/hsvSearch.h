@@ -57,7 +57,12 @@ public:
 
 		nl_uu_science_gmt::Scene3DRenderer::processForegroundImproved(frame752, background, computed_foreground, params);
 
-		cv::Mat differenceMatrix = optimal752 - computed_foreground; //!< A matrix containing 0 for matching pixels, 1 for pixels that should have been 1 but are 0 (person classified as background), and -1 for pixels that should have been 0 but are 1 (background classified as person)
+		cv::Mat differenceMatrix = cv::Mat::zeros(optimal752.rows, optimal752.cols, CV_32SC1);
+			
+		//optimal752.copyTo(differenceMatrix);
+		optimal752.assignTo(differenceMatrix);
+
+		differenceMatrix -= computed_foreground; //!< A matrix containing 0 for matching pixels, 1 for pixels that should have been 1 but are 0 (person classified as background), and -1 for pixels that should have been 0 but are 1 (background classified as person)
 
 		//! Penalty for background classified as person, higher is more bad
 		const int false_person = 1;
@@ -65,21 +70,25 @@ public:
 		//! Penalty for person classified as background, higher is more bad
 		const int false_background = 3;
 		
+		cout << differenceMatrix.rows << endl;
+		cout << differenceMatrix.cols << endl;
 
-		for (int i = 0; i < differenceMatrix.rows; i++) {
-			for (int j = 0; j < differenceMatrix.cols; j++)
+		for (int i = 1; i < differenceMatrix.rows; i++) {
+			for (int j = 1; j < differenceMatrix.cols; j++)
 			{
+
+				cout << i << ' ' << j << endl;
 				int val = differenceMatrix.at<int>(i, j);
 
 				//! Apply weighted penalties to the two different ways in which a pixel can differ
-				if (val == -1) { //!< background classified as person
+				if (val < 0) { //!< background classified as person
 					val = false_person;
-					differenceMatrix.at<uchar>(i, j) = val;
+					differenceMatrix.at<int>(i, j) = val;
 
 				}
-				else if (val == 1) { //!< person classified as background
+				else if (val > 0) { //!< person classified as background
 					val = false_background;
-					differenceMatrix.at<uchar>(i, j) = val;
+					differenceMatrix.at<int>(i, j) = val;
 				}
 			}
 		}
