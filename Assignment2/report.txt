@@ -1,0 +1,173 @@
+   Report - Assignment 2 Computer Vision 2014-2015
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+
+	Marinus Burger (drop out?)
+	
+	Tim Kuipers
+	
+	Jeroen van de Ven (a little help)
+
+														written by Tim Kuipers
+=======================================================
+
+III.2d )
+The calibration has been performed by Marinus Burger, before he decided I should get a new assignment partner.
+He first tried to calibrate on the average image of the calibration videos, but this performed worse than a single image.
+Therefore we just picked the frame of the calibration videos which resulted in the best calibration.
+
+IV.2 )
+I have come up with a new kind of search algorithm, namely Mixture Model Beam Search.
+It is similar to beam search, but uses a mixture model to sample new parameter space points.
+In this program we used a Gaussian mixture model for this, but the class can be used for different parameter space types with different performance evaluation functions.
+
+It is neatly described in the comments, so here is a copy of the Documentation of MMBeamSearch:
+
+"
+	A heuristic search algorithm similar to beam-search.
+
+	Beam search:
+		- at each epoch
+			- expand on the current parameter states (sample new ones)
+			- prune all parameter states to a number of beam-width (keep the [beam-width] best ones)
+
+	Mixture Model Beam Search expands on the current set of parameter states by sampling a parameter state from the existing ones, 
+	based on the performance or rank of the parameter states.
+	It does this by applying a discrete distribution over the parameter settings, 
+	where the probabilities are proportional to the performances or to the ranks in the ordered list of results.
+
+	The sampled parameter state is then used to sample a new nearby parameter state, based on the standard deviation at the current epoch.
+	The standard deviation is set by hand by MMBeamSearch, instead of fitted to the parameter states.
+	The standard deviation is reduced exponentially after each epoch, so that we sample closer and closer to better and better points in the parameter space.
+
+	We suppose the ParamstateType contains a function 
+	\beginverbatim
+	HSV_State* getNearbyRandom(double std_dev, std::default_random_engine& gen)
+	\endverbatim
+	which samples a new ParamstateType, with a given standard deviation, which it uses homogeneously over each dimensino in the parameter space.
+	In case this function uses a Gaussion distribution, each Mixture Model Beam Search epoch can be seen as a two step process:
+		- sampling new parameter states from a gaussian mixture model
+		- pruning the total parameter states
+"
+
+
+Bonus:
+I have experimented with foreground subtraction itself as well.
+I have tried different functions to extract the foreground from the image.
+
+1 :
+Firstly I have corrected a mistake in the original code. (Scene3DRenderer::processForegroundCorrected)
+The original code didn't take into account the inherent cyclic nature of hue.
+A hue distance of 250 between two pixels, should rather be seen as a distance of 5.
+Thus, a pixel is classified as foreground when the distance is above the hue-threshold, and when it is below 255 minus hue-threshold:
+
+	threshold(tmp, foregroundH1, hsv_thresh.h, 255, CV_THRESH_BINARY);
+	threshold(tmp, foregroundH2, 255 - hsv_thresh.h, 255, CV_THRESH_BINARY_INV); //TK
+	bitwise_and(foregroundH1, foregroundH2, foreground); //TK : hue-wrap-around
+
+2 : 
+Secondly I've experimented with using HSL instead of HSV. (Scene3DRenderer::processForegroundHSL)
+(Note that in OpenCV HSL is called HLS, just like RGB is called BGR, quite arbitrarily.)
+This in itself didn't generate very differing results.
+
+3 : 
+I've experimented with a geametric measure on a geametric model of the HSL color space. (Scene3DRenderer::processForegroundImproved2)
+See EuclideanColorModel.h and _.cpp >> DoubleConeColorModel
+The decision whether or not a pixel is foreground is based on the distince between the two colors in a 3D representation of the HSL color space.
+The HSL color space is generally depicted as a double cone, as opposed to the HSV color space which is depicted as a single cone.
+One of the HSV sliders is used to govern the height of the double cone, while another is used to set a threshold on the distance between two colors.
+
+While yielding promising results, the lack of a use for the third slider, and the inherently unsatisfiable arbitrariness of the whole idea propelled me to find yet another alternative.
+
+4 : 
+Finally, I've experimented with a kind of conditional measure on HSL color distance.(Scene3DRenderer::processForegroundImproved)
+See EuclideanColorModel.h >> HLSconditionalColorDistance
+This distance measure is based on the observation that when lightness is extremal (minimal or maximal) the saturation and hue -values are uninformative.
+Likewise, when the saturation is zero, the hue is uninformative.
+Furthermore, when the lightness is not extremal, the saturation and hue seem more informative than lightness, since lightness is heavily under the influence of shadow.
+I therefore came up with a formula to reflect these properties.
+
+To explain the formula in EuclideanColorModel::65, let's simplify to a case where we only consider hue and saturation.
+ds = saturation_background - saturation_current_frame
+dh = hue_background - hue_current_frame
+modifier = min(saturation_background, saturation_current_frame)
+distance = modifier * dh + (1-modifier) * ds
+
+The relative importance of hue, lightness and saturation in the formula are represented by three weights, which are governed by the HSV sliders.
+These are introduced into the formula as well.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+IV.3 ) 
+Erosion and dilation have been used, though not implemented. I just used the OpenCV functions.
+I used them in the following order:
+
+1 - erode by 2x2 in order to remove white specks
+2 - dilate by 4x4 in order to fill back up black holes
+3 - erode by 2x2 again to get the resulting shapes to (a softened version of) their original shapes
+
+But perhaps using these functions in such a way is already common practice..
+
+IV.4 not performed
+
+IV.5 )
+On the corrected version of the original background subtraction the optimal HSV thresholds were found to be:
+0, 54, 167
+As we expected the value for hue is rather small. This is because when the saturation or value is extremal, the hue can wildly differ with a single increment of for example only the red channel.
+
+Note that in these experiments, the penalty for false background was set higher than the penalty for false foreground.
+This is because voxel carving is designed to be conservative - voxel carving should result in a an estimated shape bigger than the actual shape.
+Holes in the silhouettes could therefore be harmful.
+
+
+
+On the conditional distance measure the optimal HSL weights were found to be:
+174, 130, 65
+
+The total output of our search method is shown in [HSL conditional search output.txt] and [HSV corrected search output.txt] respectively.
+At each epoch of the Mixeture Model Beam Search, the pruned results are shown: the HSV parameters and their performance.
+Note how one result may survive multiple epochs.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        _   _____  ___   ____                                                                                                                                                                                            
+|\  |  / \    |   |     /                                                       
+| \ | |   |   |   |__   \___                                                      
+|  \| |   |   |   |         \                                               
+|   |  \_/    |   |___  ____/                                                     
+
+Submission >> "A link to YouTube or Vimeo (for the output video/screencast)."
+This was not in the assignment description! I haven't got a screencast, or do I?
+
+---
+
+In order to hurry the runtime, I've reduced the number of voxels.
+In this assignment we have focussed on the 2D techniques, without looking at the voxels too much.
+
+---
+
+Where you need to look, if you want:
+added 
+	static void processForegroundCorrected(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
+	static void processForegroundHSL(cv::Mat& bgr_image, std::vector<cv::Mat>& bgHlsChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
+	static void processForegroundImproved(const cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
+	static void processForegroundImproved2(cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
+in Scene3DRenderer
+
+added .cpp and .h files:
+MixtureModelBeamSearch
+EuclideanColorModel
+hsvSearch
+
+(also added HSV_Threshold.h, which is not so interesting)
+
+
+
+
+
+
+
+
+
+
+
