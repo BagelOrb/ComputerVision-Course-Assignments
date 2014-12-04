@@ -1,6 +1,5 @@
 #include "hsvSearch.h"
 
-
 #include "MixtureModelBeamSearch.h"
 
 

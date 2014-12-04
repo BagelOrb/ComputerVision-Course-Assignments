@@ -20,6 +20,8 @@
 #include "Reconstructor.h"
 #include "Camera.h"
 
+#include "HSV_Threshold.h"
+
 namespace nl_uu_science_gmt
 {
 
@@ -81,15 +83,15 @@ public:
 	virtual ~Scene3DRenderer();
 
 	void processForeground(Camera*);
-	void processForegroundOriginal(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground);
+	static void processForegroundOriginal(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
 	//void processForegroundCorrected(Camera*);
-	void processForegroundCorrected(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground);
+	static void processForegroundCorrected(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
 	//void processForegroundHSL(Camera*);
-	void processForegroundHSL(cv::Mat& bgr_image, std::vector<cv::Mat>& bgHlsChannels, cv::Mat& foreground);
+	static void processForegroundHSL(cv::Mat& bgr_image, std::vector<cv::Mat>& bgHlsChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
 	//void processForegroundImproved(Camera*);
-	void processForegroundImproved(const cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground);
+	static void processForegroundImproved(const cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
 	//void processForegroundImproved2(Camera*);
-	void processForegroundImproved2(cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground);
+	static void processForegroundImproved2(cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
 
 	bool processFrame();
 	void setCamera(int);
