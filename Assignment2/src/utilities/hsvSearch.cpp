@@ -22,7 +22,7 @@ double HSV_Evaluator::evaluate(HSV_State& params)
 };
 */
 
-int main_hsvSearch_test()
+int HSV_Search_Test::main_hsvSearch_test()
 {
 	MMBeamSearch<HSV_State, HSV_Evaluator_Test> search(10, 50, 20, HSV_Evaluator_Test());
 	vector<HSV_State*> initials;

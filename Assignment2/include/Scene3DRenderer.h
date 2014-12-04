@@ -81,10 +81,15 @@ public:
 	virtual ~Scene3DRenderer();
 
 	void processForeground(Camera*);
-	void processForegroundCorrected(Camera*);
-	void processForegroundHSL(Camera*);
-	void processForegroundImproved(Camera*);
-	void processForegroundImproved2(Camera*);
+	void processForegroundOriginal(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground);
+	//void processForegroundCorrected(Camera*);
+	void processForegroundCorrected(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground);
+	//void processForegroundHSL(Camera*);
+	void processForegroundHSL(cv::Mat& bgr_image, std::vector<cv::Mat>& bgHlsChannels, cv::Mat& foreground);
+	//void processForegroundImproved(Camera*);
+	void processForegroundImproved(const cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground);
+	//void processForegroundImproved2(Camera*);
+	void processForegroundImproved2(cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground);
 
 	bool processFrame();
 	void setCamera(int);
