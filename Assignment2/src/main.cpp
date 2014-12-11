@@ -7,6 +7,8 @@
 
 #include "hsvSearch.h"
 
+#include "Scene3DRenderer.h"
+#include "Reconstructor.h"
 
 using namespace nl_uu_science_gmt;
 int main_(int argc, char** argv)

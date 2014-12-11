@@ -23,6 +23,11 @@ using namespace cv;
 namespace nl_uu_science_gmt
 {
 
+bool Scene3DRenderer::PERFORM_EROSION_DILATION = false;
+
+Scene3DRenderer::BackgroundSubtractor Scene3DRenderer::backgroundSubtractor = CONDITIONAL;
+
+
 /**
  * Scene properties class (mostly called by Glut)
  */

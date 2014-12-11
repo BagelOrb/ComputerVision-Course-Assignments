@@ -18,6 +18,8 @@ using namespace cv;
 namespace nl_uu_science_gmt
 {
 
+bool Reconstructor::SKIP_VOXELS = true; // TK
+
 /**
  * Voxel reconstruction class
  */
