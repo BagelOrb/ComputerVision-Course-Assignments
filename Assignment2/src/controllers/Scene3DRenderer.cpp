@@ -23,6 +23,11 @@ using namespace cv;
 namespace nl_uu_science_gmt
 {
 
+bool Scene3DRenderer::PERFORM_EROSION_DILATION = false;
+
+Scene3DRenderer::BackgroundSubtractor Scene3DRenderer::backgroundSubtractor = CONDITIONAL;
+
+
 /**
  * Scene properties class (mostly called by Glut)
  */
@@ -131,8 +136,24 @@ void Scene3DRenderer::processForeground(Camera* camera)
 	bg_image = camera->getBgImage();
 
 
-	//processForegroundOriginal(hsv_image, bgHsvChannels, foreground);
-	processForegroundImproved(camera->getFrame(), bg_image, foreground, HSV_State(_h_threshold, _s_threshold, _v_threshold));
+	switch (backgroundSubtractor)
+	{
+	case ORIGINAL:
+		processForegroundOriginal(hsv_image, bgHsvChannels, foreground, HSV_State(_h_threshold, _s_threshold, _v_threshold)); 
+		break;
+	case CORRECTED:
+		processForegroundCorrected(hsv_image, bgHsvChannels, foreground, HSV_State(_h_threshold, _s_threshold, _v_threshold));
+		break;
+	case HSL:
+		processForegroundHSL(camera->getFrame(), bgHsvChannels, foreground, HSV_State(_h_threshold, _s_threshold, _v_threshold));
+		break;
+	case EUCLIDEAN:
+		processForegroundImproved2(camera->getFrame(), bg_image, foreground, HSV_State(_h_threshold, _s_threshold, _v_threshold));
+		break;
+	case CONDITIONAL:
+		processForegroundImproved(camera->getFrame(), bg_image, foreground, HSV_State(_h_threshold, _s_threshold, _v_threshold));
+		break;
+	}
 
 
 	int size = 2;
@@ -140,10 +161,12 @@ void Scene3DRenderer::processForeground(Camera* camera)
 		Size(2 * size + 1, 2 * size + 1),
 		Point(size, size));
 
-	erode(foreground, foreground, kernel, Point(-1, -1), 1); // remove white specks
-	dilate(foreground, foreground, kernel, Point(-1, -1), 2); // go back and remove black holes
-	erode(foreground, foreground, kernel, Point(-1, -1), 1); // go back
-
+	if (PERFORM_EROSION_DILATION)
+	{
+		erode(foreground, foreground, kernel, Point(-1, -1), 1); // remove white specks
+		dilate(foreground, foreground, kernel, Point(-1, -1), 2); // go back and remove black holes
+		erode(foreground, foreground, kernel, Point(-1, -1), 1); // go back
+	}
 
 
 
@@ -199,7 +222,7 @@ void Scene3DRenderer::processForegroundCorrected(Mat& hsv_image, vector<Mat>& bg
 
 }
 
-void Scene3DRenderer::processForegroundHSL(Mat& bgr_image, vector<Mat>& bgHlsChannels, Mat& foreground, HSV_State& hsv_thresh)
+void Scene3DRenderer::processForegroundHSL(const Mat& bgr_image, vector<Mat>& bgHlsChannels, Mat& foreground, HSV_State& hsv_thresh)
 {
 	Mat hsv_image;
 	cvtColor(bgr_image, hsv_image, CV_BGR2HLS);  // TK: from BGR to HLS color space
@@ -254,7 +277,7 @@ void Scene3DRenderer::processForegroundImproved(const Mat& bgr_image, Mat& bg_im
 
 
 }
-void Scene3DRenderer::processForegroundImproved2(Mat& bgr_image, Mat& bg_image, Mat& foreground, HSV_State& hsv_thresh)
+void Scene3DRenderer::processForegroundImproved2(const Mat& bgr_image, Mat& bg_image, Mat& foreground, HSV_State& hsv_thresh)
 {
 	Mat hsv_image;
 	cvtColor(bgr_image, hsv_image, CV_BGR2HLS);  // from BGR to HSV color space

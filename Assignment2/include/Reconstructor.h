@@ -26,6 +26,8 @@ namespace nl_uu_science_gmt
 class Reconstructor
 {
 public:
+	static bool SKIP_VOXELS; // TK
+
 	struct Voxel
 	{
 		int x, y, z;
