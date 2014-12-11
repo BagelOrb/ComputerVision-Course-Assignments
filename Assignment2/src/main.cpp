@@ -22,7 +22,7 @@ int main_(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-	Reconstructor::SKIP_VOXELS = true;
+	Reconstructor::SKIP_VOXELS = false;
 	Scene3DRenderer::PERFORM_EROSION_DILATION = false;
 	Scene3DRenderer::backgroundSubtractor = Scene3DRenderer::CONDITIONAL;
 	//HSV_Search_Test::main_hsvSearch_test(); // TK: test Mixture Model Beam Search
