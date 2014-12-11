@@ -15,6 +15,7 @@
 #include "General.h"
 #include "Camera.h"
 #include "Reconstructor.h"
+#include "VoxelTracker.h"
 #include "Scene3DRenderer.h"
 #include "Glut.h"
 

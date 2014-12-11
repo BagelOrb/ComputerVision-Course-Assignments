@@ -31,8 +31,9 @@ Scene3DRenderer::BackgroundSubtractor Scene3DRenderer::backgroundSubtractor = CO
 /**
  * Scene properties class (mostly called by Glut)
  */
-Scene3DRenderer::Scene3DRenderer(Reconstructor &r, const vector<Camera*> &cs) :
-		_reconstructor(r), _cameras(cs), _num(4), _sphere_radius(1850)
+//JV: VoxelTracker
+Scene3DRenderer::Scene3DRenderer(Reconstructor &r, VoxelTracker &vt, const vector<Camera*> &cs) :
+_reconstructor(r), _voxeltracker(vt), _cameras(cs), _num(4), _sphere_radius(1850)
 {
 	_width = 640;
 	_height = 480;

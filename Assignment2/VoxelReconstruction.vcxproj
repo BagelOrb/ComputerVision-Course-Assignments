@@ -160,6 +160,7 @@
     <ClCompile Include="src\controllers\Camera.cpp" />
     <ClCompile Include="src\controllers\Glut.cpp" />
     <ClCompile Include="src\controllers\Reconstructor.cpp" />
+    <ClCompile Include="src\controllers\VoxelTracker.cpp" />
     <ClCompile Include="src\controllers\Scene3DRenderer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utilities\EuclideanColorModel.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="include\Scene3DRenderer.h" />
     <ClInclude Include="include\Utils.h" />
     <ClInclude Include="include\VoxelReconstruction.h" />
+    <ClInclude Include="include\VoxelTracker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

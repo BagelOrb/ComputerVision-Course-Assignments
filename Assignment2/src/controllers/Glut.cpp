@@ -530,6 +530,7 @@ void Glut::display()
 	if (scene3d.isShowArcball()) drawArcball();
 
 	drawVoxels();
+	drawClusterPositions(); //JV
 
 	if (scene3d.isShowOrg()) drawWCoord();
 	if (scene3d.isShowInfo()) drawInfo();
@@ -814,8 +815,8 @@ void Glut::drawArcball()
 }
 
 /**
- * Draw all visible voxels
- */
+* Draw all visible voxels
+*/
 void Glut::drawVoxels()
 {
 	glPushMatrix();
@@ -833,6 +834,38 @@ void Glut::drawVoxels()
 	}
 
 	glEnd();
+	glPopMatrix();
+}
+
+//JV
+/**
+* Draw cluster positions on the floor of the 3d world
+*/
+void Glut::drawClusterPositions()
+{
+	glPushMatrix();
+
+	// apply default translation
+	glTranslatef(0, 0, 0);
+
+	// determines the size of the square to draw
+	uchar squaresize = 400;
+
+	vector<VoxelTracker::Cluster*> clusters = _glut->getScene3d().getVoxelTracker().getClusters();
+	for (size_t c = 0; c < clusters.size(); c++)
+	{
+		glBegin(GL_POLYGON);
+
+			glColor4f((GLfloat) clusters[c]->drawColorR, (GLfloat) clusters[c]->drawColorG, (GLfloat) clusters[c]->drawColorB, 0.5f);
+
+			glVertex3f((GLfloat) (clusters[c]->center_x - squaresize), (GLfloat) (clusters[c]->center_y) - squaresize, 0.0f);
+			glVertex3f((GLfloat) (clusters[c]->center_x + squaresize), (GLfloat) (clusters[c]->center_y) - squaresize, 0.0f);
+			glVertex3f((GLfloat) (clusters[c]->center_x + squaresize), (GLfloat) (clusters[c]->center_y) + squaresize, 0.0f);
+			glVertex3f((GLfloat) (clusters[c]->center_x - squaresize), (GLfloat) (clusters[c]->center_y) + squaresize, 0.0f);
+
+		glEnd();
+	}
+
 	glPopMatrix();
 }
 

@@ -42,6 +42,7 @@ class Glut
 	static void drawVolume();
 	static void drawArcball();
 	static void drawVoxels();
+	static void drawClusterPositions(); //JV
 	static void drawWCoord();
 	static void drawInfo();
 
