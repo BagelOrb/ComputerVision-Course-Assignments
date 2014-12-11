@@ -34,7 +34,7 @@ Reconstructor::Reconstructor(const vector<Camera*> &cs) :
 			_plane_size = _cameras[c]->getSize();
 	}
 
-	_step = 32;
+	_step = 64;
 	if (SKIP_VOXELS)
 		_size = 32;// TK : work-around to avoid long voxel initialization when working on background subtraction...
 	else
