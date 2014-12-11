@@ -33,7 +33,7 @@ Reconstructor::Reconstructor(const vector<Camera*> &cs) :
 	}
 
 	_step = 32;
-	_size = 64;// 512; // TK : work-around to avoid long voxel initialization when working on background subtraction...
+	_size = 512;
 	const size_t h_edge = _size * 4;
 	const size_t edge = 2 * h_edge;
 	_voxels_amount = (edge / _step) * (edge / _step) * (h_edge / _step);
@@ -102,6 +102,9 @@ void Reconstructor::initialize()
 				voxel->x = x;
 				voxel->y = y;
 				voxel->z = z;
+				voxel->drawColorR = 1.0;
+				voxel->drawColorG = 0.0;
+				voxel->drawColorB = 0.5;
 				voxel->camera_projection = vector<Point>(_cameras.size());
 				voxel->valid_camera_projection = vector<int>(_cameras.size(), 0);
 

@@ -455,11 +455,11 @@ LRESULT CALLBACK Glut::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 		case WM_MOUSEWHEEL:  //Scroll wheel
 		{
 			short zDelta = (short) HIWORD(wParam);
-			if (zDelta < 0 && !_glut->getScene3d().isCameraView())
+			if (zDelta < 0)
 			{
 				arcball_add_distance(+250);
 			}
-			else if (zDelta > 0 && !_glut->getScene3d().isCameraView())
+			else if (zDelta > 0)
 			{
 				arcball_add_distance(-250);
 			}
@@ -828,7 +828,7 @@ void Glut::drawVoxels()
 	vector<Reconstructor::Voxel*> voxels = _glut->getScene3d().getReconstructor().getVisibleVoxels();
 	for (size_t v = 0; v < voxels.size(); v++)
 	{
-		glColor4f(0.5f, 0.5f, 0.5f, 0.5f);
+		glColor4f((GLfloat) voxels[v]->drawColorR, (GLfloat) voxels[v]->drawColorG, (GLfloat) voxels[v]->drawColorB, 0.5f);
 		glVertex3f((GLfloat) voxels[v]->x, (GLfloat) voxels[v]->y, (GLfloat) voxels[v]->z);
 	}
 

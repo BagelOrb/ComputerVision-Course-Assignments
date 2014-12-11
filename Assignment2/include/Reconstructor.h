@@ -29,7 +29,12 @@ public:
 	struct Voxel
 	{
 		int x, y, z;
-		cv::Scalar color;
+		//Color to draw this voxel
+		float drawColorR;
+		float drawColorG;
+		float drawColorB;
+		//The color value based on the camera pixels
+		cv::Scalar realColor;
 		std::vector<cv::Point> camera_projection;
 		std::vector<int> valid_camera_projection;
 	};
