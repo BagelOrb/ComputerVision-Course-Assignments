@@ -33,7 +33,10 @@ Reconstructor::Reconstructor(const vector<Camera*> &cs) :
 	}
 
 	_step = 32;
-	_size = 64;// 512; // TK : work-around to avoid long voxel initialization when working on background subtraction...
+	if (SKIP_VOXELS)
+		_size = 32;// TK : work-around to avoid long voxel initialization when working on background subtraction...
+	else
+		_size = 512;
 	const size_t h_edge = _size * 4;
 	const size_t edge = 2 * h_edge;
 	_voxels_amount = (edge / _step) * (edge / _step) * (h_edge / _step);

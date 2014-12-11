@@ -27,6 +27,17 @@ namespace nl_uu_science_gmt
 
 class Scene3DRenderer
 {
+public:
+	// OURS: (TK
+	static bool PERFORM_EROSION_DILATION;// = false;
+
+	enum BackgroundSubtractor { ORIGINAL, CORRECTED, HSL, EUCLIDEAN, CONDITIONAL};
+	static BackgroundSubtractor backgroundSubtractor;// = CONDITIONAL;
+	// \ours
+
+
+protected:
+
 	Reconstructor &_reconstructor;
 	const std::vector<Camera*> &_cameras;
 	const int _num;
@@ -84,14 +95,10 @@ public:
 
 	void processForeground(Camera*);
 	static void processForegroundOriginal(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
-	//void processForegroundCorrected(Camera*);
 	static void processForegroundCorrected(cv::Mat& hsv_image, std::vector<cv::Mat>& bgHsvChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
-	//void processForegroundHSL(Camera*);
-	static void processForegroundHSL(cv::Mat& bgr_image, std::vector<cv::Mat>& bgHlsChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
-	//void processForegroundImproved(Camera*);
+	static void processForegroundHSL(const cv::Mat& bgr_image, std::vector<cv::Mat>& bgHlsChannels, cv::Mat& foreground, HSV_State& hsv_thresh);
 	static void processForegroundImproved(const cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
-	//void processForegroundImproved2(Camera*);
-	static void processForegroundImproved2(cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
+	static void processForegroundImproved2(const cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
 
 	bool processFrame();
 	void setCamera(int);
