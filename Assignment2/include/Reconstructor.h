@@ -31,12 +31,19 @@ public:
 	struct Voxel
 	{
 		int x, y, z;
-		//Color to draw this voxel
+		//Color to draw this voxel JV
 		float drawColorR;
 		float drawColorG;
 		float drawColorB;
-		//The color value based on the camera pixels
+		//These colors are determined by the cluster
+
+		//The color value based on the camera pixels JV
 		cv::Scalar realColor;
+
+		//The 'label' of the cluster this voxel belongs to, -1 if none JV
+		char labelNum;
+
+		//??
 		std::vector<cv::Point> camera_projection;
 		std::vector<int> valid_camera_projection;
 	};

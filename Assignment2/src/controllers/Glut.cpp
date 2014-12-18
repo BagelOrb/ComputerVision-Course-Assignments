@@ -537,6 +537,7 @@ void Glut::display()
 
 	glFlush();
 
+
 #ifdef __linux__
 	glutSwapBuffers();
 #elif defined _WIN32
@@ -582,8 +583,10 @@ void Glut::update(int v)
 	if (scene3d.getCurrentFrame() != scene3d.getPreviousFrame())
 	{
 		// If the current frame is different from the last iteration update stuff
+		scene3d.outputFrame(); //JV
 		scene3d.processFrame();
 		scene3d.getReconstructor().update();
+		scene3d.getVoxelTracker().update(); //JV
 		scene3d.setPreviousFrame(scene3d.getCurrentFrame());
 	}
 	else if (scene3d.getHThreshold() != scene3d.getPHThreshold() || scene3d.getSThreshold() != scene3d.getPSThreshold()
@@ -592,6 +595,7 @@ void Glut::update(int v)
 		// Update the scene if one of the HSV sliders was moved (when the video is paused)
 		scene3d.processFrame();
 		scene3d.getReconstructor().update();
+		scene3d.getVoxelTracker().update(); //JV
 
 		scene3d.setPHThreshold(scene3d.getHThreshold());
 		scene3d.setPSThreshold(scene3d.getSThreshold());

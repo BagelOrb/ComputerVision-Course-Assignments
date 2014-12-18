@@ -104,6 +104,7 @@ void Reconstructor::initialize()
 			for (int x = xL; x < xR; x += _step)
 			{
 				Voxel* voxel = new Voxel;
+				voxel->labelNum = -1; //JV cluster label
 				voxel->x = x;
 				voxel->y = y;
 				voxel->z = z;

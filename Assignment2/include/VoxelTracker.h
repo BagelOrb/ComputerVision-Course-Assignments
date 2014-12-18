@@ -22,6 +22,9 @@ namespace nl_uu_science_gmt
 
 class VoxelTracker
 {
+protected:
+	Reconstructor &_reconstructor;
+
 public:
 
 	struct Cluster
@@ -33,15 +36,16 @@ public:
 		float drawColorB;
 
 		//Probably some other stuff here
-		std::vector<Reconstructor::Voxel> closestVoxels;
+		//std::vector<Reconstructor::Voxel> closestVoxels;
+
+		//Color model: TODO change this to something useful instead of int
+		int colorModel;
 	};
 
 private:
 	const std::vector<Camera*> &_cameras;
 
-	int _step;
-	int _size;
-
+	int _num_clusters;
 
 	cv::Size _plane_size;
 
@@ -50,7 +54,7 @@ private:
 	void initialize();
 
 public:
-	VoxelTracker(const std::vector<Camera*> &);
+	VoxelTracker(Reconstructor &, const std::vector<Camera*> &, const int);
 	virtual ~VoxelTracker();
 
 	void update();
@@ -60,15 +64,18 @@ public:
 		return _clusters;
 	}
 
+	//Calculates the 'distance' between a color and a given color model
+	float colorDistance(cv::Scalar color, int colorModel)
+	{
+		return 0; //TODO implement
+	}
+
+	//Some maximum value for the result of colorDistance
+	const float colorModelMaxDistance = 1000;
 
 	void setClusters(const std::vector<Cluster*>& clusters)
 	{
 		_clusters = clusters;
-	}
-
-	int getSize() const
-	{
-		return _size;
 	}
 
 	const cv::Size& getPlaneSize() const
