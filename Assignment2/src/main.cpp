@@ -32,15 +32,13 @@ int main_(int argc, char** argv)
 	return EXIT_SUCCESS;
 }
 
-
-
 int main(int argc, char** argv)
 {
 	Reconstructor::SKIP_VOXELS = false;
 	Scene3DRenderer::PERFORM_EROSION_DILATION = false;
 	Scene3DRenderer::backgroundSubtractor = Scene3DRenderer::CONDITIONAL;
 
-	//main_(argc, argv);
+	main_(argc, argv);
 
 	/*
 	MixtureColorModel mcm;
@@ -49,11 +47,11 @@ int main(int argc, char** argv)
 	*/
 	
 
-	MixtureColorModel m;
+	/*MixtureColorModel m;
 	m.load();
 	
-
-	m.test();
+	
+	m.test();*/
 }
 
 

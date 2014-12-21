@@ -183,6 +183,9 @@ void Reconstructor::update()
 #endif
 			visible_voxels.push_back(voxel);
 		}
+		else {
+			voxel->labelNum = -1; //JV
+		}
 	}
 
 	_visible_voxels.insert(_visible_voxels.end(), visible_voxels.begin(), visible_voxels.end());

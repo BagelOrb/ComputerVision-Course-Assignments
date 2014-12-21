@@ -144,11 +144,6 @@ void VoxelTracker::update()
 		clusterVoxelsX[currentlyVisibleVoxels[i]->labelNum].push_back(currentlyVisibleVoxels[i]->x);
 		clusterVoxelsY[currentlyVisibleVoxels[i]->labelNum].push_back(currentlyVisibleVoxels[i]->y);
 
-		//Fix the voxels' colors
-		currentlyVisibleVoxels[i]->drawColorR = _clusters[currentlyVisibleVoxels[i]->labelNum]->drawColorR;
-		currentlyVisibleVoxels[i]->drawColorG = _clusters[currentlyVisibleVoxels[i]->labelNum]->drawColorG;
-		currentlyVisibleVoxels[i]->drawColorB = _clusters[currentlyVisibleVoxels[i]->labelNum]->drawColorB;
-
 	}
 
 	//Recalculate the cluster centers
