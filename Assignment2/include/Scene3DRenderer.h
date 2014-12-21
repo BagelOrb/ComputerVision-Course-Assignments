@@ -9,6 +9,8 @@
 #define SCENE3DRENDERER_H_
 
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp> //VideoWriter
+
 #include <boost/lexical_cast.hpp>
 
 #ifdef _WIN32
@@ -42,6 +44,9 @@ protected:
 
 	Reconstructor &_reconstructor;
 	VoxelTracker &_voxeltracker; //JV
+
+	cv::VideoWriter _wrt; //JV
+
 	const std::vector<Camera*> &_cameras;
 	const int _num;
 	const float _sphere_radius;

@@ -91,6 +91,9 @@ bool Camera::initialize()
 
 	// Open the video for this camera
 	_video = VideoCapture(_data_path + General::VideoFile);
+
+	//int ex = static_cast<int>(_video.get(CV_CAP_PROP_FOURCC));
+	//cout << endl << endl << ex << endl << endl;
 	assert(_video.isOpened());
 
 	// Assess the image size

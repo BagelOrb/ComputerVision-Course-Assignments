@@ -6,6 +6,7 @@
  */
 
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp> //VideoWriter
 
 #include "Scene3DRenderer.h"
 #include "EuclideanColorModel.h" // TK : new background subtraction algorithm
@@ -31,7 +32,7 @@ Scene3DRenderer::BackgroundSubtractor Scene3DRenderer::backgroundSubtractor = CO
 /**
  * Scene properties class (mostly called by Glut)
  */
-//JV: VoxelTracker
+//JV: VoxelTracker, VideoWriter
 Scene3DRenderer::Scene3DRenderer(Reconstructor &r, VoxelTracker &vt, const vector<Camera*> &cs) :
 _reconstructor(r), _voxeltracker(vt), _cameras(cs), _num(4), _sphere_radius(1850)
 {
@@ -87,6 +88,9 @@ _reconstructor(r), _voxeltracker(vt), _cameras(cs), _num(4), _sphere_radius(1850
 
 	createFloorGrid();
 	setTopView();
+
+	//VideoWriter _wrt; //JV
+	_wrt.open("output/video1.avi", 1145656920, 29, Size(640, 480));
 }
 
 /**
@@ -97,6 +101,9 @@ Scene3DRenderer::~Scene3DRenderer()
 	for (size_t f = 0; f < _floor_grid.size(); ++f)
 		for (size_t g = 0; g < _floor_grid[f].size(); ++g)
 			delete _floor_grid[f][g];
+
+	//Close our video output
+	_wrt.release();
 }
 
 /**
@@ -141,11 +148,13 @@ void Scene3DRenderer::outputFrame()
 	cv::flip(img, flipped, 0);
 
 	//GAH more C++ bullshit
-	std::string filename = "output/3doutput";
-	filename = filename + boost::lexical_cast<std::string>(getCurrentFrame());
-	filename = filename + ".bmp";
+	//std::string filename = "output/3doutput";
+	//filename = filename + boost::lexical_cast<std::string>(getCurrentFrame());
+	//filename = filename + ".bmp";
 
-	imwrite(filename, flipped);
+	//imwrite(filename, flipped);
+
+	_wrt.write(flipped);
 }
 
 /**
