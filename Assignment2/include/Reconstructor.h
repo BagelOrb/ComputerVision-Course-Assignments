@@ -30,6 +30,7 @@ class Reconstructor
 	friend class VoxelTracker;
 public:
 	static bool SKIP_VOXELS; // TK
+	static bool LOW_RES_VOXELS; // TK
 
 	struct Voxel
 	{
