@@ -455,11 +455,11 @@ LRESULT CALLBACK Glut::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 		case WM_MOUSEWHEEL:  //Scroll wheel
 		{
 			short zDelta = (short) HIWORD(wParam);
-			if (zDelta < 0 && !_glut->getScene3d().isCameraView())
+			if (zDelta < 0)
 			{
 				arcball_add_distance(+250);
 			}
-			else if (zDelta > 0 && !_glut->getScene3d().isCameraView())
+			else if (zDelta > 0)
 			{
 				arcball_add_distance(-250);
 			}
@@ -530,11 +530,13 @@ void Glut::display()
 	if (scene3d.isShowArcball()) drawArcball();
 
 	drawVoxels();
+	drawClusterPositions(); //JV
 
 	if (scene3d.isShowOrg()) drawWCoord();
 	if (scene3d.isShowInfo()) drawInfo();
 
 	glFlush();
+
 
 #ifdef __linux__
 	glutSwapBuffers();
@@ -581,8 +583,10 @@ void Glut::update(int v)
 	if (scene3d.getCurrentFrame() != scene3d.getPreviousFrame())
 	{
 		// If the current frame is different from the last iteration update stuff
+		scene3d.outputFrame(); //JV
 		scene3d.processFrame();
 		scene3d.getReconstructor().update();
+		scene3d.getVoxelTracker().update(); //JV
 		scene3d.setPreviousFrame(scene3d.getCurrentFrame());
 	}
 	else if (scene3d.getHThreshold() != scene3d.getPHThreshold() || scene3d.getSThreshold() != scene3d.getPSThreshold()
@@ -591,6 +595,7 @@ void Glut::update(int v)
 		// Update the scene if one of the HSV sliders was moved (when the video is paused)
 		scene3d.processFrame();
 		scene3d.getReconstructor().update();
+		scene3d.getVoxelTracker().update(); //JV
 
 		scene3d.setPHThreshold(scene3d.getHThreshold());
 		scene3d.setPSThreshold(scene3d.getSThreshold());
@@ -814,8 +819,8 @@ void Glut::drawArcball()
 }
 
 /**
- * Draw all visible voxels
- */
+* Draw all visible voxels
+*/
 void Glut::drawVoxels()
 {
 	glPushMatrix();
@@ -828,11 +833,43 @@ void Glut::drawVoxels()
 	vector<Reconstructor::Voxel*> voxels = _glut->getScene3d().getReconstructor().getVisibleVoxels();
 	for (size_t v = 0; v < voxels.size(); v++)
 	{
-		glColor4f(0.5f, 0.5f, 0.5f, 0.5f);
+		glColor4f((GLfloat) voxels[v]->drawColorR, (GLfloat) voxels[v]->drawColorG, (GLfloat) voxels[v]->drawColorB, 0.5f);
 		glVertex3f((GLfloat) voxels[v]->x, (GLfloat) voxels[v]->y, (GLfloat) voxels[v]->z);
 	}
 
 	glEnd();
+	glPopMatrix();
+}
+
+//JV
+/**
+* Draw cluster positions on the floor of the 3d world
+*/
+void Glut::drawClusterPositions()
+{
+	glPushMatrix();
+
+	// apply default translation
+	glTranslatef(0, 0, 0);
+
+	// determines the size of the square to draw
+	uchar squaresize = 400;
+
+	vector<VoxelTracker::Cluster*> clusters = _glut->getScene3d().getVoxelTracker().getClusters();
+	for (size_t c = 0; c < clusters.size(); c++)
+	{
+		glBegin(GL_POLYGON);
+
+			glColor4f((GLfloat) clusters[c]->drawColorR, (GLfloat) clusters[c]->drawColorG, (GLfloat) clusters[c]->drawColorB, 0.5f);
+
+			glVertex3f((GLfloat) (clusters[c]->center_x - squaresize), (GLfloat) (clusters[c]->center_y) - squaresize, 0.0f);
+			glVertex3f((GLfloat) (clusters[c]->center_x + squaresize), (GLfloat) (clusters[c]->center_y) - squaresize, 0.0f);
+			glVertex3f((GLfloat) (clusters[c]->center_x + squaresize), (GLfloat) (clusters[c]->center_y) + squaresize, 0.0f);
+			glVertex3f((GLfloat) (clusters[c]->center_x - squaresize), (GLfloat) (clusters[c]->center_y) + squaresize, 0.0f);
+
+		glEnd();
+	}
+
 	glPopMatrix();
 }
 

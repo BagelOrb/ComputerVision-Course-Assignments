@@ -53,7 +53,7 @@ int main(int argc, char** argv)
 	m.load();
 	
 
-	//m.test();
+	m.test();
 }
 
 

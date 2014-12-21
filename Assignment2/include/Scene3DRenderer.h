@@ -9,6 +9,7 @@
 #define SCENE3DRENDERER_H_
 
 #include <opencv2/opencv.hpp>
+#include <boost/lexical_cast.hpp>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -18,6 +19,7 @@
 #include "arcball.h"
 #include "General.h"
 #include "Reconstructor.h"
+#include "VoxelTracker.h"
 #include "Camera.h"
 
 #include "HSV_Threshold.h"
@@ -39,6 +41,7 @@ public:
 protected:
 
 	Reconstructor &_reconstructor;
+	VoxelTracker &_voxeltracker; //JV
 	const std::vector<Camera*> &_cameras;
 	const int _num;
 	const float _sphere_radius;
@@ -90,7 +93,8 @@ protected:
 #endif
 
 public:
-	Scene3DRenderer(Reconstructor &, const std::vector<Camera*> &);
+	//JV: VoxelTracker
+	Scene3DRenderer(Reconstructor &, VoxelTracker &, const std::vector<Camera*> &);
 	virtual ~Scene3DRenderer();
 
 	void processForeground(Camera*);
@@ -101,6 +105,7 @@ public:
 	static void processForegroundImproved2(const cv::Mat& bgr_image, cv::Mat& bg_image, cv::Mat& foreground, HSV_State& hsv_thresh);
 
 	bool processFrame();
+	void outputFrame();
 	void setCamera(int);
 	void setTopView();
 
@@ -319,6 +324,12 @@ public:
 	Reconstructor& getReconstructor() const
 	{
 		return _reconstructor;
+	}	
+	
+	//JV
+	VoxelTracker& getVoxelTracker() const
+	{
+		return _voxeltracker;
 	}
 
 #ifdef _WIN32

@@ -105,9 +105,13 @@ void Reconstructor::initialize()
 			for (int x = xL; x < xR; x += _step)
 			{
 				Voxel* voxel = new Voxel;
+				voxel->labelNum = -1; //JV cluster label
 				voxel->x = x;
 				voxel->y = y;
 				voxel->z = z;
+				voxel->drawColorR = 1.0;
+				voxel->drawColorG = 0.0;
+				voxel->drawColorB = 0.5;
 				voxel->camera_projection = vector<Point>(_cameras.size());
 				voxel->valid_camera_projection = vector<int>(_cameras.size(), 0);
 

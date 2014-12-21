@@ -119,7 +119,8 @@ void VoxelReconstruction::run(int argc, char** argv)
 	namedWindow(VIDEO_WINDOW, CV_WINDOW_KEEPRATIO);
 
 	Reconstructor reconstructor(_cam_views);
-	Scene3DRenderer scene3d(reconstructor, _cam_views);
+	VoxelTracker voxeltracker(reconstructor, _cam_views, 4); //JV
+	Scene3DRenderer scene3d(reconstructor, voxeltracker, _cam_views);
 	Glut glut(scene3d);
 
 #ifdef __linux__

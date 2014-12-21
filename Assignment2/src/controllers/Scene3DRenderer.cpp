@@ -31,13 +31,14 @@ Scene3DRenderer::BackgroundSubtractor Scene3DRenderer::backgroundSubtractor = CO
 /**
  * Scene properties class (mostly called by Glut)
  */
-Scene3DRenderer::Scene3DRenderer(Reconstructor &r, const vector<Camera*> &cs) :
-		_reconstructor(r), _cameras(cs), _num(4), _sphere_radius(1850)
+//JV: VoxelTracker
+Scene3DRenderer::Scene3DRenderer(Reconstructor &r, VoxelTracker &vt, const vector<Camera*> &cs) :
+_reconstructor(r), _voxeltracker(vt), _cameras(cs), _num(4), _sphere_radius(1850)
 {
 	_width = 640;
 	_height = 480;
 	_quit = false;
-	_paused = false;
+	_paused = true; //JV
 	_rotate = false;
 	_camera_view = true;
 	_show_volume = true;
@@ -117,6 +118,34 @@ bool Scene3DRenderer::processFrame()
 		processForeground(_cameras[c]);
 	}
 	return true;
+}
+
+//JV
+/**
+* Output whatever is in the gl frame buffer to a file. This is always a frame late.
+* Adapted from http://stackoverflow.com/questions/9097756/converting-data-from-glreadpixels-to-opencvmat
+*/
+void Scene3DRenderer::outputFrame()
+{
+	int width = getWidth(), height = getHeight();
+	cv::Mat img(height, width, CV_8UC3), flipped(height, width, CV_8UC3);
+
+	//use fast 4-byte alignment (default anyway) if possible
+	glPixelStorei(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
+
+	//set length of one complete row in destination data (doesn't need to equal img.cols)
+	glPixelStorei(GL_PACK_ROW_LENGTH, img.step / img.elemSize());
+
+	glReadPixels(0, 0, img.cols, img.rows, 0x80E0 /* GL_BGR */, GL_UNSIGNED_BYTE, img.data);
+
+	cv::flip(img, flipped, 0);
+
+	//GAH more C++ bullshit
+	std::string filename = "output/3doutput";
+	filename = filename + boost::lexical_cast<std::string>(getCurrentFrame());
+	filename = filename + ".bmp";
+
+	imwrite(filename, flipped);
 }
 
 /**
