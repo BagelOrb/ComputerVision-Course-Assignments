@@ -194,7 +194,6 @@ void VoxelTracker::update()
 
 	if (APPLY_CLUSTERING)
 	{
-
 		//Re-label each voxel to the cluster with the minimum spatial (Manhattan) distance from the center to the voxel
 		for (size_t i = 0; i < currentlyVisibleVoxels.size(); i++)
 		{
