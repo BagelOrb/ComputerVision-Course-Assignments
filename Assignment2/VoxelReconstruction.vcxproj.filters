@@ -54,6 +54,9 @@
     <ClCompile Include="src\utilities\HSV_Threshold.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\MixtureColorModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\arcball.h">
@@ -63,9 +66,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Glut.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Reconstructor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Scene3DRenderer.h">
@@ -87,6 +87,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\HSV_Threshold.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MixtureColorModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Reconstructor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -97,7 +97,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>boost_random-vc120-mt-gd-1_57.lib;boost_filesystem-vc120-mt-gd-1_57.lib;boost_regex-vc120-mt-gd-1_57.lib;boost_system-vc120-mt-gd-1_57.lib;opencv_core249d.lib;opencv_highgui249d.lib;opencv_imgproc249d.lib;opencv_calib3d249d.lib;OpenGL32.lib;Glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>boost_random-vc120-mt-gd-1_57.lib;boost_filesystem-vc120-mt-gd-1_57.lib;boost_regex-vc120-mt-gd-1_57.lib;boost_system-vc120-mt-gd-1_57.lib;opencv_core249d.lib;opencv_highgui249d.lib;opencv_imgproc249d.lib;opencv_calib3d249d.lib;opencv_ml249d.lib;OpenGL32.lib;Glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -166,17 +166,20 @@
     <ClCompile Include="src\utilities\General.cpp" />
     <ClCompile Include="src\utilities\hsvSearch.cpp" />
     <ClCompile Include="src\utilities\HSV_Threshold.cpp" />
+    <ClCompile Include="src\utilities\MixtureColorModel.cpp" />
     <ClCompile Include="src\utilities\MixtureModelBeamSearch.cpp" />
     <ClCompile Include="src\utilities\Utils.cpp" />
     <ClCompile Include="src\VoxelReconstruction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\arcball.h" />
+    <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\EuclideanColorModel.h" />
     <ClInclude Include="include\General.h" />
     <ClInclude Include="include\Glut.h" />
     <ClInclude Include="include\hsvSearch.h" />
     <ClInclude Include="include\HSV_Threshold.h" />
+    <ClInclude Include="include\MixtureColorModel.h" />
     <ClInclude Include="include\MixtureModelBeamSearch.h" />
     <ClInclude Include="include\Reconstructor.h" />
     <ClInclude Include="include\Scene3DRenderer.h" />

@@ -20,6 +20,8 @@
 
 #include "Camera.h"
 
+#include <stdint.h> // int16_t
+
 namespace nl_uu_science_gmt
 {
 
@@ -30,7 +32,7 @@ public:
 
 	struct Voxel
 	{
-		int x, y, z;
+		int16_t x, y, z;
 		cv::Scalar color;
 		std::vector<cv::Point> camera_projection;
 		std::vector<int> valid_camera_projection;
