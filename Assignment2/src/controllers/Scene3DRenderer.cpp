@@ -49,6 +49,7 @@ _reconstructor(r), _voxeltracker(vt), _cameras(cs), _num(4), _sphere_radius(1850
 	_show_arcball = false;
 	_show_info = true;
 	_fullscreen = false;
+	_draw_cluster_paths = false;
 
 	// Read the checkerboard properties (XML)
 	FileStorage fs;
