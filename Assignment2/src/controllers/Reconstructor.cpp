@@ -18,7 +18,8 @@ using namespace cv;
 namespace nl_uu_science_gmt
 {
 
-bool Reconstructor::SKIP_VOXELS = true; // TK
+	bool Reconstructor::SKIP_VOXELS = false; // TK
+	bool Reconstructor::LOW_RES_VOXELS = false; // TK
 
 /**
  * Voxel reconstruction class
@@ -34,12 +35,14 @@ Reconstructor::Reconstructor(const vector<Camera*> &cs) :
 			_plane_size = _cameras[c]->getSize();
 	}
 
-
-	_step = 128; // 32
+	if (LOW_RES_VOXELS)
+		_step = 128; // 32
+	else
+		_step = 32;
 	if (SKIP_VOXELS)
 		_size = 32;// TK : work-around to avoid long voxel initialization when working on background subtraction...
 	else
-		_size = 512;
+		_size = 640; // 512 = original value
 	const size_t h_edge = _size * 4;
 	const size_t edge = 2 * h_edge;
 	_voxels_amount = (edge / _step) * (edge / _step) * (h_edge / _step);

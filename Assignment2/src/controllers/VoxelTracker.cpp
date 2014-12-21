@@ -13,6 +13,8 @@
 #include <cassert>
 #include <iostream>
 
+#include <math.h> // isnan
+
 #include <fstream>
 
 using namespace std;
@@ -156,7 +158,12 @@ void VoxelTracker::update()
 	//Recalculate the cluster centers
 	for (size_t c = 0; c < _num_clusters; c++)
 	{
-
+		if (numVoxels[c] == 0)
+		{
+			_clusters[c]->center_x = 0;
+			_clusters[c]->center_y = 0;
+			continue;
+		}
 		//Sum all the x- and y-coords for this cluster
 		int sumx = 0;
 		int sumy = 0;
@@ -167,8 +174,31 @@ void VoxelTracker::update()
 		}
 
 		//Divide by the amount of voxels to obtain mean value
-		_clusters[c]->center_x = (numVoxels[c] == 0) ? 0 : sumx / numVoxels[c];
-		_clusters[c]->center_y = (numVoxels[c] == 0) ? 0 : sumy / numVoxels[c];
+		int meanx = sumx / numVoxels[c];
+		int meany = sumy / numVoxels[c];
+
+		//Use the geometrical means to calculate cluster centers which are based more on points closer to the geometrical mean, than on points farther away
+		double totweight = 0;
+		double totx = 0;
+		double toty = 0;
+		for (size_t i = 0; i < clusterVoxelsX[c].size(); i++)
+		{
+			int x = clusterVoxelsX[c][i];
+			int y = clusterVoxelsY[c][i];
+			double weight = 100 * std::exp(-1e-6 * double( (x - meanx)*(x - meanx) + (y - meany)*(y - meany) ));
+			totweight += weight;
+			totx += x * weight;
+			toty += y * weight;
+		}
+		if (totweight == 0)
+		{
+			_clusters[c]->center_x = meanx;
+			_clusters[c]->center_y = meany;
+		}
+		else {
+			_clusters[c]->center_x = int(totx / totweight);
+			_clusters[c]->center_y = int(toty / totweight);
+		}
 	}
 
 	if (APPLY_CLUSTERING)
