@@ -294,6 +294,11 @@ void Glut::keyboard(unsigned char key, int x, int y)
 			bool floor = scene3d.isShowGrdFlr();
 			scene3d.setShowGrdFlr(!floor);
 		}
+		else if (key == 'a' || key == 'A')
+		{
+			bool floor = scene3d.isDrawClusterPaths();
+			scene3d.setDrawClusterPaths(!floor);
+		}
 		else if (key == 'c' || key == 'C')
 		{
 			bool cam = scene3d.isShowCam();
@@ -521,20 +526,32 @@ void Glut::display()
 	glMatrixMode(GL_MODELVIEW);  //set modelview matrix
 	glLoadIdentity();  //reset modelview matrix
 
-	arcball_rotate();
 
 	Scene3DRenderer& scene3d = _glut->getScene3d();
-	if (scene3d.isShowGrdFlr()) drawGrdGrid();
-	if (scene3d.isShowCam()) drawCamCoord();
-	if (scene3d.isShowVolume()) drawVolume();
-	if (scene3d.isShowArcball()) drawArcball();
+	arcball_rotate();
 
-	drawVoxels();
-	drawClusterPositions(); //JV
 
-	if (scene3d.isShowOrg()) drawWCoord();
-	if (scene3d.isShowInfo()) drawInfo();
+	//Draw the cluster paths instead of anything else
+	if (scene3d.isDrawClusterPaths()) {
 
+		drawGrdGrid();
+
+		drawClusterPaths();
+
+	}
+	else {
+
+		if (scene3d.isShowGrdFlr()) drawGrdGrid();
+		if (scene3d.isShowCam()) drawCamCoord();
+		if (scene3d.isShowVolume()) drawVolume();
+		if (scene3d.isShowArcball()) drawArcball();
+
+		drawVoxels();
+		drawClusterPositions(); //JV
+
+		if (scene3d.isShowOrg()) drawWCoord();
+		if (scene3d.isShowInfo()) drawInfo();
+	}
 	glFlush();
 
 
@@ -879,6 +896,44 @@ void Glut::drawClusterPositions()
 			glVertex3f((GLfloat) (clusters[c]->center_x + squaresize), (GLfloat) (clusters[c]->center_y) - squaresize, 0.0f);
 			glVertex3f((GLfloat) (clusters[c]->center_x + squaresize), (GLfloat) (clusters[c]->center_y) + squaresize, 0.0f);
 			glVertex3f((GLfloat) (clusters[c]->center_x - squaresize), (GLfloat) (clusters[c]->center_y) + squaresize, 0.0f);
+
+		glEnd();
+	}
+
+	glPopMatrix();
+}
+
+//JV
+/**
+* Draw cluster positions on the floor of the 3d world
+*/
+void Glut::drawClusterPaths()
+{
+	glPushMatrix();
+
+	// apply default translation
+	glTranslatef(0, 0, 0);
+
+	// determines the size of the square to draw
+	uchar squaresize = 400;
+
+	vector<VoxelTracker::Cluster*> clusters = _glut->getScene3d().getVoxelTracker().getClusters();
+
+	glLineWidth(2.5);
+
+	for (size_t c = 0; c < clusters.size(); c++)
+	{
+		glBegin(GL_LINE_STRIP);
+
+		glColor4f((GLfloat) clusters[c]->drawColorR, (GLfloat) clusters[c]->drawColorG, (GLfloat) clusters[c]->drawColorB, 0.5f);
+
+		int x, y;
+		for (size_t i = 0; i < clusters[c]->path_x.size(); i++)
+		{
+			x = clusters[c]->path_x[i];
+			y = clusters[c]->path_y[i];
+			glVertex3f((GLfloat) x, (GLfloat) y, 0.0f);
+		}
 
 		glEnd();
 	}

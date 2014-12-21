@@ -64,6 +64,7 @@ protected:
 	bool _camera_view;
 	bool _show_volume;
 	bool _show_grd_flr;
+	bool _draw_cluster_paths;
 	bool _show_cam;
 	bool _show_org;
 	bool _show_arcball;
@@ -164,9 +165,17 @@ public:
 		return _show_grd_flr;
 	}
 
+	bool isDrawClusterPaths() const
+	{
+		return _draw_cluster_paths;
+	}
 	void setShowGrdFlr(bool showGrdFlr)
 	{
 		_show_grd_flr = showGrdFlr;
+	}	
+	void setDrawClusterPaths(bool showGrdFlr)
+	{
+		_draw_cluster_paths = showGrdFlr;
 	}
 
 	bool isShowInfo() const
