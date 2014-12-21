@@ -32,13 +32,14 @@ int main_(int argc, char** argv)
 	return EXIT_SUCCESS;
 }
 
-
-
 int main(int argc, char** argv)
 {
 	Reconstructor::SKIP_VOXELS = false;
 	Scene3DRenderer::PERFORM_EROSION_DILATION = false;
 	Scene3DRenderer::backgroundSubtractor = Scene3DRenderer::CONDITIONAL;
+
+	VoxelTracker::RELABEL_EMERGING_VOXELS_ONLY = false;
+	VoxelTracker::APPLY_CLUSTERING = false;
 
 	main_(argc, argv);
 
@@ -55,6 +56,7 @@ int main(int argc, char** argv)
 
 	m.test();
 	*/
+
 }
 
 

@@ -35,16 +35,9 @@ public:
 	{
 		int16_t x, y, z; // TK: smaller int type; bigger isnt needed
 
-		//Color to draw this voxel JV
-		float drawColorR;
-		float drawColorG;
-		float drawColorB;
-		//These colors are determined by the cluster
-
 		//The 'label' of the cluster this voxel belongs to, -1 if none JV
 		char labelNum;
 
-		//??
 		std::vector<cv::Point> camera_projection;
 		std::vector<int> valid_camera_projection;
 	};

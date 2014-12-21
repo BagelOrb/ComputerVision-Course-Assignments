@@ -830,10 +830,23 @@ void Glut::drawVoxels()
 	glPointSize(2.0f);
 	glBegin(GL_POINTS);
 
+	//LUT for clusters' colors
+	std::vector<GLfloat> clusterR;
+	std::vector<GLfloat> clusterG;
+	std::vector<GLfloat> clusterB;
+	vector<VoxelTracker::Cluster*> clusters = _glut->getScene3d().getVoxelTracker().getClusters();
+	for (size_t c = 0; c < clusters.size(); c++)
+	{
+		clusterR.push_back((GLfloat) clusters[c]->drawColorR);
+		clusterG.push_back((GLfloat) clusters[c]->drawColorG);
+		clusterB.push_back((GLfloat) clusters[c]->drawColorB);
+	}
+
 	vector<Reconstructor::Voxel*> voxels = _glut->getScene3d().getReconstructor().getVisibleVoxels();
 	for (size_t v = 0; v < voxels.size(); v++)
 	{
-		glColor4f((GLfloat) voxels[v]->drawColorR, (GLfloat) voxels[v]->drawColorG, (GLfloat) voxels[v]->drawColorB, 0.5f);
+		//Use color of the cluster that the voxel belongs to
+		glColor4f(clusterR[voxels[v]->labelNum], clusterG[voxels[v]->labelNum], clusterB[voxels[v]->labelNum], 0.5f);
 		glVertex3f((GLfloat) voxels[v]->x, (GLfloat) voxels[v]->y, (GLfloat) voxels[v]->z);
 	}
 

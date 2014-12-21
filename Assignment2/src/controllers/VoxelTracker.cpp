@@ -19,6 +19,9 @@ using namespace cv;
 namespace nl_uu_science_gmt
 {
 
+	VoxelTracker::RELABEL_EMERGING_VOXELS_ONLY = true; // TK
+	VoxelTracker::APPLY_CLUSTERING = true; // TK
+
 /**
  * Voxel tracking by clustering
  */
@@ -26,6 +29,7 @@ namespace nl_uu_science_gmt
 		_reconstructor(r), _cameras(cs)
 {
 	_num_clusters = numClusters;
+
 
 	colorModels.load();
 
@@ -126,7 +130,8 @@ void VoxelTracker::update()
 	{
 		
 		//Check if the voxel has a label
-		if (currentlyVisibleVoxels[i]->labelNum == -1) {
+		if (!RELABEL_EMERGING_VOXELS_ONLY || currentlyVisibleVoxels[i]->labelNum == -1)
+		{
 
 			assignClusterLabelBasedOnColor(currentlyVisibleVoxels[i]);
 
@@ -136,11 +141,6 @@ void VoxelTracker::update()
 		numVoxels[currentlyVisibleVoxels[i]->labelNum]++;
 		clusterVoxelsX[currentlyVisibleVoxels[i]->labelNum].push_back(currentlyVisibleVoxels[i]->x);
 		clusterVoxelsY[currentlyVisibleVoxels[i]->labelNum].push_back(currentlyVisibleVoxels[i]->y);
-
-		//Fix the voxels' colors
-		currentlyVisibleVoxels[i]->drawColorR = _clusters[currentlyVisibleVoxels[i]->labelNum]->drawColorR;
-		currentlyVisibleVoxels[i]->drawColorG = _clusters[currentlyVisibleVoxels[i]->labelNum]->drawColorG;
-		currentlyVisibleVoxels[i]->drawColorB = _clusters[currentlyVisibleVoxels[i]->labelNum]->drawColorB;
 
 	}
 
@@ -162,16 +162,20 @@ void VoxelTracker::update()
 		_clusters[c]->center_y = (numVoxels[c] == 0) ? 0 : sumy / numVoxels[c];
 	}
 
-	//Re-label each voxel to the cluster with the minimum spatial (Manhattan) distance from the center to the voxel
-	for (size_t i = 0; i < currentlyVisibleVoxels.size(); i++)
+	if (APPLY_CLUSTERING)
 	{
-		auto minClusterCenterDistance = 100000; // some maximum value
-		for (size_t c = 0; c < _num_clusters; c++)
+
+		//Re-label each voxel to the cluster with the minimum spatial (Manhattan) distance from the center to the voxel
+		for (size_t i = 0; i < currentlyVisibleVoxels.size(); i++)
 		{
-			auto clusterCenterDistance = std::abs(currentlyVisibleVoxels[i]->x - _clusters[c]->center_x) + std::abs(currentlyVisibleVoxels[i]->y - _clusters[c]->center_y);
-			if (clusterCenterDistance < minClusterCenterDistance) {
-				minClusterCenterDistance = clusterCenterDistance;
-				currentlyVisibleVoxels[i]->labelNum = c;
+			auto minClusterCenterDistance = 100000; // some maximum value
+			for (size_t c = 0; c < _num_clusters; c++)
+			{
+				auto clusterCenterDistance = std::abs(currentlyVisibleVoxels[i]->x - _clusters[c]->center_x) + std::abs(currentlyVisibleVoxels[i]->y - _clusters[c]->center_y);
+				if (clusterCenterDistance < minClusterCenterDistance) {
+					minClusterCenterDistance = clusterCenterDistance;
+					currentlyVisibleVoxels[i]->labelNum = c;
+				}
 			}
 		}
 	}

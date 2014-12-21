@@ -109,9 +109,6 @@ void Reconstructor::initialize()
 				voxel->x = x;
 				voxel->y = y;
 				voxel->z = z;
-				voxel->drawColorR = 1.0;
-				voxel->drawColorG = 0.0;
-				voxel->drawColorB = 0.5;
 				voxel->camera_projection = vector<Point>(_cameras.size());
 				voxel->valid_camera_projection = vector<int>(_cameras.size(), 0);
 
@@ -182,6 +179,9 @@ void Reconstructor::update()
 #pragma omp critical //push_back is critical
 #endif
 			visible_voxels.push_back(voxel);
+		}
+		else {
+			voxel->labelNum = -1; //JV
 		}
 	}
 

@@ -32,6 +32,9 @@ protected:
 	MixtureColorModel colorModels;
 public:
 
+	static bool RELABEL_EMERGING_VOXELS_ONLY;	
+	static bool APPLY_CLUSTERING;
+
 	struct Cluster
 	{
 		int center_x, center_y;
