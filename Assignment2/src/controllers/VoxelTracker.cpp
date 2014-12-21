@@ -13,6 +13,8 @@
 #include <cassert>
 #include <iostream>
 
+#include <fstream>
+
 using namespace std;
 using namespace cv;
 
@@ -51,6 +53,9 @@ VoxelTracker::~VoxelTracker()
 {
 	for (size_t c = 0; c < _clusters.size(); ++c)
 		delete _clusters.at(c);
+	
+	//Close the text output
+	_ftrajectories.close();
 }
 
 /**
@@ -99,6 +104,10 @@ void VoxelTracker::initialize()
 
 	_clusters.push_back(cluster3);
 
+
+
+	//Text output for trajectories
+	_ftrajectories.open("output/trajectories.txt", ios::out);
 }
 
 /**
@@ -179,6 +188,20 @@ void VoxelTracker::update()
 			}
 		}
 	}
+
+	//Output cluster center data to a file.
+	for (size_t c = 0; c < _num_clusters; c++)
+	{
+		_ftrajectories << "(";
+		_ftrajectories << _clusters[c]->center_x << ",";
+		_ftrajectories << _clusters[c]->center_y << ") ";
+
+		//Save the cluster positions in the cluster for drawing later
+		_clusters[c]->path_x.push_back(_clusters[c]->center_x);
+		_clusters[c]->path_y.push_back(_clusters[c]->center_y);
+	}
+	_ftrajectories << endl;
+
 }
 
 } /* namespace nl_uu_science_gmt */

@@ -89,7 +89,7 @@ _reconstructor(r), _voxeltracker(vt), _cameras(cs), _num(4), _sphere_radius(1850
 	createFloorGrid();
 	setTopView();
 
-	//VideoWriter _wrt; //JV
+	//VideoWriter for video output
 	_wrt.open("output/video1.avi", 1145656920, 29, Size(640, 480));
 }
 

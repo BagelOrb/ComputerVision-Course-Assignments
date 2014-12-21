@@ -12,9 +12,10 @@
 #include <stddef.h>
 #include <vector>
 
-//#include <cstdlib> // rand (TK)
+#include <iostream>
+#include <fstream>
 
-#include <opencv2/opencv.hpp>
+//#include <cstdlib> // rand (TK)
 
 #include "Camera.h"
 #include "Reconstructor.h"
@@ -32,6 +33,8 @@ protected:
 	MixtureColorModel colorModels;
 public:
 
+	std::ofstream _ftrajectories;
+
 	static bool RELABEL_EMERGING_VOXELS_ONLY;	
 	static bool APPLY_CLUSTERING;
 
@@ -43,8 +46,9 @@ public:
 		float drawColorG;
 		float drawColorB;
 
-		//Probably some other stuff here
-		//std::vector<Reconstructor::Voxel> closestVoxels;
+		//A history of the cluster center's path
+		std::vector<int> path_x;
+		std::vector<int> path_y;
 
 		//Color model: TODO change this to something useful instead of int
 		int colorModel;
