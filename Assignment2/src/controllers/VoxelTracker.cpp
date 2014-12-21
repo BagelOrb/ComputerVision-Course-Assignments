@@ -19,8 +19,8 @@ using namespace cv;
 namespace nl_uu_science_gmt
 {
 
-	VoxelTracker::RELABEL_EMERGING_VOXELS_ONLY = true; // TK
-	VoxelTracker::APPLY_CLUSTERING = true; // TK
+	bool VoxelTracker::RELABEL_EMERGING_VOXELS_ONLY = true; // TK
+	bool VoxelTracker::APPLY_CLUSTERING = true; // TK
 
 /**
  * Voxel tracking by clustering
