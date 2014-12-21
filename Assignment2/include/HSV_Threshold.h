@@ -20,7 +20,7 @@ public:
 	HSV_State* getNearbyRandom(double std_dev, std::default_random_engine& gen)
 	{
 		std::normal_distribution<double> dist(0, std_dev);
-		HSV_State* ret = new HSV_State(h + dist(gen), s + dist(gen), v + dist(gen));
+		HSV_State* ret = new HSV_State(uchar(h + dist(gen)), uchar(s + dist(gen)), uchar(v + dist(gen)));
 
 
 		return ret;

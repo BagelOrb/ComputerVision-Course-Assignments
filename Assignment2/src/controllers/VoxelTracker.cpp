@@ -82,7 +82,7 @@ void VoxelTracker::initialize()
 	cluster1->drawColorR = 0.0;
 	cluster1->drawColorG = 1.0;
 	cluster1->drawColorB = 0.0;
-	cluster1->colorModel = 0.25;
+	cluster1->colorModel = 1;
 
 	_clusters.push_back(cluster1);
 
@@ -92,7 +92,7 @@ void VoxelTracker::initialize()
 	cluster2->drawColorR = 0.0;
 	cluster2->drawColorG = 0.0;
 	cluster2->drawColorB = 1.0;
-	cluster2->colorModel = 0.5;
+	cluster2->colorModel = 2;
 
 	_clusters.push_back(cluster2);
 
@@ -102,7 +102,7 @@ void VoxelTracker::initialize()
 	cluster3->drawColorR = 0.5;
 	cluster3->drawColorG = 0.5;
 	cluster3->drawColorB = 0.5;
-	cluster3->colorModel = 1;
+	cluster3->colorModel = 3;
 
 	_clusters.push_back(cluster3);
 
