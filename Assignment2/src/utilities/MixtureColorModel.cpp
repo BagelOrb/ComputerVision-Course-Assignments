@@ -77,7 +77,7 @@ void MixtureColorModel::test()
 
 	Mat frame = imread("data\\cam1frame752-original.jpg");
 
-	Mat out(frame); // copy so that output has same dimensionality
+	Mat out(frame); // copy so that output mat has same dimensionality
 
 	{
 		MatIterator_<Vec3b> out_pixel = out.begin<Vec3b>();
@@ -135,31 +135,7 @@ bool MixtureColorModel::load(string filename)
 	std::cout << "Loading MixtureColorModel D..." << std::endl;
 	emD = loadModel(fs, "D-", data.d);
 
-
 	fs.release();
-
-	/*
-	int n_color_clusters = 4;
-	int maxIters = 0; 
-
-	
-	mcm.emA = new EM(n_color_clusters, EM::COV_MAT_DIAGONAL, TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, maxIters, FLT_EPSILON));
-	std::cout << "training A..." << std::endl;
-	mcm.emA->train(data.a);
-
-	mcm.emB = new EM(n_color_clusters, EM::COV_MAT_DIAGONAL, TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, maxIters, FLT_EPSILON));
-	std::cout << "training B..." << std::endl;
-	mcm.emB->train(data.b);
-
-	mcm.emC = new EM(n_color_clusters, EM::COV_MAT_DIAGONAL, TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, maxIters, FLT_EPSILON));
-	std::cout << "training C..." << std::endl;
-	mcm.emC->train(data.c);
-
-	mcm.emD = new EM(n_color_clusters, EM::COV_MAT_DIAGONAL, TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, maxIters, FLT_EPSILON));
-	std::cout << "training D..." << std::endl;
-	mcm.emD->train(data.d);
-	*/
-	
 
 	return true;
 }

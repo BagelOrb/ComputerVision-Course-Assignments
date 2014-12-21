@@ -27,6 +27,8 @@ namespace nl_uu_science_gmt
 {
 	_num_clusters = numClusters;
 
+	colorModels.load();
+
 	for (size_t c = 0; c < _cameras.size(); ++c)
 	{
 		if (_plane_size.area() > 0)
@@ -126,17 +128,8 @@ void VoxelTracker::update()
 		//Check if the voxel has a label
 		if (currentlyVisibleVoxels[i]->labelNum == -1) {
 
-			//Assign a label based on minimum color distance to each cluster's color model
-			auto minColorModelDistance = VoxelTracker::colorModelMaxDistance; // some maximum value
-			for (size_t m = 0; m < _num_clusters;  m++)
-			{
+			assignClusterLabelBasedOnColor(currentlyVisibleVoxels[i]);
 
-				float colorModelDistance = VoxelTracker::colorDistance(currentlyVisibleVoxels[i]->realColor, _clusters[m]->colorModel);
-				if (colorModelDistance < minColorModelDistance) {
-					minColorModelDistance = colorModelDistance;
-					currentlyVisibleVoxels[i]->labelNum = m;
-				}
-			}
 		}
 
 		//Assign each voxel's coordinates to the voxel's cluster, to calculate cluster centers
