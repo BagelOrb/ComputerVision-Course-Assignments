@@ -39,8 +39,8 @@ int main(int argc, char** argv)
 	Scene3DRenderer::PERFORM_EROSION_DILATION = true;
 	Scene3DRenderer::backgroundSubtractor = Scene3DRenderer::CONDITIONAL;
 
-	VoxelTracker::RELABEL_EMERGING_VOXELS_ONLY = true;
-	VoxelTracker::APPLY_CLUSTERING = true;
+	VoxelTracker::RELABEL_EMERGING_VOXELS_ONLY = false;
+	VoxelTracker::APPLY_CLUSTERING = false;
 
 	main_(argc, argv);
 

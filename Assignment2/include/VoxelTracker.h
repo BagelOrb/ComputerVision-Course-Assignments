@@ -158,7 +158,7 @@ public:
 	*/
 
 	//Some maximum value for the result of colorDistance
-	const float colorModelMaxDistance = 1000;
+	const double colorModelMaxDistance = 1000;
 
 	void setClusters(const std::vector<Cluster*>& clusters)
 	{
