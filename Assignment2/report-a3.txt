@@ -1,0 +1,65 @@
+   Report - Assignment 3 Computer Vision 2014-2015
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+	
+	Tim Kuipers (3149099 (old) or F141459 (new)) 
+		color model, offline tracking initialization
+	
+	Jeroen van de Ven (F141192) 
+		online tracking steps, drawing (opengl), output
+
+														written by Tim Kuipers 
+=======================================================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        _   _____  ___   ____                                                                                                                                                                                            
+|\  |  / \    |   |     /                                                       
+| \ | |   |   |   |__   \___                                                      
+|  \| |   |   |   |         \                                               
+|   |  \_/    |   |___  ____/                                                     
+
+---
+
+struct Cluster:
+
+Clusters are given a center position, a color, a colormodel and a path. 
+'Path' is simply the history of the center positions and is used to for drawing.
+
+---
+
+Drawing the cluster path history: use the 'a' key in the program to toggle this mode.
+It runs Glut::drawClusterPaths
+
+---
+
+Online tracking:
+
+This is implemented mostly in VoxelTracker. VoxelTracker::update is called each time
+a new frame is processed. It performs the steps in III.1 through III.6 making use of 
+assignClusterLabelBasedOnColor by Tim. There is a feature by Tim that reduces the effect
+of outliers on the cluster centers so that they are positioned more accurately (rr181-201).
+
+VoxelTracker::update also outputs the newly calculated centers of the clusters to a text file.
+(the assignment was ambiguous here, in section III it was specified to add an image trace
+of the paths but in the 'Submission' section a text version was requested. We did both.
+
+---
+
+Drawing:
+
+Cluster centers are (always) drawn as squares on the floor of the cube (Glut::drawClusterPositions)
+
+---
+
+Results analysis
+
+Because we used input video's with 4 people that sometimes walk entirely out of the picture
+on some cameras, the clusters sometimes get lost. Either of two things happen then: (a) The 
+cluster center floats around, or (b) A different person gets split into two clusters.
+
+Examples of (a): 0:15 etc
+Examples of (b): 0:11, 0:12 etc
+
+Whenever all the people are in the model, the clusters work well and are stable. We did not
+consider the quality of these input video's when we decided to use them, only that they had 4
+people which would have been more challenging. It turns out the fact that not all people
+are always in the model is the most important factor that makes these input video's unsuitable.
