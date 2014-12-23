@@ -883,7 +883,7 @@ void Glut::drawClusterPositions()
 	glTranslatef(0, 0, 0);
 
 	// determines the size of the square to draw
-	uchar squaresize = 64;
+	uchar squaresize = 255;
 
 
 	vector<VoxelTracker::Cluster*> clusters = _glut->getScene3d().getVoxelTracker().getClusters();

@@ -36,7 +36,7 @@ Reconstructor::Reconstructor(const vector<Camera*> &cs) :
 	}
 
 	if (LOW_RES_VOXELS)
-		_step = 128; // 32
+		_step = 64; // 32
 	else
 		_step = 32;
 	if (SKIP_VOXELS)
