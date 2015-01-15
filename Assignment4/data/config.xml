@@ -5,7 +5,7 @@
 		<examples size="400" />
 		<pos>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
-				C:/Users/Coert/Pictures/lfw2/
+				data/Faces/
 				<!-- /home/coert/Pictures/PhD/lfw2/ -->
 				<!-- /home/coert/Pictures/lfw/lfw2/ -->
 			</path>
@@ -13,7 +13,7 @@
 		</pos>
 		<neg>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
-				C:/Users/Coert/Pictures/PascalVOC/VOCdevkit/VOC2007/JPEGImages/
+				data/nonFaces/JPEGImages/
 				<!-- /mnt/HDD060/cache/mp/VOCdevkit/VOC2007/JPEGImages/ -->
 				<!-- /home/coert/Documents/PascalVOC/VOCdevkit/VOC2007/JPEGImages/ -->
 			</path>
