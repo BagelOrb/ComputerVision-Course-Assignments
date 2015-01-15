@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)include;$(OPENCV_DIR)include;$(BOOST_DIR);$(IncludePath)</IncludePath>
-    <LibraryPath>$(OPENCV_DIR)x86\vc11\lib;$(BOOST_DIR)lib32-msvc-11.0;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;$(OPENCV_DIR)build\include;$(BOOST_DIR);$(IncludePath)</IncludePath>
+    <LibraryPath>$(OPENCV_DIR)build\x86\vc11\lib;$(BOOST_DIR)lib32-msvc-12.0;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -62,7 +62,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opencv_core249d.lib;opencv_highgui249d.lib;opencv_imgproc249d.lib;opencv_ml249d.lib;opencv_contrib249d.lib;boost_filesystem-vc110-mt-gd-1_56.lib;boost_system-vc110-mt-gd-1_56.lib;boost_regex-vc110-mt-gd-1_56.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core249d.lib;opencv_highgui249d.lib;opencv_imgproc249d.lib;opencv_ml249d.lib;opencv_contrib249d.lib;boost_filesystem-vc120-mt-gd-1_57.lib;boost_system-vc120-mt-gd-1_57.lib;boost_regex-vc120-mt-gd-1_57.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
