@@ -1,0 +1,1154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.debug.871258223">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.debug.871258223" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.debug.871258223" name="Debug" parent="cdt.managedbuild.config.gnu.cross.exe.debug">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.871258223." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.1972437703" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.2041515311" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/LinearSVMImageDetector-public-v2.0}/Debug" id="cdt.managedbuild.builder.gnu.cross.406745920" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1638930135" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1664611361" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.400746579" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.1306689567" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" valueType="undefDefinedSymbols">
+									<listOptionValue builtIn="false" value="__STDC__"/>
+									<listOptionValue builtIn="false" value="__INT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_DWARF2_CFI_ASM"/>
+									<listOptionValue builtIn="false" value="__WINT_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_LITTLE_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_POINTER_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_TEST_AND_SET_TRUEVAL"/>
+									<listOptionValue builtIn="false" value="__STDC_ISO_10646__"/>
+									<listOptionValue builtIn="false" value="__BYTE_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SIZE_T__"/>
+									<listOptionValue builtIn="false" value="__PRAGMA_REDEFINE_EXTNAME"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELEASE"/>
+									<listOptionValue builtIn="false" value="__SCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION"/>
+									<listOptionValue builtIn="false" value="__k8__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__x86_64__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN__"/>
+									<listOptionValue builtIn="false" value="__UINT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FXSR__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_RELEASE"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__BIGGEST_ALIGNMENT__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG__"/>
+									<listOptionValue builtIn="false" value="__UINT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC64_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE_MATH__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MIN__"/>
+									<listOptionValue builtIn="false" value="__REGISTER_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__CHAR16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_RADIX__"/>
+									<listOptionValue builtIn="false" value="__ORDER_BIG_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__SIZE_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__SIZE_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__FLOAT_WORD_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__gnu_linux__"/>
+									<listOptionValue builtIn="false" value="__code_model_small__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SHORT__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_BID_FORMAT__"/>
+									<listOptionValue builtIn="false" value="__unix__"/>
+									<listOptionValue builtIn="false" value="__LP64__"/>
+									<listOptionValue builtIn="false" value="__UINT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__linux"/>
+									<listOptionValue builtIn="false" value="__INTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_BOOL_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__LDBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_CONSUME"/>
+									<listOptionValue builtIn="false" value="__LDBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC_PATCHLEVEL__"/>
+									<listOptionValue builtIn="false" value="linux"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__VERSION__"/>
+									<listOptionValue builtIn="false" value="__SSE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE2_MATH__"/>
+									<listOptionValue builtIn="false" value="__unix"/>
+									<listOptionValue builtIn="false" value="__FLT_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_INT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LLONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559_COMPLEX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MIN__"/>
+									<listOptionValue builtIn="false" value="__CHAR32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__GNUC_GNU_INLINE__"/>
+									<listOptionValue builtIn="false" value="__UINT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__k8"/>
+									<listOptionValue builtIn="false" value="__UINT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_LONG__"/>
+									<listOptionValue builtIn="false" value="__LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQ_REL"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SSE2__"/>
+									<listOptionValue builtIn="false" value="__INT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR16_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__DBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__CHAR_BIT__"/>
+									<listOptionValue builtIn="false" value="__MMX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_SEQ_CST"/>
+									<listOptionValue builtIn="false" value="__FLT_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WCHAR_T__"/>
+									<listOptionValue builtIn="false" value="__DEC32_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC128_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__NO_INLINE__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_SHORT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__linux__"/>
+									<listOptionValue builtIn="false" value="__GNUC_MINOR__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELAXED"/>
+									<listOptionValue builtIn="false" value="__FINITE_MATH_ONLY__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR32_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="_LP64"/>
+									<listOptionValue builtIn="false" value="__DBL_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_PTRDIFF_T__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__INT_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="_STDC_PREDEF_H"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_FLOAT__"/>
+									<listOptionValue builtIn="false" value="__STDC_NO_THREADS__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SSP__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="unix"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MAX__"/>
+									<listOptionValue builtIn="false" value="__ELF__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT128__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__LONG_LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SHRT_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__DEC32_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__STDC_HOSTED__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_WCHAR_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WINT_T__"/>
+									<listOptionValue builtIn="false" value="__UINT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_PDP_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__x86_64"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_POINTER__"/>
+									<listOptionValue builtIn="false" value="__DEC64_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MAX__"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.87032331" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1183217999" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.378223536" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.677314089" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.690885932" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1171705648" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++11 -fopenmp" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1578896111" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="_OPENMP"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.preprocessor.undef.1192266798" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" valueType="undefDefinedSymbols">
+									<listOptionValue builtIn="false" value="__STDC__"/>
+									<listOptionValue builtIn="false" value="__INT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_DWARF2_CFI_ASM"/>
+									<listOptionValue builtIn="false" value="__WINT_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_LITTLE_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_POINTER_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_TEST_AND_SET_TRUEVAL"/>
+									<listOptionValue builtIn="false" value="__STDC_ISO_10646__"/>
+									<listOptionValue builtIn="false" value="__GXX_WEAK__"/>
+									<listOptionValue builtIn="false" value="__BYTE_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SIZE_T__"/>
+									<listOptionValue builtIn="false" value="__PRAGMA_REDEFINE_EXTNAME"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELEASE"/>
+									<listOptionValue builtIn="false" value="__SCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION"/>
+									<listOptionValue builtIn="false" value="__k8__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__x86_64__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN__"/>
+									<listOptionValue builtIn="false" value="__UINT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FXSR__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_RELEASE"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__BIGGEST_ALIGNMENT__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG__"/>
+									<listOptionValue builtIn="false" value="__UINT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC64_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE_MATH__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MIN__"/>
+									<listOptionValue builtIn="false" value="__REGISTER_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__CHAR16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_RADIX__"/>
+									<listOptionValue builtIn="false" value="__ORDER_BIG_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__SIZE_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__SIZE_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__FLOAT_WORD_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX__"/>
+									<listOptionValue builtIn="false" value="__GNUG__"/>
+									<listOptionValue builtIn="false" value="__DBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__gnu_linux__"/>
+									<listOptionValue builtIn="false" value="__code_model_small__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SHORT__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_BID_FORMAT__"/>
+									<listOptionValue builtIn="false" value="__unix__"/>
+									<listOptionValue builtIn="false" value="__LP64__"/>
+									<listOptionValue builtIn="false" value="__UINT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__linux"/>
+									<listOptionValue builtIn="false" value="__INTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_BOOL_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__LDBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_CONSUME"/>
+									<listOptionValue builtIn="false" value="__LDBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC_PATCHLEVEL__"/>
+									<listOptionValue builtIn="false" value="linux"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__VERSION__"/>
+									<listOptionValue builtIn="false" value="__SSE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE2_MATH__"/>
+									<listOptionValue builtIn="false" value="__unix"/>
+									<listOptionValue builtIn="false" value="__FLT_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_INT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LLONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559__"/>
+									<listOptionValue builtIn="false" value="__DEPRECATED"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559_COMPLEX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MIN__"/>
+									<listOptionValue builtIn="false" value="__CHAR32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GXX_RTTI"/>
+									<listOptionValue builtIn="false" value="__FLT_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__GNUC_GNU_INLINE__"/>
+									<listOptionValue builtIn="false" value="__UINT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__k8"/>
+									<listOptionValue builtIn="false" value="__UINT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_LONG__"/>
+									<listOptionValue builtIn="false" value="__LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQ_REL"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SSE2__"/>
+									<listOptionValue builtIn="false" value="__INT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR16_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__DBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__CHAR_BIT__"/>
+									<listOptionValue builtIn="false" value="__MMX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_SEQ_CST"/>
+									<listOptionValue builtIn="false" value="__FLT_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WCHAR_T__"/>
+									<listOptionValue builtIn="false" value="__DEC32_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC128_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__NO_INLINE__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_SHORT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__linux__"/>
+									<listOptionValue builtIn="false" value="__GNUC_MINOR__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELAXED"/>
+									<listOptionValue builtIn="false" value="__FINITE_MATH_ONLY__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR32_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="_LP64"/>
+									<listOptionValue builtIn="false" value="__DBL_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_PTRDIFF_T__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__INT_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="_STDC_PREDEF_H"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_FLOAT__"/>
+									<listOptionValue builtIn="false" value="__STDC_NO_THREADS__"/>
+									<listOptionValue builtIn="false" value="_GNU_SOURCE"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SSP__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX__"/>
+									<listOptionValue builtIn="false" value="__EXCEPTIONS"/>
+									<listOptionValue builtIn="false" value="__DBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="unix"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MAX__"/>
+									<listOptionValue builtIn="false" value="__ELF__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT128__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__LONG_LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__cplusplus"/>
+									<listOptionValue builtIn="false" value="__FLT_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SHRT_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__DEC32_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__STDC_HOSTED__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_WCHAR_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WINT_T__"/>
+									<listOptionValue builtIn="false" value="__UINT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_PDP_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__x86_64"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_POINTER__"/>
+									<listOptionValue builtIn="false" value="__DEC64_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MAX__"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.998361484" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.85952239" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.162842830" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.944675519" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="Utilities"/>
+									<listOptionValue builtIn="false" value="boost_system"/>
+									<listOptionValue builtIn="false" value="boost_filesystem"/>
+									<listOptionValue builtIn="false" value="boost_regex"/>
+									<listOptionValue builtIn="false" value="statgrab"/>
+									<listOptionValue builtIn="false" value="gomp"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.888176264" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Utilities/lib}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1918477854" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1188532886" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.755627519" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1931046958" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.release.1703337929">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.release.1703337929" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.exe.release.1703337929" name="Release" parent="cdt.managedbuild.config.gnu.cross.exe.release">
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.release.1703337929." name="/" resourcePath="">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.release.226684913" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.release">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1532117070" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/LinearSVMImageDetector-public-v2.0}/Release" id="cdt.managedbuild.builder.gnu.cross.2115299611" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.693328131" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.665544533" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.2095635189" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.647183898" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" valueType="undefDefinedSymbols">
+									<listOptionValue builtIn="false" value="__STDC__"/>
+									<listOptionValue builtIn="false" value="__INT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_DWARF2_CFI_ASM"/>
+									<listOptionValue builtIn="false" value="__WINT_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_LITTLE_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_POINTER_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_TEST_AND_SET_TRUEVAL"/>
+									<listOptionValue builtIn="false" value="__STDC_ISO_10646__"/>
+									<listOptionValue builtIn="false" value="__BYTE_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SIZE_T__"/>
+									<listOptionValue builtIn="false" value="__PRAGMA_REDEFINE_EXTNAME"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELEASE"/>
+									<listOptionValue builtIn="false" value="__SCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION"/>
+									<listOptionValue builtIn="false" value="__k8__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__x86_64__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN__"/>
+									<listOptionValue builtIn="false" value="__UINT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FXSR__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_RELEASE"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__BIGGEST_ALIGNMENT__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG__"/>
+									<listOptionValue builtIn="false" value="__UINT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC64_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE_MATH__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MIN__"/>
+									<listOptionValue builtIn="false" value="__REGISTER_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__CHAR16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_RADIX__"/>
+									<listOptionValue builtIn="false" value="__ORDER_BIG_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__SIZE_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__SIZE_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__FLOAT_WORD_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__gnu_linux__"/>
+									<listOptionValue builtIn="false" value="__code_model_small__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SHORT__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_BID_FORMAT__"/>
+									<listOptionValue builtIn="false" value="__unix__"/>
+									<listOptionValue builtIn="false" value="__LP64__"/>
+									<listOptionValue builtIn="false" value="__UINT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__linux"/>
+									<listOptionValue builtIn="false" value="__INTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_BOOL_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__LDBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_CONSUME"/>
+									<listOptionValue builtIn="false" value="__LDBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC_PATCHLEVEL__"/>
+									<listOptionValue builtIn="false" value="linux"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__VERSION__"/>
+									<listOptionValue builtIn="false" value="__SSE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE2_MATH__"/>
+									<listOptionValue builtIn="false" value="__unix"/>
+									<listOptionValue builtIn="false" value="__FLT_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_INT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LLONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559_COMPLEX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MIN__"/>
+									<listOptionValue builtIn="false" value="__CHAR32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__GNUC_GNU_INLINE__"/>
+									<listOptionValue builtIn="false" value="__UINT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__k8"/>
+									<listOptionValue builtIn="false" value="__UINT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_LONG__"/>
+									<listOptionValue builtIn="false" value="__LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQ_REL"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SSE2__"/>
+									<listOptionValue builtIn="false" value="__INT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR16_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__DBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__CHAR_BIT__"/>
+									<listOptionValue builtIn="false" value="__MMX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_SEQ_CST"/>
+									<listOptionValue builtIn="false" value="__FLT_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WCHAR_T__"/>
+									<listOptionValue builtIn="false" value="__DEC32_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC128_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__NO_INLINE__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_SHORT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__linux__"/>
+									<listOptionValue builtIn="false" value="__GNUC_MINOR__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELAXED"/>
+									<listOptionValue builtIn="false" value="__FINITE_MATH_ONLY__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR32_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="_LP64"/>
+									<listOptionValue builtIn="false" value="__DBL_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_PTRDIFF_T__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__INT_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="_STDC_PREDEF_H"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_FLOAT__"/>
+									<listOptionValue builtIn="false" value="__STDC_NO_THREADS__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SSP__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="unix"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MAX__"/>
+									<listOptionValue builtIn="false" value="__ELF__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT128__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__LONG_LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SHRT_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__DEC32_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__STDC_HOSTED__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_WCHAR_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WINT_T__"/>
+									<listOptionValue builtIn="false" value="__UINT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_PDP_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__x86_64"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_POINTER__"/>
+									<listOptionValue builtIn="false" value="__DEC64_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MAX__"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1811391194" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1595633095" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.optimization.level.886673298" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.2043293862" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1820790666" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/include}&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1589155837" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++11 -fopenmp" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1820243233" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="_OPENMP"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.preprocessor.undef.1323822492" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" valueType="undefDefinedSymbols">
+									<listOptionValue builtIn="false" value="__STDC__"/>
+									<listOptionValue builtIn="false" value="__INT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_DWARF2_CFI_ASM"/>
+									<listOptionValue builtIn="false" value="__WINT_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_LITTLE_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_POINTER_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_TEST_AND_SET_TRUEVAL"/>
+									<listOptionValue builtIn="false" value="__STDC_ISO_10646__"/>
+									<listOptionValue builtIn="false" value="__GXX_WEAK__"/>
+									<listOptionValue builtIn="false" value="__BYTE_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SIZE_T__"/>
+									<listOptionValue builtIn="false" value="__PRAGMA_REDEFINE_EXTNAME"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELEASE"/>
+									<listOptionValue builtIn="false" value="__SCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION"/>
+									<listOptionValue builtIn="false" value="__k8__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT64_MAX__"/>
+									<listOptionValue builtIn="false" value="__x86_64__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN__"/>
+									<listOptionValue builtIn="false" value="__UINT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__UINT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FXSR__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_RELEASE"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__BIGGEST_ALIGNMENT__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2"/>
+									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG__"/>
+									<listOptionValue builtIn="false" value="__UINT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC64_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE_MATH__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MIN__"/>
+									<listOptionValue builtIn="false" value="__REGISTER_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_C(c)"/>
+									<listOptionValue builtIn="false" value="__CHAR16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_RADIX__"/>
+									<listOptionValue builtIn="false" value="__ORDER_BIG_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__SIZE_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__SIZE_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__FLOAT_WORD_ORDER__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX__"/>
+									<listOptionValue builtIn="false" value="__GNUG__"/>
+									<listOptionValue builtIn="false" value="__DBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__gnu_linux__"/>
+									<listOptionValue builtIn="false" value="__code_model_small__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_SHORT__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DECIMAL_BID_FORMAT__"/>
+									<listOptionValue builtIn="false" value="__unix__"/>
+									<listOptionValue builtIn="false" value="__LP64__"/>
+									<listOptionValue builtIn="false" value="__UINT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__linux"/>
+									<listOptionValue builtIn="false" value="__INTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_BOOL_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__LDBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_CONSUME"/>
+									<listOptionValue builtIn="false" value="__LDBL_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC_PATCHLEVEL__"/>
+									<listOptionValue builtIn="false" value="linux"/>
+									<listOptionValue builtIn="false" value="__LDBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__VERSION__"/>
+									<listOptionValue builtIn="false" value="__SSE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_MAX__"/>
+									<listOptionValue builtIn="false" value="__SSE2_MATH__"/>
+									<listOptionValue builtIn="false" value="__unix"/>
+									<listOptionValue builtIn="false" value="__FLT_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_INT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__PTRDIFF_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_LLONG_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__UINT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559__"/>
+									<listOptionValue builtIn="false" value="__DEPRECATED"/>
+									<listOptionValue builtIn="false" value="__DEC32_MIN__"/>
+									<listOptionValue builtIn="false" value="__STDC_IEC_559_COMPLEX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_DENORM__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MIN__"/>
+									<listOptionValue builtIn="false" value="__CHAR32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GXX_RTTI"/>
+									<listOptionValue builtIn="false" value="__FLT_DENORM_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC32_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_HLE_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__GNUC_GNU_INLINE__"/>
+									<listOptionValue builtIn="false" value="__UINT8_MAX__"/>
+									<listOptionValue builtIn="false" value="__k8"/>
+									<listOptionValue builtIn="false" value="__UINT32_C(c)"/>
+									<listOptionValue builtIn="false" value="__INT64_C(c)"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_LONG_LONG__"/>
+									<listOptionValue builtIn="false" value="__LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_C(c)"/>
+									<listOptionValue builtIn="false" value="__FLT_MIN__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQ_REL"/>
+									<listOptionValue builtIn="false" value="__LDBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SSE2__"/>
+									<listOptionValue builtIn="false" value="__INT16_C(c)"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR16_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__DBL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__CHAR_BIT__"/>
+									<listOptionValue builtIn="false" value="__MMX__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_SEQ_CST"/>
+									<listOptionValue builtIn="false" value="__FLT_EVAL_METHOD__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_DOUBLE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WCHAR_T__"/>
+									<listOptionValue builtIn="false" value="__DEC32_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__DEC128_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__NO_INLINE__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_10_EXP__"/>
+									<listOptionValue builtIn="false" value="__INT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_SHORT_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__linux__"/>
+									<listOptionValue builtIn="false" value="__GNUC_MINOR__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_RELAXED"/>
+									<listOptionValue builtIn="false" value="__FINITE_MATH_ONLY__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR32_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT_LEAST32_TYPE__"/>
+									<listOptionValue builtIn="false" value="_LP64"/>
+									<listOptionValue builtIn="false" value="__DBL_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__amd64"/>
+									<listOptionValue builtIn="false" value="__DBL_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__FLT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_PTRDIFF_T__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_HAS_INFINITY__"/>
+									<listOptionValue builtIn="false" value="__INT_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX_10_EXP__"/>
+									<listOptionValue builtIn="false" value="_STDC_PREDEF_H"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_FLOAT__"/>
+									<listOptionValue builtIn="false" value="__STDC_NO_THREADS__"/>
+									<listOptionValue builtIn="false" value="_GNU_SOURCE"/>
+									<listOptionValue builtIn="false" value="__INT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__INT32_TYPE__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__UINT_LEAST16_MAX__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MIN_EXP__"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MIN__"/>
+									<listOptionValue builtIn="false" value="__GNUC__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__SSP__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MAX__"/>
+									<listOptionValue builtIn="false" value="__EXCEPTIONS"/>
+									<listOptionValue builtIn="false" value="__DBL_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC128_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="unix"/>
+									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MAX__"/>
+									<listOptionValue builtIn="false" value="__ELF__"/>
+									<listOptionValue builtIn="false" value="__UINTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT128__"/>
+									<listOptionValue builtIn="false" value="__ATOMIC_ACQUIRE"/>
+									<listOptionValue builtIn="false" value="__LONG_LONG_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_CHAR_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__INT32_MAX__"/>
+									<listOptionValue builtIn="false" value="__FLT_MANT_DIG__"/>
+									<listOptionValue builtIn="false" value="__UINT16_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT8_TYPE__"/>
+									<listOptionValue builtIn="false" value="__cplusplus"/>
+									<listOptionValue builtIn="false" value="__FLT_DECIMAL_DIG__"/>
+									<listOptionValue builtIn="false" value="__DEC64_MAX__"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_INT__"/>
+									<listOptionValue builtIn="false" value="__FLT_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__SHRT_MAX__"/>
+									<listOptionValue builtIn="false" value="__INTMAX_MAX__"/>
+									<listOptionValue builtIn="false" value="__LDBL_MAX__"/>
+									<listOptionValue builtIn="false" value="__DBL_MAX_EXP__"/>
+									<listOptionValue builtIn="false" value="__DEC32_EPSILON__"/>
+									<listOptionValue builtIn="false" value="__UINT_FAST64_MAX__"/>
+									<listOptionValue builtIn="false" value="__STDC_HOSTED__"/>
+									<listOptionValue builtIn="false" value="__DBL_HAS_QUIET_NAN__"/>
+									<listOptionValue builtIn="false" value="__GCC_ATOMIC_WCHAR_T_LOCK_FREE"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_WINT_T__"/>
+									<listOptionValue builtIn="false" value="__UINT64_TYPE__"/>
+									<listOptionValue builtIn="false" value="__INT_FAST16_TYPE__"/>
+									<listOptionValue builtIn="false" value="__ORDER_PDP_ENDIAN__"/>
+									<listOptionValue builtIn="false" value="__WCHAR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__UINTPTR_TYPE__"/>
+									<listOptionValue builtIn="false" value="__x86_64"/>
+									<listOptionValue builtIn="false" value="__SIZEOF_POINTER__"/>
+									<listOptionValue builtIn="false" value="__DEC64_SUBNORMAL_MIN__"/>
+									<listOptionValue builtIn="false" value="__WINT_MAX__"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.353477108" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1218053146" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.523347160" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.1587810296" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="opencv_core"/>
+									<listOptionValue builtIn="false" value="opencv_highgui"/>
+									<listOptionValue builtIn="false" value="opencv_imgproc"/>
+									<listOptionValue builtIn="false" value="opencv_ml"/>
+									<listOptionValue builtIn="false" value="Utilities"/>
+									<listOptionValue builtIn="false" value="boost_system"/>
+									<listOptionValue builtIn="false" value="boost_filesystem"/>
+									<listOptionValue builtIn="false" value="boost_regex"/>
+									<listOptionValue builtIn="false" value="statgrab"/>
+									<listOptionValue builtIn="false" value="gomp"/>
+								</option>
+								<option id="gnu.cpp.link.option.paths.1371785708" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Utilities/lib}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1959985750" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1602158383" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1596755514" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1716154445" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="LinearSVMImageDetector-public-v1.0.org.eclipse.linuxtools.cdt.autotools.core.projectType.1104294550" name="GNU Autotools" projectType="org.eclipse.linuxtools.cdt.autotools.core.projectType"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.871258223;cdt.managedbuild.config.gnu.cross.exe.debug.871258223.;cdt.managedbuild.tool.gnu.cross.c.compiler.1638930135;cdt.managedbuild.tool.gnu.c.compiler.input.87032331">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.871258223;cdt.managedbuild.config.gnu.cross.exe.debug.871258223.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1183217999;cdt.managedbuild.tool.gnu.cpp.compiler.input.998361484">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1703337929;cdt.managedbuild.config.gnu.cross.exe.release.1703337929.;cdt.managedbuild.tool.gnu.cross.c.compiler.693328131;cdt.managedbuild.tool.gnu.c.compiler.input.1811391194">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1703337929;cdt.managedbuild.config.gnu.cross.exe.release.1703337929.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1595633095;cdt.managedbuild.tool.gnu.cpp.compiler.input.353477108">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Build (GNU)">
+			<resource resourceType="PROJECT" workspacePath="/LinearSVMImageDetector-public-v1.0"/>
+		</configuration>
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/LinearSVMImageDetector-public-v1.0"/>
+		</configuration>
+		<configuration configurationName="Release"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+</cproject>

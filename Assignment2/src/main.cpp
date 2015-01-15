@@ -34,8 +34,8 @@ int main_(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-	Reconstructor::SKIP_VOXELS = false;
-	Reconstructor::LOW_RES_VOXELS = false;
+	Reconstructor::SKIP_VOXELS = true;
+	Reconstructor::LOW_RES_VOXELS = true;
 	Scene3DRenderer::PERFORM_EROSION_DILATION = true;
 	Scene3DRenderer::backgroundSubtractor = Scene3DRenderer::CONDITIONAL;
 

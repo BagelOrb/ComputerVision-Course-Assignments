@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Detector.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controllers\FileIO.cpp">
+      <Filter>src\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controllers\MySVM.cpp">
+      <Filter>src\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controllers\QueryXML.cpp">
+      <Filter>src\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controllers\Utility.cpp">
+      <Filter>src\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\ticpp\ticpp.cpp">
+      <Filter>src\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\ticpp\tinystr.cpp">
+      <Filter>src\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\ticpp\tinyxml.cpp">
+      <Filter>src\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\ticpp\tinyxmlerror.cpp">
+      <Filter>src\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\ticpp\tinyxmlparser.cpp">
+      <Filter>src\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controllers\FeatureHOG.cpp">
+      <Filter>src\controllers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Detector.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileIO.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MySVM.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\QueryXML.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\ticpp\ticpp.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\ticpp\ticppapi.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\ticpp\ticpprc.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\ticpp\tinystr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\ticpp\tinyxml.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utility.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FeatureHOG.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{acd8b705-9655-4bbd-bfe1-580dc38d95f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{248f9598-3560-4524-89a7-07dd52c854c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\controllers">
+      <UniqueIdentifier>{88192bf7-2913-406f-b863-fbfff3c38f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules">
+      <UniqueIdentifier>{01b666ea-4ab6-48fd-9621-c8101c88e058}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

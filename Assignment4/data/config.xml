@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings seed="50">
+	<query_image>data/img1.jpg</query_image>
+	<images amount="100" factor="1" width="20">
+		<examples size="400" />
+		<pos>
+			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
+				C:/Users/Coert/Pictures/lfw2/
+				<!-- /home/coert/Pictures/PhD/lfw2/ -->
+				<!-- /home/coert/Pictures/lfw/lfw2/ -->
+			</path>
+			<files regx="^.*\.jpg$" />
+		</pos>
+		<neg>
+			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
+				C:/Users/Coert/Pictures/PascalVOC/VOCdevkit/VOC2007/JPEGImages/
+				<!-- /mnt/HDD060/cache/mp/VOCdevkit/VOC2007/JPEGImages/ -->
+				<!-- /home/coert/Documents/PascalVOC/VOCdevkit/VOC2007/JPEGImages/ -->
+			</path>
+			<files regx="^.*\.jpg$" />
+		</neg>
+		<test threshold="95" show_ground_truth="1">
+			<max_size>400</max_size>
+			<nms threshold="0.2" />
+			<accuracy threshold="0.5" />
+			<ground_truth file="data/img1.jpg">
+				<face id="0">
+					<width>21</width><height>21</height>
+					<x>86</x><y>156</y>
+				</face>
+				<face id="1">
+					<width>26</width><height>26</height>
+					<x>124</x><y>164</y>
+				</face>
+				<face id="2">
+					<width>20</width><height>20</height>
+					<x>168</x><y>60</y>
+				</face>
+				<face id="3">
+					<width>21</width><height>21</height>
+					<x>90</x><y>118</y>
+				</face>
+				<face id="4">
+					<width>21</width><height>21</height>
+					<x>137</x><y>99</y>
+				</face>
+				<face id="5">
+					<width>20</width><height>20</height>
+					<x>32</x><y>148</y>
+				</face>
+				<face id="6">
+					<width>20</width><height>20</height>
+					<x>122</x><y>28</y>
+				</face>
+				<face id="7">
+					<width>20</width><height>20</height>
+					<x>156</x><y>134</y>
+				</face>
+				<face id="8">
+					<width>20</width><height>20</height>
+					<x>34</x><y>94</y>
+				</face>
+				<face id="9">
+					<width>20</width><height>20</height>
+					<x>80</x><y>68</y>
+				</face>
+				<face id="10">
+					<width>23</width><height>23</height>
+					<x>53</x><y>16</y>
+				</face>
+				<face id="11">
+					<width>23</width><height>23</height>
+					<x>64</x><y>207</y>
+				</face>
+				<face id="12">
+					<width>21</width><height>21</height>
+					<x>0</x><y>172</y>
+				</face>
+				<face id="13">
+					<width>21</width><height>21</height>
+					<x>156</x><y>199</y>
+				</face>
+			</ground_truth>
+		</test>
+	</images>
+	<svm>
+		<params>
+			<C>1000</C>
+			<max_count>100000</max_count>
+			<epsilon>0.000001</epsilon>
+		</params>
+	</svm>
+	<features equalize="0" whiten="0">
+		<crop>
+			<x1>80</x1>
+			<x2>80</x2>
+			<y1>90</y1>
+			<y2>70</y2>
+		</crop>
+		<hog>
+			<texture>0.2357</texture>
+			<truncation>0.2</truncation>
+			<step>0</step>
+			<margin>1</margin>
+			<cell_size>8</cell_size>
+			<gradient_bins>9</gradient_bins>
+			<use_texture_features>1</use_texture_features>
+			<use_occlusion_features>0</use_occlusion_features>
+		</hog>
+	</features>
+</settings>
