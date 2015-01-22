@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings seed="50">
-	<query_image>data/img2.jpg</query_image>
-	<images amount="140" factor="20" width="20">
+	<query_image>data/img1.jpg</query_image>
+	<images amount="5" factor="20" width="20">
 		<examples size="400" />
 		<pos>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
-				R:/data/Faces/
+				data/Faces/
 				<!-- /home/coert/Pictures/PhD/lfw2/ -->
 				<!-- /home/coert/Pictures/lfw/lfw2/ -->
 			</path>
@@ -13,7 +13,7 @@
 		</pos>
 		<neg>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
-				R:/data/nonFaces/JPEGImages/
+				data/nonFaces/JPEGImages/
 				<!-- /mnt/HDD060/cache/mp/VOCdevkit/VOC2007/JPEGImages/ -->
 				<!-- /home/coert/Documents/PascalVOC/VOCdevkit/VOC2007/JPEGImages/ -->
 			</path>
@@ -23,58 +23,62 @@
 			<max_size>400</max_size>
 			<nms threshold="0.2" />
 			<accuracy threshold="0.5" />
-			<ground_truth file="data/img2.jpg">
+			<ground_truth file="data/img1.jpg">
 				<face id="0">
-					<width>40</width><height>35</height>
-					<x>55</x><y>110</y>
+					<width>21</width><height>21</height>
+					<x>86</x><y>156</y>
 				</face>
 				<face id="1">
-					<width>30</width><height>30</height>
-					<x>75</x><y>40</y>
+					<width>26</width><height>26</height>
+					<x>124</x><y>164</y>
 				</face>
 				<face id="2">
-					<width>33</width><height>32</height>
-					<x>155</x><y>107</y>
+					<width>20</width><height>20</height>
+					<x>168</x><y>60</y>
 				</face>
 				<face id="3">
-					<width>30</width><height>30</height>
-					<x>160</x><y>60</y>
+					<width>21</width><height>21</height>
+					<x>90</x><y>118</y>
 				</face>
 				<face id="4">
-					<width>30</width><height>32</height>
-					<x>232</x><y>110</y>
+					<width>21</width><height>21</height>
+					<x>137</x><y>99</y>
 				</face>
 				<face id="5">
-					<width>30</width><height>30</height>
-					<x>255</x><y>40</y>
+					<width>20</width><height>20</height>
+					<x>32</x><y>148</y>
 				</face>
 				<face id="6">
-					<width>30</width><height>35</height>
-					<x>275</x><y>75</y>
+					<width>20</width><height>20</height>
+					<x>122</x><y>28</y>
 				</face>
 				<face id="7">
-					<width>30</width><height>35</height>
-					<x>314</x><y>120</y>
+					<width>20</width><height>20</height>
+					<x>156</x><y>134</y>
 				</face>
 				<face id="8">
-					<width>30</width><height>28</height>
-					<x>325</x><y>58</y>
+					<width>20</width><height>20</height>
+					<x>34</x><y>94</y>
 				</face>
 				<face id="9">
-					<width>29</width><height>38</height>
-					<x>347</x><y>75</y>
+					<width>20</width><height>20</height>
+					<x>80</x><y>68</y>
 				</face>
 				<face id="10">
-					<width>28</width><height>37</height>
-					<x>372</x><y>43</y>
+					<width>23</width><height>23</height>
+					<x>53</x><y>16</y>
 				</face>
 				<face id="11">
-					<width>32</width><height>34</height>
-					<x>399</x><y>64</y>
+					<width>23</width><height>23</height>
+					<x>64</x><y>207</y>
 				</face>
 				<face id="12">
-					<width>35</width><height>30</height>
-					<x>520</x><y>50</y>
+					<width>21</width><height>21</height>
+					<x>0</x><y>172</y>
+				</face>
+				<face id="13">
+					<width>21</width><height>21</height>
+					<x>156</x><y>199</y>
 				</face>
 			</ground_truth>
 		</test>
