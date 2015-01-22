@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings seed="50">
 	<query_image>data/img2.jpg</query_image>
-	<images amount="140" factor="20" width="20">
+	<images amount="5" factor="20" width="20">
 		<examples size="400" />
 		<pos>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
-				R:/data/Faces/
+				data/Faces/
 				<!-- /home/coert/Pictures/PhD/lfw2/ -->
 				<!-- /home/coert/Pictures/lfw/lfw2/ -->
 			</path>
@@ -13,7 +13,7 @@
 		</pos>
 		<neg>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
-				R:/data/nonFaces/JPEGImages/
+				data/nonFaces/JPEGImages/
 				<!-- /mnt/HDD060/cache/mp/VOCdevkit/VOC2007/JPEGImages/ -->
 				<!-- /home/coert/Documents/PascalVOC/VOCdevkit/VOC2007/JPEGImages/ -->
 			</path>
@@ -94,7 +94,6 @@
 			<y2>70</y2>
 		</crop>
 		<hog>
-			<use_hog>1</use_hog>
 			<texture>0.2357</texture>
 			<truncation>0.2</truncation>
 			<step>0</step>

@@ -126,8 +126,16 @@ void Detector::readPosFilelist(vector<string> &pos_files)
 	random_shuffle(pos_files.begin(), pos_files.end());
 }
 
+bool strfindreplace(std::string& str, const std::string& from, const std::string& to) {
+	size_t start_pos = str.find(from);
+	if (start_pos == std::string::npos)
+		return false;
+	str.replace(start_pos, from.length(), to);
+	return true;
+}
+
 /*
- * Read negative image files (and shuffle)
+ * Read negative image files (and filter, then shuffle)
  */
 void Detector::readNegFilelist(vector<string> &neg_files)
 {
@@ -135,6 +143,44 @@ void Detector::readNegFilelist(vector<string> &neg_files)
 	const string neg_path = Detector::cfg()->getValue<string>("settings/images/neg/path");
 	const string files_regx = Detector::cfg()->getValue<string>("settings/images/neg/files@regx");
 	FileIO::getDirectory(neg_path, neg_files, files_regx, neg_path);
+
+	cout << "Before: " << neg_files.size() << endl;
+	for (int i = 0; i < neg_files.size(); i++)
+	{
+		ifstream annotationFile;
+		string line;
+		string filename = neg_files.at(i); 
+		
+		//JPEGImages -> Annotations, jpg -> xml
+		strfindreplace(filename, "JPEGImages", "Annotations");
+		strfindreplace(filename, "jpg", "xml");
+
+		//Open the annotation file
+		annotationFile.open(filename);
+
+		if (annotationFile.is_open()) {
+			while (getline(annotationFile, line)) {
+
+				//See if the image contains a person
+				//(This is the quickest way and based on a test it is equivalent to actually parsing the xml)
+				if (line.find("person") != std::string::npos) {
+
+					//"person" found, exclude the file
+					//cout << "Excluding img because it contains a person: " << neg_files.at(i) << endl;
+					neg_files.erase(neg_files.begin()+i);
+					--i; //compensate
+					break; //no need to read the rest of the file
+				}
+			}
+			annotationFile.close();
+		}
+		else {
+			cerr << "Error opening Annotations file " << filename << endl;
+		}
+	}
+
+	cout << "After: " << neg_files.size() << endl;
+
 	assert(!neg_files.empty());
 	random_shuffle(neg_files.begin(), neg_files.end());
 }
@@ -524,13 +570,38 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 /*! @brief creates a feature pyramid of several layers containing
  * 					scaled representations of the input
  *
- * @param image the input image
+ * @param image tphe input image
  * @param pyramid a vector of scaled features or images
  */
 void Detector::createPyramid(const Mat &image, SCVMats &pyramid)
 {
-	// TODO: create a sensible image feature pyramid
+	Mat smallerImage = image;
+	Size size;
+	size.width = image.cols;
+	size.height = image.rows;
+
+	//How much to downscale the image by each pass
+	float downscaleFactor = 1.3f;
+
+	//Use this factor to determine a 'stop size' in terms of the model size
+	float smallestImageModelSizeFactor = 4.0f;
+
+	cout << "image size: (" << size.width << ", " << size.height << ")" << endl;
+
+	//Put the original image as the bottom layer
 	pyramid.push_back(std::make_shared<Mat>(image));
+
+	//Resize the image repeatedly and add it to the pyramid as a new layer
+	int stopSizeW = smallestImageModelSizeFactor * _model_size.width;
+	int stopSizeH = smallestImageModelSizeFactor * _model_size.height;
+	while (size.width >= stopSizeW * downscaleFactor && size.height >= stopSizeH * downscaleFactor)
+	{
+		size.width = smallerImage.cols / downscaleFactor;
+		size.height = smallerImage.rows / downscaleFactor;
+		resize(smallerImage, smallerImage, size);
+		cout << "image size: (" << size.width << ", " << size.height << ")" << endl;
+		pyramid.push_back(std::make_shared<Mat>(smallerImage));
+	}
 }
 
 /*! @brief remove all candidates from a vector of results that
@@ -618,8 +689,6 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 
 	for (size_t layer = 0; layer < pyramid.size(); ++layer)
 	{
-		string etf = Utility::show_fancy_etf((int) layer, (int) pyramid.size(), 1, t0, fps);
-		if (!etf.empty()) cout << etf << endl;
 
 		/*
 		 *  Slide the model template over all possible image locations
@@ -751,6 +820,10 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		responses.layers.push_back(Range(responses.detections.rows, responses.detections.rows + detect.rows));
 		// Save responses
 		responses.detections.push_back(detect);
+
+		//Moved this to end of for loop:
+		string etf = Utility::show_fancy_etf((int) layer, (int) pyramid.size(), 1, t0, fps);
+		if (!etf.empty()) cout << etf << endl;
 	}
 }
 
@@ -768,6 +841,7 @@ std::pair<double, double> Detector::precisionRecall(const Rects &ground_truths,
 	if (!ground_truths.empty())
 	{
 		vector<Rect> search_gt = ground_truths;
+		int tp = 0; //True positives counter
 		for (size_t r = 0; r < results.size(); ++r)
 		{
 			Rect detection = results.at(r).bbox;
@@ -777,15 +851,17 @@ std::pair<double, double> Detector::precisionRecall(const Rects &ground_truths,
 			{
 				Rect ground_truth = *it;
 				/*
-				 * TODO: calculate the intersection size as the intersection-over-union between
-				 * the detection result and the ground_truth
-				 */
-				double intersection_size = 0;
+				* Calculate the intersection size as the intersection-over-union between
+				* the detection result and the ground_truth
+				*/
+				int insct = (ground_truth & detection).area(); //Intersection area
+				double intersection_size = (insct + 0.0) / (ground_truth.area() + detection.area() - insct); //Intersection over union
 
 				if (intersection_size >= _gt_accuracy)
 				{
 					// if size is equal or larger than the accuracy threshold we have found a true positive
 					it = search_gt.erase(it);
+					tp++;
 				}
 				else
 				{
@@ -794,9 +870,17 @@ std::pair<double, double> Detector::precisionRecall(const Rects &ground_truths,
 			}
 		}
 
-		// TODO: Calculate the Precision and Recall at the currect threshold value
+		// Calculate the Precision and Recall at the currect threshold value
+		int rs = results.size(), ts = ground_truths.size();
 		double precision = 0, recall = 0;
+		if (rs > 0) {
+			precision = (tp + 0.0) / rs; //yay integer division
+		}
+		if (ts > 0) {
+			recall = (tp + 0.0) / ts;
+		}
 
+		cout << precision << "," << recall << " (Threshold,Precision,Recall)" << endl;
 		precision_recall.first = precision;
 		precision_recall.second = recall;
 	}
@@ -860,7 +944,7 @@ void Detector::run()
 			neg_files.begin() + MIN(2 * neg_amount, (int ) neg_files.size() - neg_amount));
 
 	cout << "Positive images used:" << pos_train.size() << ", validation:" << pos_val.size() << endl;
-	cout << "Negative images used:" << neg_train.size() << ", validation:" << neg_val.size() << endl;
+	cout << "Negative images used:" << neg_train.size() << ", validation:" << neg_val.size() << endl; 
 
 	Mat pos_tmp_im = imread(pos_files.front(), CV_LOAD_IMAGE_GRAYSCALE);
 	int width = _target_width;
@@ -1030,6 +1114,8 @@ void Detector::run()
 			results.clear();		// Generate new results
 
 			double threshold = ((_max_slider_value - o_value) / 100.0) * _max_slider_value;
+
+			cout << (50 - threshold) << ",";
 
 			// Create result vector with all detections above the threshold
 			for (int i = 0; i < responses.detections.rows; ++i)
