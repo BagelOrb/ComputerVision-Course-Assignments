@@ -60,6 +60,7 @@ Detector::Detector(const string &qif) :
 				Detector::cfg()->getValue<bool>("settings/features@equalize")), _do_whitening(
 				Detector::cfg()->getValue<bool>("settings/features@whiten")), _show_ground_truth(
 				Detector::cfg()->getValue<bool>("settings/images/test@show_ground_truth")), _query_image_file(qif),
+				_use_hog(Detector::cfg()->getValue<bool>("settings/features/hog/use_hog")),
 				_min_slider_value(50), _max_slider_value(100)
 {
 	assert(_max_count > 0);
@@ -171,6 +172,15 @@ void Detector::readPosData(const Strings &pos_train, Mat &pos_data)
 		Mat features = image(rect);
 		resize(features, features, _model_size);
 
+		/*
+		if (_use_hog)
+		{
+			cv::Mat HOG_features;
+			FeatureHOG<float>::compute(features, HOG_features);
+			features = HOG_features.reshape(FeatureHOG<float>::DEPTH);
+		}
+		*/
+
 		if (pos_sum.empty())
 		{
 			Mat sz_imF;
@@ -197,6 +207,7 @@ void Detector::readPosData(const Strings &pos_train, Mat &pos_data)
 		mv_pos_data.push_back(mean_line);
 		sv_pos_data.push_back(std_line);
 
+
 		pos_data.push_back(features1dF);
 
 		string etf = Utility::show_fancy_etf(index, (int) pos_train.size(), 10, t0, fps);
@@ -212,11 +223,13 @@ void Detector::readPosData(const Strings &pos_train, Mat &pos_data)
 	}
 
 	// This is the mean model
+
 	Mat pos_sum1dF = pos_sum.reshape(1, 1);
 	_pos_sumF = pos_sum1dF / pos_data.rows;
 
 	normalize(pos_sum1dF.reshape(1, height), pos_sum, 255, 0, NORM_MINMAX);
 	pos_sum.convertTo(_pos_sum8U, CV_8U);
+
 }
 
 /*
@@ -261,6 +274,14 @@ void Detector::readNegData(const Strings &neg_train, Mat &neg_data)
 				features.convertTo(sz_imF, CV_64F);
 				neg_sum += sz_imF;
 			}
+			/*
+			if (_use_hog)
+			{
+				cv::Mat HOG_features;
+				FeatureHOG<float>::compute(features, HOG_features);
+				features = HOG_features.reshape(FeatureHOG<float>::DEPTH);
+			}
+			*/
 
 			Mat features1d = features.reshape(1, 1);
 			Mat features1dF;
@@ -332,11 +353,37 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 
 	// Train the SVM
 	cout << "line:" << __LINE__ << ") Training SVM..." << endl;
-	model.svm->run(data, labels, params);
+	
+	Mat HOG_data;
+	if (_use_hog)
+	{
+		Mat HOG_data_8U;
+		for (int i = 0; i < train_data.rows; i++)
+		{
+			Mat row = train_data.row(i);
+			Mat window = row.reshape(1, _model_size.height);
+			Mat window_8U;
+			window.convertTo(window_8U, CV_8U);
+			cv::Mat HOG_features;
+			FeatureHOG<float>::compute(window_8U, HOG_features);
+			Mat reshaped = HOG_features.reshape(1, 1);
+			HOG_data_8U.push_back(reshaped);
+		}
+		HOG_data_8U.convertTo(HOG_data, CV_32F);
+	} 
+
+
+	if (_use_hog)
+		model.svm->run(HOG_data, labels, params);
+	else
+		model.svm->run(data, labels, params);
 
 	// Generate prediction scores for all training data
 	Mat labels_train;
-	model.svm->predict(data, labels_train);
+	if (_use_hog)
+		model.svm->predict(HOG_data, labels_train);
+	else
+		model.svm->predict(data, labels_train);
 
 	Mat labels_32F;
 	labels.convertTo(labels_32F, CV_32F);
@@ -402,18 +449,23 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 
 	// Show the support vectors
 	Mat sv_tmp_sz_im_canvas;
-	if(sv_weight.rows > 1)
-	{
-		const int canvas_cols = (int) sqrt((double) sv_count) + 1;
-		Utility::getImagesCanvas(canvas_cols, sv_weight_color_image, _model_size, sv_tmp_sz_im_canvas, Color_BLACK);
-	}
-	else if(sv_weight.rows == 1)
-	{
-		sv_tmp_sz_im_canvas = sv_weight_cimage.reshape(sv_weight_cimage.channels(), _model_size.height);
-	}
 
-	namedWindow("Support Vector overview", CV_WINDOW_KEEPRATIO);
-	imshow("Support Vector overview", sv_tmp_sz_im_canvas);
+	if (!_use_hog)
+	{
+		if(sv_weight.rows > 1)
+		{
+			const int canvas_cols = (int) sqrt((double) sv_count) + 1;
+			Utility::getImagesCanvas(canvas_cols, sv_weight_color_image, _model_size, sv_tmp_sz_im_canvas, Color_BLACK);
+		}
+		else if(sv_weight.rows == 1)
+		{
+			sv_tmp_sz_im_canvas = sv_weight_cimage.reshape(sv_weight_cimage.channels(), _model_size.height);
+		}
+
+
+		namedWindow("Support Vector overview", CV_WINDOW_KEEPRATIO);
+		imshow("Support Vector overview", sv_tmp_sz_im_canvas);
+	}
 
 	/*
 	 {
@@ -449,15 +501,22 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 	W_rect.data = W.data;
 	W_rect = W_rect.clone();
 
-	assert((int) W.total() == _model_size.area());
-	assert((int) W.total() == W_rect.total());
+	//assert((int) W.total() == _model_size.area());
+	//assert((int) W.total() == W_rect.total());
 
 	// Show the model
+	cout << "showing model" << endl;
 	normalize(W_rect, W_rect, 255, 0, NORM_MINMAX);
 
 	Mat W_img;
 	W_rect.convertTo(W_img, CV_8U);
-	imshow("Model", W_img);
+	if (_use_hog)
+	{
+		//imshow("Model", FeatureHOG<float>::visualize(W_rect));
+	} 
+	else 
+		imshow("Model", W_img);
+	cout << "End of training phase!" << endl;
 	cout << "Press a key to continue" << endl;
 	waitKey();
 }
@@ -608,9 +667,17 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
 #endif
-		for (int i = 0; i < (int) X1.total(); ++i)
+		for (int i = 0; i < (int) X1.total(); ++i) // for all window positions
 		{
 			Mat sub = (*pyramid.at(layer))(Rect(Point(Xv[i], Yv[i]), _model_size));
+			/*if (_use_hog)
+			{
+				cv::Mat HOG_features;
+				FeatureHOG<float>::compute(sub, HOG_features);
+				cout << "reshaping at " << __LINE__ << "..." << endl;
+				sub = HOG_features.reshape(FeatureHOG<float>::DEPTH);
+				cout << "reshaping finished. "<< endl;
+			}*/
 			Mat sub1d = sub.clone().reshape(1, 1);
 			sub1d.convertTo(sub_windows.row(i), CV_32F);
 
@@ -641,14 +708,34 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		 *
 		 * Mat detect = ...;
 		 */
+		cout << "detecting..."<<endl;
 		Mat detect(sub_windows.rows, 1, CV_32F);
 #ifdef _OPENMP
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
 #endif
 		for (int i = 0; i < sub_windows.rows; ++i)
-			detect.at<float>(i) = -model.svm->predict(sub_windows.row(i), true); // svm->predict inverses the scores...
+		{
+			cout << (i * 100 / sub_windows.rows) << "%" << endl;
+			Mat HOG_data;
+			if (_use_hog)
+			{
+				Mat row = sub_windows.row(i);
+				Mat window = row.reshape(1, _model_size.height);
+				Mat window_8U;
+				window.convertTo(window_8U, CV_8U);
+				cv::Mat HOG_features;
+				FeatureHOG<float>::compute(window_8U, HOG_features);
+				Mat reshaped = HOG_features.reshape(1, 1);
+				Mat HOG_32F;
+				reshaped.convertTo(HOG_32F, CV_32F);
+				
+				detect.at<float>(i) = -model.svm->predict(HOG_32F, true); // svm->predict inverses the scores...
+			} else 
+				detect.at<float>(i) = -model.svm->predict(sub_windows.row(i), true); // svm->predict inverses the scores...
+		}
 
+		cout << "Show detection results as a heatmap (PDF)" << endl;
 		// Show detection results as a heatmap (PDF) of most likely face locations for this pyramid layer
 		Mat face_locations = (detect.reshape(detect.channels(),
 				(pyramid.at(layer)->size().height - _model_size.height) + 1));
@@ -789,6 +876,8 @@ void Detector::run()
 	readNegData(neg_train, neg_train_data);
 	/////////////////////////////////////////////////////////////////////////////
 
+	cout << "training images have been read." << endl;
+
 	/////////////////////////// Whitening transformation ////////////////////////
 	Mat whitened_pos_data, whitened_neg_data;
 	if (_do_whitening)
@@ -797,14 +886,17 @@ void Detector::run()
 		Utility::whiten(neg_train_data, _model_size, whitened_neg_data);
 	}
 	/////////////////////////////////////////////////////////////////////////////
+	cout << "whitened" << endl;
 
 	////////////////////// Show pos and neg examples ////////////////////////////
+
 	const int canvas_total = MIN(_disp, MIN(neg_train_data.rows, pos_train_data.rows));
 	const int canvas_cols = (int) sqrt((double) canvas_total);
 
 	Mat pos_tmp_sz_im_canvas, neg_tmp_sz_im_canvas;
 	Utility::getImagesCanvas(canvas_cols, pos_train_data, sz_dim, pos_tmp_sz_im_canvas);
 	Utility::getImagesCanvas(canvas_cols, neg_train_data, sz_dim, neg_tmp_sz_im_canvas);
+
 
 	if (_do_whitening)
 	{
@@ -893,7 +985,7 @@ void Detector::run()
 
 	train(train_data, train_labels, model);		// train it based on pos/neg train data
 	/////////////////////////////////////////////////////////////////////////////
-
+	cout << "training finished. start testing" << endl;
 	////////////////////////////// Test on real image ///////////////////////////
 	const Mat image = imread(_query_image_file);
 
@@ -905,11 +997,13 @@ void Detector::run()
 	Responses responses;
 	getResponses(image, model, responses);
 
+
 	double min_val, max_val;
 	minMaxLoc(responses.detections, &min_val, &max_val);
 	std::cout << "line:" << __LINE__ << ") response range: " << min_val << " <-> " << max_val << std::endl;
 
 	// Create window
+	cout << "creatiung windows" << endl;
 	namedWindow("Search image", CV_WINDOW_KEEPRATIO);
 	resizeWindow("Search image", im_size.width, im_size.height);
 
@@ -917,6 +1011,8 @@ void Detector::run()
 	int value = _initial_threshold - _min_slider_value, o_val = -INT_MAX;
 	createTrackbar("Threshold", "Search image", &value, _max_slider_value - _min_slider_value);
 
+
+	cout << "creatiung Detection results" << endl;
 	// Detection results
 	ResultLocations results;
 

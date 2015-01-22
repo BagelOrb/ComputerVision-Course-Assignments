@@ -100,6 +100,8 @@ class Detector
 
 	const int _seed;                        // Randomizing seed
 
+	const int _use_hog;                  // (TK) whether to use HOG features instead of raw pixel data
+
 	const int _pos_amount;                  // Amount of positive learning data (images)
 	const int _target_width;                // Target image width (height will be relative the width)
 	const int _posneg_factor;               // 4x as many negative images as positive ones
