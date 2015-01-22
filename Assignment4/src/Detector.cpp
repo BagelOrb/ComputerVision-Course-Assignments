@@ -783,9 +783,17 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
 #endif
+		cout << "sub_windows.rows = " << sub_windows.rows << endl;
+		int hog_progress = 0;
 		for (int i = 0; i < sub_windows.rows; ++i)
 		{
-			cout << (i * 100 / sub_windows.rows) << "%" << endl;
+			int hog_progress_now = i * 100 / sub_windows.rows;
+			if (hog_progress_now / 2 > hog_progress / 2)
+			{
+				hog_progress = hog_progress_now;
+				cout << hog_progress << "%" << endl;
+			}
+
 			Mat HOG_data;
 			if (_use_hog)
 			{
