@@ -57,6 +57,7 @@ Detector::Detector(const string &qif) :
 				Detector::cfg()->getValue<int>("settings/images/test@threshold")), _nms_overlap_threshold(
 				Detector::cfg()->getValue<double>("settings/images/test/nms@threshold")), _gt_accuracy(
 				Detector::cfg()->getValue<double>("settings/images/test/accuracy@threshold")), 
+				_eval_everywhere(Detector::cfg()->getValue<bool>("settings/features/hog/eval_everywhere")), // (TK)
 				_use_hog(Detector::cfg()->getValue<bool>("settings/features/hog/use_hog")), // (TK)
 				_do_equalizing((_use_hog)? false : // (TK) don't do whitening or equalization when using HOG
 				Detector::cfg()->getValue<bool>("settings/features@equalize")), 
@@ -719,12 +720,32 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		 *  |                                                            |
 		 *  +------------------------------------------------------------+
 		 */
-		Range rx(0, pyramid.at(layer)->cols - _model_size.width);
-		Range ry(0, pyramid.at(layer)->rows - _model_size.height);
+
+		Size _hog_model_size(_model_size.width / FeatureHOG<float>::CELL_SIZE, _model_size.height / FeatureHOG<float>::CELL_SIZE);
+		int w, h;
+		if (_use_hog && !_eval_everywhere)
+		{
+			w = pyramid.at(layer)->cols / FeatureHOG<float>::CELL_SIZE - _hog_model_size.width;
+			h = pyramid.at(layer)->rows / FeatureHOG<float>::CELL_SIZE - _hog_model_size.height;
+		}
+		else
+		{
+			w = pyramid.at(layer)->cols - _model_size.width;
+			h = pyramid.at(layer)->rows - _model_size.height;
+		}
+		Range rx(0, w);
+		Range ry(0, h);
 		Mat1i X, Y;
 		Utility::meshgrid(rx, ry, X, Y);				// Generate all possible template locations
 		Mat X1 = X.reshape(1, 1);
 		Mat Y1 = Y.reshape(1, 1);
+		if (_use_hog && !_eval_everywhere)
+		{
+			
+			X1 *= FeatureHOG<float>::CELL_SIZE;
+			Y1 *= FeatureHOG<float>::CELL_SIZE;
+		}
+		
 		const int* px = X1.ptr<int>(0);
 		const int* py = Y1.ptr<int>(0);
 		vector<int> Xv(px, px + X1.total());		// Create vector of X locations
@@ -732,21 +753,25 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		responses.Xvs.insert(make_pair(layer, Xv));				// Map vector to to a pyramid layer X (for lookup, later)
 		responses.Yvs.insert(make_pair(layer, Yv));				// Map vector to to a pyramid layer Y (for lookup, later)
 
+		
 		// Extract subwindow locations from image for detection
 		Mat sub_windows((int) X1.total(), _model_size.area(), CV_32F);
 		Mat mv_sub_data((int) X1.total(), _model_size.area(), CV_32F);
 		Mat sv_sub_data((int) X1.total(), _model_size.area(), CV_32F);
 
+		
 #ifdef _OPENMP
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
 #endif
 
-	
+	if (!_use_hog || _eval_everywhere)
 		for (int i = 0; i < (int) X1.total(); ++i) // for all window positions
 		{
+			
 			Mat sub = (*pyramid.at(layer))(Rect(Point(Xv[i], Yv[i]), _model_size));
 			Mat subclone;
+			/*
 			if (_use_hog)
 			{
 				cv::Mat HOG_features;
@@ -754,11 +779,13 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 				subclone = HOG_features.clone(); // .reshape(FeatureHOG<float>::DEPTH);
 			}
 			else
+			*/
 				subclone = sub.clone();
 			Mat sub1d = subclone.reshape(1, 1);
 			sub1d.convertTo(sub_windows.row(i), CV_32F);
 			
 
+			
 			if (_do_equalizing)
 			{
 				Mat mean, stddev;
@@ -789,52 +816,88 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		 * Mat detect = ...;
 		 */
 		cout << "detecting..."<<endl;
-		Mat detect(sub_windows.rows, 1, CV_32F);
+		Mat face_locations;
+		Mat detect = Mat::zeros(sub_windows.rows, 1, CV_32F);
 #ifdef _OPENMP
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
 #endif
 
 	
-		cout << "sub_windows.rows = " << sub_windows.rows << endl;
-		int hog_progress = 0;
-		for (int i = 0; i < sub_windows.rows; ++i)
+		if (_use_hog && !_eval_everywhere)
 		{
-			/*
-			int hog_progress_now = i * 100 / sub_windows.rows;
-			if (hog_progress_now / 2 > hog_progress / 2)
-			{
-				hog_progress = hog_progress_now;
-				cout << hog_progress << "%" << endl;
-			}
+			Mat HOG_features;
+			FeatureHOG<float>::compute(*pyramid.at(layer), HOG_features);
+			Mat features = HOG_features.reshape(FeatureHOG<float>::DEPTH);
 
-			Mat HOG_data;
-			if (_use_hog)
-			{
-				Mat row = sub_windows.row(i);
-				Mat window = row.reshape(1, _model_size.height);
-				Mat window_8U;
-				window.convertTo(window_8U, CV_8U);
-				cv::Mat HOG_features;
-				FeatureHOG<float>::compute(window_8U, HOG_features);
-				Mat reshaped = HOG_features.reshape(1, 1);
-				Mat HOG_32F = reshaped;
-				//reshaped.convertTo(HOG_32F, CV_32F);
-				
-				detect.at<float>(i) = -model.svm->predict(HOG_32F, true); // svm->predict inverses the scores...
-			} else 
-			*/
+
+			int w = features.cols - _hog_model_size.width + 1;
+			int h = features.rows - _hog_model_size.height + 1;
+			detect = Mat::zeros(w*h, 1, CV_32F);
+
+			int i = 0;
+			
+			for (int x = 0; x < w; x++)
+				for (int y = 0; y < h; y++)
+				{
+					
+					Mat sub = features(Rect(Point(x, y), _hog_model_size));
+					
+					Mat sub1D = sub.clone().reshape(1, 1);
+					
+					detect.at<float>(i) = -model.svm->predict(sub1D, true); // svm->predict inverses the scores...
+					i++;
+				}
 
 			
-				detect.at<float>(i) = -model.svm->predict(sub_windows.row(i), true); // svm->predict inverses the scores...
+			cout << "Show detection results as a heatmap (PDF)" << endl;
+			// Show detection results as a heatmap (PDF) of most likely face locations for this pyramid layer
+			face_locations = (detect.reshape(detect.channels(),
+				(features.size().height - _hog_model_size.height) + 1));
 
-				
+			
+		}
+		else
+		{
+			int hog_progress = 0;
+			for (int i = 0; i < sub_windows.rows; ++i)
+			{
+
+				int hog_progress_now = i * 100 / sub_windows.rows;
+				if (hog_progress_now / 2 > hog_progress / 2)
+				{
+					hog_progress = hog_progress_now;
+					cout << hog_progress << "%" << endl;
+				}
+
+				Mat HOG_data;
+				if (_use_hog)
+				{
+					Mat sub = (*pyramid.at(layer))(Rect(Point(Xv[i], Yv[i]), _model_size));
+
+					//Mat row = sub_windows.row(i);
+					//Mat window = row.reshape(1, _model_size.height);
+					Mat window_8U = sub;
+					//window.convertTo(window_8U, CV_8U);
+					cv::Mat HOG_features;
+					FeatureHOG<float>::compute(window_8U, HOG_features);
+					Mat reshaped = HOG_features.reshape(1, 1);
+					Mat HOG_32F = reshaped;
+					//reshaped.convertTo(HOG_32F, CV_32F);
+
+					detect.at<float>(i) = -model.svm->predict(HOG_32F, true); // svm->predict inverses the scores...
+				}
+				else
+					detect.at<float>(i) = -model.svm->predict(sub_windows.row(i), true); // svm->predict inverses the scores...
+
+
+			}
+			cout << "Show detection results as a heatmap (PDF)" << endl;
+			// Show detection results as a heatmap (PDF) of most likely face locations for this pyramid layer
+			face_locations = (detect.reshape(detect.channels(),
+					(pyramid.at(layer)->size().height - _model_size.height) + 1));
 		}
 
-		cout << "Show detection results as a heatmap (PDF)" << endl;
-		// Show detection results as a heatmap (PDF) of most likely face locations for this pyramid layer
-		Mat face_locations = (detect.reshape(detect.channels(),
-				(pyramid.at(layer)->size().height - _model_size.height) + 1));
 
 		//Generate and show a PDF (Probabilistic Density Function)
 		Mat pdf;
