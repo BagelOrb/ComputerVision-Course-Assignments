@@ -531,20 +531,24 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 	 // The confidence value for training should be the same value you get from
 	 // svm.predict(data, labels_train);
 	 */
-	Mat conf_train, conf_val;
 
-	cv::add((data * W), b, conf_train); // data is train_data but in CV_32F
-	//cv::add((data * W), b, conf_val); // where is the validation data???
+	Mat conf_train = (data * W) + b; // data is train_data but in CV_32F
+	//Mat conf_val = (data * W) + b; // where is the validation data???
 
 	Mat train_pred, train_pred_32S;
 	train_pred = (conf_train > 0) / 255;
 	train_pred.convertTo(train_pred_32S, CV_32S);
 
-	//Mat val_pred = (conf_val > 0) / 255;
+	//Mat val_pred, val_pred_32S;
+	//val_pred = (conf_val > 0) / 255;
+	//val_pred.convertTo(val_pred_32S, CV_32S);
+
 	double train_true2 = sum((train_pred_32S == labels) / 255)[0];
 	double train_pct2 = (train_true2 / (double) train_pred_32S.rows) * 100.0;
+
 	//double val_true = sum((val_pred == val_gnd) / 255)[0];
 	//double val_pct = (val_true / (double) val_pred.rows) * 100.0;
+
 	cout << __LINE__ << "\tTraining correct: " << train_pct2 << "%" << endl;
 	//cout << "\tValidation correct: " << val_pct << "%" << endl;
 
