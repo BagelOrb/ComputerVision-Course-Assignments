@@ -519,31 +519,32 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 		imshow("Support Vector overview", sv_tmp_sz_im_canvas);
 	}
 
-	/*
-	 {
-	 // TODO
-	 // Compute the confidence values for training and validation as the distances
-	 // between the sample vectors X and weight vector W, using bias b:
-	 // conf = X * W + b
-	 //
-	 // Approach this as a matrix calculation (ie. fill in the dots below, using no
-	 // more than a single line for calculating respectively conf_train and conf_val)
-	 //
-	 // The confidence value for training should be the same value you get from
-	 // svm.predict(data, labels_train);
+	// DONE: Compute the confidence values for training and validation as the distances
+	// between the sample vectors X and weight vector W, using bias b:
+	// conf = X * W + b
+	//  
+	// Approach this as a matrix calculation (ie. fill in the dots below, using no
+	// more than a single line for calculating respectively conf_train and conf_val)
+	//  
+	// The confidence value for training should be the same value you get from
+	// svm.predict(data, labels_train);
 
-	 Mat conf_train = ...;
-	 Mat conf_val = ...;
-	 Mat train_pred = (conf_train > 0) / 255;
-	 Mat val_pred = (conf_val > 0) / 255;
-	 double train_true = sum((train_pred == train_gnd) / 255)[0];
-	 double train_pct = (train_true / (double) train_pred.rows) * 100.0;
-	 double val_true = sum((val_pred == val_gnd) / 255)[0];
-	 double val_pct = (val_true / (double) val_pred.rows) * 100.0;
-	 cout << "\tTraining correct: " << train_pct << "%" << endl;
-	 cout << "\tValidation correct: " << val_pct << "%" << endl;
-	 }
-	 */
+	Mat conf_train = (data * W) + b; // data is train_data but in CV_32F
+	//Mat conf_val = (data * W) + b; // where is the validation data???
+
+	Mat train_pred, train_pred_32S;
+	train_pred = (conf_train > 0) / 255;
+	train_pred.convertTo(train_pred_32S, CV_32S);
+	train_pred_32S = (train_pred_32S * 2) - 1; //convert {0,1} to {-1,1} to match labels vector
+
+	double train_true2 = sum((train_pred_32S == labels) / 255)[0];
+	double train_pct2 = (train_true2 / (double) train_pred_32S.rows) * 100.0;
+
+	//double val_true = sum((val_pred == val_gnd) / 255)[0];
+	//double val_pct = (val_true / (double) val_pred.rows) * 100.0;
+
+	cout << __LINE__ << "\tTraining correct: " << train_pct2 << "%" << endl;
+	//cout << "\tValidation correct: " << val_pct << "%" << endl;
 
 	model.W = W;
 	model.b = b;
@@ -810,7 +811,7 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 
 		
 		/*
-		 * TODO: If you have found the answer to the question in the
+		 * DONE: If you have found the answer to the question in the
 		 * train method, you can replace the loop below by a single line.
 		 *
 		 * Mat detect = ...;
@@ -818,6 +819,9 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		cout << "detecting..."<<endl;
 		Mat face_locations;
 		Mat detect = Mat::zeros(sub_windows.rows, 1, CV_32F);
+
+		// Mat detect = (sub_windows * model.W) + model.b;
+		
 #ifdef _OPENMP
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
