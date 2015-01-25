@@ -518,19 +518,15 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 		imshow("Support Vector overview", sv_tmp_sz_im_canvas);
 	}
 
-	/*
-	 {
-	 // TODO
-	 // Compute the confidence values for training and validation as the distances
-	 // between the sample vectors X and weight vector W, using bias b:
-	 // conf = X * W + b
-	 //
-	 // Approach this as a matrix calculation (ie. fill in the dots below, using no
-	 // more than a single line for calculating respectively conf_train and conf_val)
-	 //
-	 // The confidence value for training should be the same value you get from
-	 // svm.predict(data, labels_train);
-	 */
+	// DONE: Compute the confidence values for training and validation as the distances
+	// between the sample vectors X and weight vector W, using bias b:
+	// conf = X * W + b
+	//  
+	// Approach this as a matrix calculation (ie. fill in the dots below, using no
+	// more than a single line for calculating respectively conf_train and conf_val)
+	//  
+	// The confidence value for training should be the same value you get from
+	// svm.predict(data, labels_train);
 
 	Mat conf_train = (data * W) + b; // data is train_data but in CV_32F
 	//Mat conf_val = (data * W) + b; // where is the validation data???
@@ -538,10 +534,7 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 	Mat train_pred, train_pred_32S;
 	train_pred = (conf_train > 0) / 255;
 	train_pred.convertTo(train_pred_32S, CV_32S);
-
-	//Mat val_pred, val_pred_32S;
-	//val_pred = (conf_val > 0) / 255;
-	//val_pred.convertTo(val_pred_32S, CV_32S);
+	train_pred_32S = (train_pred_32S * 2) - 1; //convert {0,1} to {-1,1} to match labels vector
 
 	double train_true2 = sum((train_pred_32S == labels) / 255)[0];
 	double train_pct2 = (train_true2 / (double) train_pred_32S.rows) * 100.0;
@@ -791,13 +784,14 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 
 		
 		/*
-		 * TODO: If you have found the answer to the question in the
+		 * DONE: If you have found the answer to the question in the
 		 * train method, you can replace the loop below by a single line.
 		 *
 		 * Mat detect = ...;
 		 */
 		cout << "detecting..."<<endl;
-		Mat detect(sub_windows.rows, 1, CV_32F);
+		Mat detect = (sub_windows * model.W) + model.b;
+		
 #ifdef _OPENMP
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
@@ -806,38 +800,38 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 	
 		cout << "sub_windows.rows = " << sub_windows.rows << endl;
 		int hog_progress = 0;
-		for (int i = 0; i < sub_windows.rows; ++i)
-		{
-			/*
-			int hog_progress_now = i * 100 / sub_windows.rows;
-			if (hog_progress_now / 2 > hog_progress / 2)
-			{
-				hog_progress = hog_progress_now;
-				cout << hog_progress << "%" << endl;
-			}
+		//for (int i = 0; i < sub_windows.rows; ++i)
+		//{
+		//	/*
+		//	int hog_progress_now = i * 100 / sub_windows.rows;
+		//	if (hog_progress_now / 2 > hog_progress / 2)
+		//	{
+		//		hog_progress = hog_progress_now;
+		//		cout << hog_progress << "%" << endl;
+		//	}
 
-			Mat HOG_data;
-			if (_use_hog)
-			{
-				Mat row = sub_windows.row(i);
-				Mat window = row.reshape(1, _model_size.height);
-				Mat window_8U;
-				window.convertTo(window_8U, CV_8U);
-				cv::Mat HOG_features;
-				FeatureHOG<float>::compute(window_8U, HOG_features);
-				Mat reshaped = HOG_features.reshape(1, 1);
-				Mat HOG_32F = reshaped;
-				//reshaped.convertTo(HOG_32F, CV_32F);
-				
-				detect.at<float>(i) = -model.svm->predict(HOG_32F, true); // svm->predict inverses the scores...
-			} else 
-			*/
+		//	Mat HOG_data;
+		//	if (_use_hog)
+		//	{
+		//		Mat row = sub_windows.row(i);
+		//		Mat window = row.reshape(1, _model_size.height);
+		//		Mat window_8U;
+		//		window.convertTo(window_8U, CV_8U);
+		//		cv::Mat HOG_features;
+		//		FeatureHOG<float>::compute(window_8U, HOG_features);
+		//		Mat reshaped = HOG_features.reshape(1, 1);
+		//		Mat HOG_32F = reshaped;
+		//		//reshaped.convertTo(HOG_32F, CV_32F);
+		//		
+		//		detect.at<float>(i) = -model.svm->predict(HOG_32F, true); // svm->predict inverses the scores...
+		//	} else 
+		//	*/
 
-			
-				detect.at<float>(i) = -model.svm->predict(sub_windows.row(i), true); // svm->predict inverses the scores...
+		//	
+		//		detect.at<float>(i) = -model.svm->predict(sub_windows.row(i), true); // svm->predict inverses the scores...
 
-				
-		}
+		//		
+		//}
 
 		cout << "Show detection results as a heatmap (PDF)" << endl;
 		// Show detection results as a heatmap (PDF) of most likely face locations for this pyramid layer
