@@ -56,11 +56,16 @@ Detector::Detector(const string &qif) :
 				Detector::cfg()->getValue<int>("settings/images/test/max_size")), _initial_threshold(
 				Detector::cfg()->getValue<int>("settings/images/test@threshold")), _nms_overlap_threshold(
 				Detector::cfg()->getValue<double>("settings/images/test/nms@threshold")), _gt_accuracy(
-				Detector::cfg()->getValue<double>("settings/images/test/accuracy@threshold")), _do_equalizing(
-				Detector::cfg()->getValue<bool>("settings/features@equalize")), _do_whitening(
+				Detector::cfg()->getValue<double>("settings/images/test/accuracy@threshold")), 
+				_use_hog(Detector::cfg()->getValue<bool>("settings/features/hog/use_hog")), // (TK)
+				_do_equalizing((_use_hog)? false : // (TK) don't do whitening or equalization when using HOG
+				Detector::cfg()->getValue<bool>("settings/features@equalize")), 
+				_do_whitening((_use_hog)? false : // (TK) don't do whitening or equalization when using HOG
 				Detector::cfg()->getValue<bool>("settings/features@whiten")), _show_ground_truth(
 				Detector::cfg()->getValue<bool>("settings/images/test@show_ground_truth")), _query_image_file(qif),
-				_use_hog(Detector::cfg()->getValue<bool>("settings/features/hog/use_hog")),
+				_pyramid_height(Detector::cfg()->getValue<int>("settings/features/pyramid/height")), // (TK)
+				_pyramid_downscale_factor(Detector::cfg()->getValue<double>("settings/features/pyramid/downscale_factor")), // (TK)
+				_smallestImageModelSizeFactor(Detector::cfg()->getValue<double>("settings/features/pyramid/smallestImageModelSizeFactor")), // (TK)
 				_min_slider_value(50), _max_slider_value(100)
 {
 	assert(_max_count > 0);
@@ -581,10 +586,10 @@ void Detector::createPyramid(const Mat &image, SCVMats &pyramid)
 	size.height = image.rows;
 
 	//How much to downscale the image by each pass
-	float downscaleFactor = 1.3f;
+	float downscaleFactor = _pyramid_downscale_factor;
 
 	//Use this factor to determine a 'stop size' in terms of the model size
-	float smallestImageModelSizeFactor = 4.0f;
+	float smallestImageModelSizeFactor = _smallestImageModelSizeFactor;
 
 	cout << "image size: (" << size.width << ", " << size.height << ")" << endl;
 
@@ -594,7 +599,7 @@ void Detector::createPyramid(const Mat &image, SCVMats &pyramid)
 	//Resize the image repeatedly and add it to the pyramid as a new layer
 	int stopSizeW = smallestImageModelSizeFactor * _model_size.width;
 	int stopSizeH = smallestImageModelSizeFactor * _model_size.height;
-	while (size.width >= stopSizeW * downscaleFactor && size.height >= stopSizeH * downscaleFactor)
+	while (size.width >= stopSizeW * downscaleFactor && size.height >= stopSizeH * downscaleFactor && pyramid.size() < _pyramid_height)
 	{
 		size.width = smallerImage.cols / downscaleFactor;
 		size.height = smallerImage.rows / downscaleFactor;
@@ -736,19 +741,23 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
 #endif
+
+	
 		for (int i = 0; i < (int) X1.total(); ++i) // for all window positions
 		{
 			Mat sub = (*pyramid.at(layer))(Rect(Point(Xv[i], Yv[i]), _model_size));
-			/*if (_use_hog)
+			Mat subclone;
+			if (_use_hog)
 			{
 				cv::Mat HOG_features;
 				FeatureHOG<float>::compute(sub, HOG_features);
-				cout << "reshaping at " << __LINE__ << "..." << endl;
-				sub = HOG_features.reshape(FeatureHOG<float>::DEPTH);
-				cout << "reshaping finished. "<< endl;
-			}*/
-			Mat sub1d = sub.clone().reshape(1, 1);
+				subclone = HOG_features.clone(); // .reshape(FeatureHOG<float>::DEPTH);
+			}
+			else
+				subclone = sub.clone();
+			Mat sub1d = subclone.reshape(1, 1);
 			sub1d.convertTo(sub_windows.row(i), CV_32F);
+			
 
 			if (_do_equalizing)
 			{
@@ -759,6 +768,7 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 			}
 		}
 
+		
 		if (_do_equalizing)
 		{
 			// Equalize image (subtract mean, divide by stddev)
@@ -771,6 +781,7 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 			Utility::whiten(sub_windows, _model_size, sub_windows);
 		}
 
+		
 		/*
 		 * TODO: If you have found the answer to the question in the
 		 * train method, you can replace the loop below by a single line.
@@ -783,10 +794,13 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 	omp_set_num_threads(NUM_THREADS);
 #pragma omp parallel for
 #endif
+
+	
 		cout << "sub_windows.rows = " << sub_windows.rows << endl;
 		int hog_progress = 0;
 		for (int i = 0; i < sub_windows.rows; ++i)
 		{
+			/*
 			int hog_progress_now = i * 100 / sub_windows.rows;
 			if (hog_progress_now / 2 > hog_progress / 2)
 			{
@@ -804,12 +818,17 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 				cv::Mat HOG_features;
 				FeatureHOG<float>::compute(window_8U, HOG_features);
 				Mat reshaped = HOG_features.reshape(1, 1);
-				Mat HOG_32F;
-				reshaped.convertTo(HOG_32F, CV_32F);
+				Mat HOG_32F = reshaped;
+				//reshaped.convertTo(HOG_32F, CV_32F);
 				
 				detect.at<float>(i) = -model.svm->predict(HOG_32F, true); // svm->predict inverses the scores...
 			} else 
+			*/
+
+			
 				detect.at<float>(i) = -model.svm->predict(sub_windows.row(i), true); // svm->predict inverses the scores...
+
+				
 		}
 
 		cout << "Show detection results as a heatmap (PDF)" << endl;

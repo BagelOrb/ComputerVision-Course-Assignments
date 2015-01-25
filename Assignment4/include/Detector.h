@@ -100,7 +100,11 @@ class Detector
 
 	const int _seed;                        // Randomizing seed
 
-	const int _use_hog;                  // (TK) whether to use HOG features instead of raw pixel data
+	const int _use_hog;						// (TK) whether to use HOG features instead of raw pixel data
+
+	const int _pyramid_height;				// (TK) the number of layers in the pyramid
+	const double _pyramid_downscale_factor;		// (TK) the ratio between the size of a larger layer and the consecutive smaller layer
+	const double _smallestImageModelSizeFactor;	// (TK) the ratio between the original image size and the smallest image in the pyramid
 
 	const int _pos_amount;                  // Amount of positive learning data (images)
 	const int _target_width;                // Target image width (height will be relative the width)
