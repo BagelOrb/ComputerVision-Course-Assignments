@@ -31,6 +31,7 @@
 #include <map>
 #include <sstream>
 #include <utility>
+#include <conio.h> // getKey getch()
 
 using namespace cv;
 using namespace std;
@@ -1275,132 +1276,138 @@ void Detector::run()
 
 
 	////////////////////////////// Test on real image ///////////////////////////
-	const Mat image = imread(_query_image_file);
-
-	// Book keeping of image resizing factor for bounding box
-	const double bside = MAX(image.rows, image.cols);
-	const double factor = 1 / (MIN(_max_image_size, bside) / bside);
-	const Size im_size(int(image.cols / factor), int(image.rows / factor));
-	
-	Responses responses;
-	getResponses(image, model, responses);
-
-
-	double min_val, max_val;
-	minMaxLoc(responses.detections, &min_val, &max_val);
-	std::cout << "line:" << __LINE__ << ") response range: " << min_val << " <-> " << max_val << std::endl;
-
-	// Create window
-	cout << "creatiung windows" << endl;
-	namedWindow("Search image", CV_WINDOW_KEEPRATIO);
-	resizeWindow("Search image", im_size.width, im_size.height);
-
-	// Trackbar with default values for detection threshold
-	int value = _initial_threshold - _min_slider_value, o_val = -INT_MAX;
-	createTrackbar("Threshold", "Search image", &value, _max_slider_value - _min_slider_value);
-
-
-	cout << "creatiung Detection results" << endl;
-	// Detection results
-	ResultLocations results;
-
-	std::string prec_rec_line = "";
-
-	const Size box_size(int(_model_size.width * factor), int(_model_size.height * factor));
-
-	// Drawing loop (to be able to vary the threshold
-	int key = -1;
-	while (true)
-	{
-		int o_value = _min_slider_value + value;
-		if (o_value != o_val)
+		//for (int img_file = 1; img_file < 7; img_file++)
 		{
-			results.clear();		// Generate new results
 
-			double threshold = ((_max_slider_value - o_value) / 100.0) * _max_slider_value;
+			//const Mat image = imread("data/img" + to_string(img_file) + ".jpg");
+			const Mat image = imread(_query_image_file);
 
-			cout << (50 - threshold) << ",";
+			// Book keeping of image resizing factor for bounding box
+			const double bside = MAX(image.rows, image.cols);
+			const double factor = 1 / (MIN(_max_image_size, bside) / bside);
+			const Size im_size(int(image.cols / factor), int(image.rows / factor));
 
-			// Create result vector with all detections above the threshold
-			for (int i = 0; i < responses.detections.rows; ++i)
+			Responses responses;
+			getResponses(image, model, responses);
+
+
+			double min_val, max_val;
+			minMaxLoc(responses.detections, &min_val, &max_val);
+			std::cout << "line:" << __LINE__ << ") response range: " << min_val << " <-> " << max_val << std::endl;
+
+			// Create window
+			cout << "creatiung windows" << endl;
+			namedWindow("Search image", CV_WINDOW_KEEPRATIO);
+			resizeWindow("Search image", im_size.width, im_size.height);
+
+			// Trackbar with default values for detection threshold
+			int value = _initial_threshold - _min_slider_value, o_val = -INT_MAX;
+			createTrackbar("Threshold", "Search image", &value, _max_slider_value - _min_slider_value);
+
+
+			cout << "creatiung Detection results" << endl;
+			// Detection results
+			ResultLocations results;
+
+			std::string prec_rec_line = "";
+
+			const Size box_size(int(_model_size.width * factor), int(_model_size.height * factor));
+
+			// Drawing loop (to be able to vary the threshold
+			int key = -1;
+			while (_getch() != 'n')
 			{
-				const double r_pct = _max_slider_value - 
-						(((responses.detections.at<float>(i) - min_val) /
-								(max_val - min_val)) * _max_slider_value);
-
-				if (r_pct < threshold)
+				int o_value = _min_slider_value + value;
+				if (o_value != o_val)
 				{
-					// Find correct image location for this detection considering the pyramid layer
-					int offset = 0;
-					int layer_n = 0;
-					for (size_t l = 0; l < responses.layers.size(); ++l)
-					{
-						Range layer = responses.layers.at(l);
+					results.clear();		// Generate new results
 
-						if (i >= layer.start && i < layer.end)
+					double threshold = ((_max_slider_value - o_value) / 100.0) * _max_slider_value;
+
+					cout << (50 - threshold) << ",";
+
+					// Create result vector with all detections above the threshold
+					for (int i = 0; i < responses.detections.rows; ++i)
+					{
+						const double r_pct = _max_slider_value -
+							(((responses.detections.at<float>(i) -min_val) /
+							(max_val - min_val)) * _max_slider_value);
+
+						if (r_pct < threshold)
 						{
-							layer_n = (int) l;
-							break;
+							// Find correct image location for this detection considering the pyramid layer
+							int offset = 0;
+							int layer_n = 0;
+							for (size_t l = 0; l < responses.layers.size(); ++l)
+							{
+								Range layer = responses.layers.at(l);
+
+								if (i >= layer.start && i < layer.end)
+								{
+									layer_n = (int)l;
+									break;
+								}
+								offset += layer.size();
+							}
+
+							ResultLocation result;
+							result.score = responses.detections.at<float>(i);
+
+							const Point point(int(responses.Xvs[layer_n][i - offset] * factor), int(responses.Yvs[layer_n][i - offset] * factor));
+							result.bbox = Rect(point, box_size);
+							results.push_back(result);
 						}
-						offset += layer.size();
 					}
 
-					ResultLocation result;
-					result.score = responses.detections.at<float>(i);
+					nonMaximumSuppression(results);
 
-					const Point point(int(responses.Xvs[layer_n][i - offset] * factor), int(responses.Yvs[layer_n][i - offset] * factor));
-					result.bbox = Rect(point, box_size);
-					results.push_back(result);
-				}
-			}
+					auto precision_recall = precisionRecall(ground_truths, results);
 
-			nonMaximumSuppression(results);
-
-			auto precision_recall = precisionRecall(ground_truths, results);
-
-			char p_buf[32], r_buf[32];
+					char p_buf[32], r_buf[32];
 #ifdef __linux__
-			sprintf(p_buf, "%4.2f", precision_recall.first);
-			sprintf(r_buf, "%4.2f", precision_recall.second);
+					sprintf(p_buf, "%4.2f", precision_recall.first);
+					sprintf(r_buf, "%4.2f", precision_recall.second);
 #else
-			sprintf_s(p_buf, "%4.2f", precision_recall.first);
-			sprintf_s(r_buf, "%4.2f", precision_recall.second);
+					sprintf_s(p_buf, "%4.2f", precision_recall.first);
+					sprintf_s(r_buf, "%4.2f", precision_recall.second);
 #endif
 
-			std::stringstream prss;
-			prss << "Precision: " << p_buf << "% Recall: " << r_buf << "%";
-			prec_rec_line = prss.str();
+					std::stringstream prss;
+					prss << "Precision: " << p_buf << "% Recall: " << r_buf << "%";
+					prec_rec_line = prss.str();
 
-			o_val = o_value;
+					o_val = o_value;
+				}
+
+				Mat canvas = image.clone();
+
+				if (_show_ground_truth)
+					for (auto ground_truth : ground_truths)
+						rectangle(canvas, ground_truth, Color_GREEN, 2, CV_AA);
+				drawResults(canvas, results);
+				putText(canvas, prec_rec_line, Point(4, 10), CV_FONT_HERSHEY_PLAIN, .6, Color_BLACK, 2, CV_AA);
+				putText(canvas, prec_rec_line, Point(4, 10), CV_FONT_HERSHEY_PLAIN, .6, Color_WHITE, 1, CV_AA);
+
+				imshow("Search image", canvas);
+				imwrite("boxed.png", canvas);
+				key = waitKey(50);
+
+				if (key == 'g')         // Show/hide ground truth bounding boxes
+					_show_ground_truth = !_show_ground_truth;
+				else if (key == 2424832) // Left key (threshold slider lower)
+					value--;
+				else if (key == 2555904) // Right key (threshold slider higher)
+					value++;
+				else if (key == 27)      // Quit
+					break;
+
+				if (value < 0) value = 0;
+				if (value > _max_slider_value - _min_slider_value) value = _max_slider_value - _min_slider_value;
+				setTrackbarPos("Threshold", "Search image", value);
+			}
+			/////////////////////////////////////////////////////////////////////////////
+
 		}
-
-		Mat canvas = image.clone();
-
-		if(_show_ground_truth)
-			for(auto ground_truth : ground_truths)
-				rectangle(canvas,	ground_truth, Color_GREEN, 2, CV_AA);
-		drawResults(canvas, results);
-		putText(canvas, prec_rec_line, Point(4, 10), CV_FONT_HERSHEY_PLAIN, .6, Color_BLACK, 2, CV_AA);
-		putText(canvas, prec_rec_line, Point(4, 10), CV_FONT_HERSHEY_PLAIN, .6, Color_WHITE, 1, CV_AA);
-
-		imshow("Search image", canvas);
-		imwrite("boxed.png", canvas);
-		key = waitKey(50);
-
-		if (key == 'g')         // Show/hide ground truth bounding boxes
-			_show_ground_truth = !_show_ground_truth;
-		else if(key == 2424832) // Left key (threshold slider lower)
-			value--;
-		else if(key == 2555904) // Right key (threshold slider higher)
-			value++;
-		else if(key == 27)      // Quit
-			break;
-
-		if(value < 0) value = 0;
-		if(value > _max_slider_value - _min_slider_value) value = _max_slider_value - _min_slider_value;
-		setTrackbarPos("Threshold", "Search image", value);
-	}
-	/////////////////////////////////////////////////////////////////////////////
 }
 
 } /* namespace nl_uu_science_gmt */
