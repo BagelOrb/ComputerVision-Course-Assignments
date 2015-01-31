@@ -964,8 +964,8 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		string etf = Utility::show_fancy_etf((int) layer, (int) pyramid.size(), 1, t0, fps);
 		if (!etf.empty()) cout << etf << endl;
 
-		cout << "Presss any key to continue (in a window!)" << endl;
-		waitKey();
+		//cout << "Presss any key to continue (in a window!)" << endl;
+		//waitKey();
 	}
 
 }
@@ -1022,8 +1022,8 @@ std::pair<double, double> Detector::precisionRecall(const Rects &ground_truths,
 		if (ts > 0) {
 			recall = (tp + 0.0) / ts;
 		}
-
-		cout << precision << "," << recall << " (Threshold,Precision,Recall)" << endl;
+		double f_score = 2 * precision * recall / (precision + recall);
+		cout << " "<< precision << ", " << recall << ", " << f_score << " (Threshold, Precision, Recall, F-score)" << endl;
 		precision_recall.first = precision;
 		precision_recall.second = recall;
 	}
@@ -1384,6 +1384,7 @@ void Detector::run()
 		putText(canvas, prec_rec_line, Point(4, 10), CV_FONT_HERSHEY_PLAIN, .6, Color_WHITE, 1, CV_AA);
 
 		imshow("Search image", canvas);
+		imwrite("boxed.png", canvas);
 		key = waitKey(50);
 
 		if (key == 'g')         // Show/hide ground truth bounding boxes

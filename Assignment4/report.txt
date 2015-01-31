@@ -60,12 +60,14 @@ Per layer of the pyramid, we could rotate the entire image around multiple times
 
 
 
-5.c see 7
+5.c 
+Q: Generate detection results (images with detection boxes) for all test images not using the pyramid and using the pyramid. That's 2 result images per test image should be handed in. Name the files clearly (eg.: result_pixelmodel_nopyramid_img1.jpg), or put them in your report with a clear caption. 
+A:
 
 
 
 
-6e
+6.e
 Q: Report the impact on the performance of the validation data (ie.: Give the change in percentage correct on the validation data.)
 A:
 	(amount="500" factor="10" equalize="1" whiten="1")
@@ -251,14 +253,27 @@ Pixel, no pyramid:
 Pixel, with pyramid
 
 HOG, with pyramid
+=======
+6.f 
+Report the impact on the performance of the test images.
+i
+Q: Generate detection results (images with detection boxes) for all test images using the pyramid
+A:
+see 5.c
 
-7b
+ii
+Q: Report the Average Precision (see point 7) for the test image that came with ground truth data annotated in config.xml. Give the AP-score for the pixel model without the feature pyramid, the pixel model with the feature pyramid and the HOG model with the feature pyramid. Also hand in the optimal settings used to train each of these models.
+A:
+
+
+
+7.b
 Q: Put the Precision/Recall curves of your models for img1.jpg in your report (or add (an) image(s) of the graphs to your archive).
 A:
 
 
 
-7c
+7.c
 Q: Calculate the AP-scores of the images as described in point 6f.ii.
 A:
 

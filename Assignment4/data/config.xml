@@ -94,7 +94,7 @@
 			<y2>70</y2>
 		</crop>
 		<pyramid>
-			<height>6</height>
+			<height>8</height>
 			<downscale_factor>1.189207115</downscale_factor> <!-- =sqrt(sqrt(2)) -->
 			<smallestImageModelSizeFactor>4</smallestImageModelSizeFactor>
 		</pyramid>
