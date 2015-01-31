@@ -13,8 +13,7 @@ A non-linear SVM can contain higher order terms, resulting in a hypersurface whi
 
 4.b 
 Q: Calculate the training (the data that was seen by the lSVM) and testing (the data that was not seen by the lSVM) performance by implementing the lines of code in Detector.cpp@349 to 373. Calculate conf_train and conf_val without making use of model.svm->predict(...)!
-A:
-[Validatie conf--geen validatie ???]
+A: Done, validation code moved to other function (because val_data is not even available at the original position in the code!)
 
 
 
