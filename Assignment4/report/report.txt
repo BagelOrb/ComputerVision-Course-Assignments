@@ -87,24 +87,24 @@ Q: Generate detection results (images with detection boxes) for all test images 
 A:
 See report/[x]
 where [x] =
-result_hogmodel_pyramid_img1.png
-result_hogmodel_pyramid_img2.png
-result_hogmodel_pyramid_img3.png
-result_hogmodel_pyramid_img4.png
-result_hogmodel_pyramid_img5.png
-result_hogmodel_pyramid_img6.png
-result_pixelmodel_nopyramid_img1.png
-result_pixelmodel_nopyramid_img2.png
-result_pixelmodel_nopyramid_img3.png
-result_pixelmodel_nopyramid_img4.png
-result_pixelmodel_nopyramid_img5.png
-result_pixelmodel_nopyramid_img6.png
-result_pixelmodel_pyramid_img1.png
-result_pixelmodel_pyramid_img2.png
-result_pixelmodel_pyramid_img3.png
-result_pixelmodel_pyramid_img4.png
-result_pixelmodel_pyramid_img5.png
-result_pixelmodel_pyramid_img6.png
+result_hogmodel_pyramid_img1.jpg
+result_hogmodel_pyramid_img2.jpg
+result_hogmodel_pyramid_img3.jpg
+result_hogmodel_pyramid_img4.jpg
+result_hogmodel_pyramid_img5.jpg
+result_hogmodel_pyramid_img6.jpg
+result_pixelmodel_nopyramid_img1.jpg
+result_pixelmodel_nopyramid_img2.jpg
+result_pixelmodel_nopyramid_img3.jpg
+result_pixelmodel_nopyramid_img4.jpg
+result_pixelmodel_nopyramid_img5.jpg
+result_pixelmodel_nopyramid_img6.jpg
+result_pixelmodel_pyramid_img1.jpg
+result_pixelmodel_pyramid_img2.jpg
+result_pixelmodel_pyramid_img3.jpg
+result_pixelmodel_pyramid_img4.jpg
+result_pixelmodel_pyramid_img5.jpg
+result_pixelmodel_pyramid_img6.jpg
 
 
 ===========
