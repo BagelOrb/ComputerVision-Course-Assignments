@@ -804,35 +804,35 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 #pragma omp parallel for
 #endif
 
-	if (!_use_hog || _eval_everywhere)
-		for (int i = 0; i < (int) X1.total(); ++i) // for all window positions
-		{
-			
-			Mat sub = (*pyramid.at(layer))(Rect(Point(Xv[i], Yv[i]), _model_size));
-			Mat subclone;
-			/*
-			if (_use_hog)
+		if (!_use_hog || _eval_everywhere)
+			for (int i = 0; i < (int) X1.total(); ++i) // for all window positions
 			{
-				cv::Mat HOG_features;
-				FeatureHOG<float>::compute(sub, HOG_features);
-				subclone = HOG_features.clone(); // .reshape(FeatureHOG<float>::DEPTH);
-			}
-			else
-			*/
-				subclone = sub.clone();
-			Mat sub1d = subclone.reshape(1, 1);
-			sub1d.convertTo(sub_windows.row(i), CV_32F);
+			
+				Mat sub = (*pyramid.at(layer))(Rect(Point(Xv[i], Yv[i]), _model_size));
+				Mat subclone;
+				/*
+				if (_use_hog)
+				{
+					cv::Mat HOG_features;
+					FeatureHOG<float>::compute(sub, HOG_features);
+					subclone = HOG_features.clone(); // .reshape(FeatureHOG<float>::DEPTH);
+				}
+				else
+				*/
+					subclone = sub.clone();
+				Mat sub1d = subclone.reshape(1, 1);
+				sub1d.convertTo(sub_windows.row(i), CV_32F);
 			
 
 			
-			if (_do_equalizing)
-			{
-				Mat mean, stddev;
-				meanStdDev(sub_windows.row(i), mean, stddev);
-				sv_sub_data.row(i) = stddev.at<double>(0, 0);
-				mv_sub_data.row(i) = mean.at<double>(0, 0);
+				if (_do_equalizing)
+				{
+					Mat mean, stddev;
+					meanStdDev(sub_windows.row(i), mean, stddev);
+					sv_sub_data.row(i) = stddev.at<double>(0, 0);
+					mv_sub_data.row(i) = mean.at<double>(0, 0);
+				}
 			}
-		}
 
 		
 		if (_do_equalizing)
@@ -872,7 +872,7 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 			FeatureHOG<float>::compute(*pyramid.at(layer), HOG_features);
 			Mat features = HOG_features.reshape(FeatureHOG<float>::DEPTH);
 
-			imshow("HOG features", FeatureHOG<float>::visualize(HOG_features));
+			imshow("HOG features", FeatureHOG<float>::visualize(HOG_features,24));
 
 			int w = features.cols - _hog_model_size.width + 1;
 			int h = features.rows - _hog_model_size.height + 1;
@@ -963,7 +963,11 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		//Moved this to end of for loop:
 		string etf = Utility::show_fancy_etf((int) layer, (int) pyramid.size(), 1, t0, fps);
 		if (!etf.empty()) cout << etf << endl;
+
+		cout << "Presss any key to continue (in a window!)" << endl;
+		waitKey();
 	}
+
 }
 
 /*! @brief generate a precision and recall score by comparing each detection to the ground truth
