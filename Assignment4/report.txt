@@ -12,7 +12,7 @@ A non-linear SVM can contain higher order terms, resulting in a hypersurface whi
 
 
 4.b 
- Q: Calculate the training (the data that was seen by the lSVM) and testing (the data that was not seen by the lSVM) performance by implementing the lines of code in Detector.cpp@349 to 373. Calculate conf_train and conf_val without making use of model.svm->predict(...)!
+Q: Calculate the training (the data that was seen by the lSVM) and testing (the data that was not seen by the lSVM) performance by implementing the lines of code in Detector.cpp@349 to 373. Calculate conf_train and conf_val without making use of model.svm->predict(...)!
 A:
 [Validatie conf--geen validatie ???]
 
@@ -44,7 +44,11 @@ Q:
     What do these switches [equalize and whiten] do with the learning data?
     Why is this good for the performance?
 A:
-Whiten breaks the code??? It is supposed to TODO. Equalize improves TODO. This is good for performance because TODO
+They normalize the image pixels.
+Equalization transforms all pixels at a given location over all images such that it has a mean value of zero and a standard deviation of 1.
+Whitening removes the covariances between pixels so that neighboring pixels won't 'share information'.
+This nulls the effect of vignetting for example; darker image corners will not be taken into account when trying to classify an image as a face or not.
+
 
 
 
