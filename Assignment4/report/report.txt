@@ -1,3 +1,15 @@
+   Report - Assignment 4 Computer Vision 2014-2015
+`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+	
+	Tim Kuipers (3149099 (old) or F141459 (new)) 
+		innovative stuff, see below
+	
+	Jeroen van de Ven (F141192) 
+		performance of predicted foreground vs by-hand coloured foreground
+
+		
+=======================================================
+
 Notes
 - People image files removed from VOC data set using code
 - Ground truth added for img2
