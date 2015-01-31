@@ -872,6 +872,7 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 			FeatureHOG<float>::compute(*pyramid.at(layer), HOG_features);
 			Mat features = HOG_features.reshape(FeatureHOG<float>::DEPTH);
 
+			imshow("HOG features", HOG_features);
 
 			int w = features.cols - _hog_model_size.width + 1;
 			int h = features.rows - _hog_model_size.height + 1;
