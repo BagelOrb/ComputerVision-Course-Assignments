@@ -1,16 +1,90 @@
 Notes
-- People images removed from VOC data set using code
+- People image files removed from VOC data set using code
 - Ground truth added for img2
 
 Questions
-4.a.i: What is "linear" about a lSVM? The hyperplane is linear. In a linear SVM, a hyperplane is constructed that splits the high-dimensional vector space exactly into two subspaces in an aim to capture the vectors of exactly one class in one subspace, with the highest margin.
-4.b [Validatie conf--geen validatie ???]
-4.c The model is a representation of the hyperplane, which by nature is the border between the positive and negative class i.e. the border between a face and not a face. It slightly resembles a face because it defines the furthest a face can be from looking like a face to still be classified as a face.
-4.d.i The c-parameter specifies the penalty when the hyperplane is such that some training vectors are in the wrong subspace. Such a situation is inevitable when there exists no linear border between the vectors of each class.
-4.d.ii TODO (implement validation first)
-4.d.iii Whiten breaks the code??? It is supposed to TODO. Equalize improves TODO. This is good for performance because TODO
+4.a.i: 
+Q: Explain what is linear about the linear Support Vector Machine.
+A:
+The hyperplane is linear. It is a linear function of the inputs.
+A non-linear SVM can contain higher order terms, resulting in a hypersurface which may not be a straight 'linear' hyperplane.
 
-5.b Per layer of the pyramid, we could rotate the entire image around multiple times by a certain interval of degrees by which 360 is divisible, such as 36. The rotation needed to match one of these images would be up to 10 times smaller than the rotation needed to match the original image, which could hopefully be overcome by the model by itself if the interval is small enough. 
+
+
+4.b 
+Q: Calculate the training (the data that was seen by the lSVM) and testing (the data that was not seen by the lSVM) performance by implementing the lines of code in Detector.cpp@349 to 373. Calculate conf_train and conf_val without making use of model.svm->predict(...)!
+A:
+[Validatie conf--geen validatie ???]
+
+
+
+4.c 
+Q: What, in terms of the theory of SVM, does the model consist of? Why does that look like a face?
+A:
+The model is a representation of the hyperplane, which by nature is the border between the positive and negative class i.e. the border between a face and not a face. It slightly resembles a face because it defines the furthest a face can be from looking like a face to still be classified as a face.
+
+
+
+4.d.i 
+Q: What does this C parameter do? 
+A:
+The c-parameter specifies the penalty of training vectors being on the wrong side of the decision surface, versus optimizing the margin between the closest vectors on the right side of the decision surface. Such a situation is inevitable when there exists no linear border between the vectors of each class.
+
+
+
+4.d.ii 
+Q: Find the optimal value for C, when using all the training images (or as many as fit in your computer's memory if you run into memory problems!). 
+A:
+TODO (implement validation first)
+
+
+
+4.d.iii 
+Q:
+    What do these switches [equalize and whiten] do with the learning data?
+    Why is this good for the performance?
+A:
+They normalize the image pixels.
+Equalization transforms all pixels at a given location over all images such that it has a mean value of zero and a standard deviation of 1.
+Whitening removes the covariances between pixels so that neighboring pixels won't 'share information'.
+This nulls the effect of vignetting for example; darker image corners will not be taken into account when trying to classify an image as a face or not.
+
+
+
+
+
+5.b 
+Q: Another problem aside from scaling is rotation. If you can think of a good way to do that, it can give you some nice bonus points. 
+A:
+Per layer of the pyramid, we could rotate the entire image around multiple times by a certain interval of degrees by which 360 is divisible, such as 36. The rotation needed to match one of these images would be up to 10 times smaller than the rotation needed to match the original image, which could hopefully be overcome by the model by itself if the interval is small enough. 
+
+
+
 5.c see 7
 
-6e	TODO (implement validation first)
+
+
+
+6e
+Q: Report the impact on the performance of the validation data (ie.: Give the change in percentage correct on the validation data.)
+A:
+	TODO (implement validation first)
+
+
+
+6f
+Q: Report the impact on the performance of the test images.
+A:
+
+
+
+7b
+Q: Put the Precision/Recall curves of your models for img1.jpg in your report (or add (an) image(s) of the graphs to your archive).
+A:
+
+
+
+7c
+Q: Calculate the AP-scores of the images as described in point 6f.ii.
+A:
+
