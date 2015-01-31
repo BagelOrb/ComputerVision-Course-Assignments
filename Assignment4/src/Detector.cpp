@@ -1171,6 +1171,8 @@ void Detector::run()
 	val_data.push_back(_do_whitening ? whitened_pos_val_data : pos_val_data);
 	val_data.push_back(_do_whitening ? whitened_neg_val_data : neg_val_data);
 
+	cout << "val data: " << val_data.size() << endl;
+
 	cout << "Show windows" << endl;
 	namedWindow("Pos examples", CV_WINDOW_KEEPRATIO);
 	namedWindow("Neg examples", CV_WINDOW_KEEPRATIO);
@@ -1186,14 +1188,15 @@ void Detector::run()
 
 	Mat val_labels(pos_val_data.rows, 1, CV_32S, Scalar::all(1));
 	val_labels.push_back(Mat(neg_val_data.rows, 1, CV_32S, Scalar::all(-1)));
-	Mat val_gnd = ((val_labels > 0) / 255) * 2 - 1;
+
 	/////////////////////////////////////////////////////////////////////////////
 
 	//////////////////// Test model from mean of images /////////////////////////
-	Mat alt_pred = (val_data * _pos_sumF.t() > 0) / 255;
-	double alt_true = alt_pred.size().height - sum((alt_pred == val_gnd) / 255)[0];
-	double alt_pct = (alt_true / (double) alt_pred.size().height) * 100.0;
-	cout << "Validation correct with mean model: " << alt_pct << "%" << endl;
+	//dont care
+	//Mat alt_pred = (val_data * _pos_sumF.t() > 0) / 255;
+	//double alt_true = alt_pred.size().height - sum((alt_pred == val_gnd) / 255)[0];
+	//double alt_pct = (alt_true / (double) alt_pred.size().height) * 100.0;
+	//cout << "Validation correct with mean model: " << alt_pct << "%" << endl;
 	/////////////////////////////////////////////////////////////////////////////
 
 	/////////////////////////////// Train SVM ///////////////////////////////////
@@ -1213,6 +1216,60 @@ void Detector::run()
 	train(train_data, train_labels, model);		// train it based on pos/neg train data
 	/////////////////////////////////////////////////////////////////////////////
 	cout << "training finished. start testing" << endl;
+
+	/*
+	 * Do validation of SVM on validation data
+	 */
+
+		// DONE: Compute the confidence values for training and validation as the distances
+		// between the sample vectors X and weight vector W, using bias b:
+		// conf = X * W + b
+		//  
+		// Approach this as a matrix calculation (ie. fill in the dots below, using no
+		// more than a single line for calculating respectively conf_train and conf_val)
+		//  
+		// The confidence value for training should be the same value you get from
+		// svm.predict(data, labels_train);
+
+		Mat data;
+		if (_use_hog)
+		{
+			Mat HOG_data_8U;
+			for (int i = 0; i < val_data.rows; i++)
+			{
+				Mat row = val_data.row(i);
+				Mat window = row.reshape(1, _model_size.height);
+				Mat window_8U;
+				window.convertTo(window_8U, CV_8U);
+				cv::Mat HOG_features;
+				FeatureHOG<float>::compute(window_8U, HOG_features);
+				Mat reshaped = HOG_features.reshape(1, 1);
+				//DEBUG_SHOW(reshaped.total());
+				//DEBUG_SHOW(sqrt(reshaped.total()/FeatureHOG<float>::DEPTH));
+				HOG_data_8U.push_back(reshaped);
+			}
+			HOG_data_8U.convertTo(data, CV_32F);
+		}
+		else {
+			if (val_data.type() != CV_32F)
+				val_data.convertTo(data, CV_32F);
+			else
+				data = val_data;
+		}
+
+		Mat conf_val = (data * model.W) + model.b; // data is val_data but in CV_32F
+
+		Mat val_pred = (conf_val > 0);
+
+		//Convert val_labels type to match val_pred
+		Mat val_gnd = (val_labels > 0);
+
+		double val_true = sum((val_pred == val_gnd) / 255)[0];
+		double val_pct = (val_true / (double) val_pred.rows) * 100.0;
+
+		cout << __LINE__ << "\tSVM Validation correct: " << val_pct << "%" << endl;
+
+
 	////////////////////////////// Test on real image ///////////////////////////
 	const Mat image = imread(_query_image_file);
 

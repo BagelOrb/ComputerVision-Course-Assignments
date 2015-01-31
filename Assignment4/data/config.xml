@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings seed="50">
 	<query_image>data/img1.jpg</query_image>
-	<images amount="10" factor="2" width="20">
+	<images amount="500" factor="15" width="20">
 		<examples size="400" />
 		<pos>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
@@ -98,7 +98,7 @@
 			<y2>70</y2>
 		</crop>
 		<pyramid>
-			<height>1</height>
+			<height>3</height>
 			<downscale_factor>1.41421356237</downscale_factor> <!-- =sqrt(2) -->
 			<smallestImageModelSizeFactor>4</smallestImageModelSizeFactor>
 		</pyramid>
