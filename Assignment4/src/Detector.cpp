@@ -37,6 +37,10 @@ using namespace std;
 using namespace boost;
 using namespace nl_uu_science_gmt;
 
+
+#define DEBUG_HERE() cout << "line:" << __LINE__ << "\t(debug)" << endl; 
+#define DEBUG_SHOW(x) cout << "Detector." << __LINE__ << ": " << #x << " = " << x << endl;
+
 namespace nl_uu_science_gmt
 {
 
@@ -69,6 +73,7 @@ Detector::Detector(const string &qif) :
 				_smallestImageModelSizeFactor(Detector::cfg()->getValue<double>("settings/features/pyramid/smallestImageModelSizeFactor")), // (TK)
 				_min_slider_value(50), _max_slider_value(100)
 {
+
 	assert(_max_count > 0);
 	assert(_epsilon > 0);
 
@@ -419,6 +424,8 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 			cv::Mat HOG_features;
 			FeatureHOG<float>::compute(window_8U, HOG_features);
 			Mat reshaped = HOG_features.reshape(1, 1);
+			DEBUG_SHOW(reshaped.total());
+			DEBUG_SHOW(sqrt(reshaped.total()/FeatureHOG<float>::DEPTH));
 			HOG_data_8U.push_back(reshaped);
 		}
 		HOG_data_8U.convertTo(HOG_data, CV_32F);
@@ -470,12 +477,14 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 		sv_idx[i].first = i;
 		sv_idx[i].second = sum(sv_weight.row(i)).val[0];
 	}
+	DEBUG_HERE();
 
 	// Sort the support vectors from most pos to most neg
 	std::sort(sv_idx.begin(), sv_idx.end(), [](const std::pair<int, double> &a, const std::pair<int, double> &b)
 	{
 		return a.second > b.second;
 	});
+	DEBUG_HERE();
 
 	// Color the positive weighed support vector patches green, the neg ones red
 	Mat sv_norm_weight, sv_weight_gimage, sv_weight_cimage;
@@ -483,11 +492,13 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 	sv_norm_weight.convertTo(sv_weight_gimage, CV_8U);
 	cvtColor(sv_weight_gimage, sv_weight_cimage, COLOR_GRAY2BGR);
 
+	DEBUG_HERE();
 	const double alpha = 0.1;
 	const double beta = (1.0 - alpha);
 	const Mat green(1, sv_weight_cimage.cols, CV_8UC3, CV_RGB(0, 255, 0));
 	const Mat red(1, sv_weight_cimage.cols, CV_8UC3, CV_RGB(255, 0, 0));
 	Mat sv_weight_color_image(sv_count, sv_length, CV_8UC3);
+	DEBUG_HERE();
 
 	for(size_t r = 0; r < sv_idx.size(); ++r)
 	{
@@ -498,6 +509,7 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 		else
 			addWeighted(red, alpha, sv_weight_cimage.row(idx), beta, 0.0, sv_weight_color_image.row((int) r));
 	}
+	DEBUG_HERE();
 
 	// Show the support vectors
 	Mat sv_tmp_sz_im_canvas;
@@ -518,6 +530,7 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 		namedWindow("Support Vector overview", CV_WINDOW_KEEPRATIO);
 		imshow("Support Vector overview", sv_tmp_sz_im_canvas);
 	}
+	DEBUG_HERE();
 
 	// DONE: Compute the confidence values for training and validation as the distances
 	// between the sample vectors X and weight vector W, using bias b:
@@ -529,13 +542,24 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 	// The confidence value for training should be the same value you get from
 	// svm.predict(data, labels_train);
 
-	Mat conf_train = (data * W) + b; // data is train_data but in CV_32F
+
+	cout << "data size: " << data.cols << "x" << data.rows << endl;
+	cout << "HOG data size: " << HOG_data.cols << "x" << HOG_data.rows << endl;
+	cout << "W size: " << W.cols << "x" << W.rows << endl;
+	Mat conf_train;
+	if (_use_hog)
+		conf_train = (HOG_data * W) + b; // data is train_data but in CV_32F
+	else
+		conf_train = (data * W) + b; // data is train_data but in CV_32F
+
 	//Mat conf_val = (data * W) + b; // where is the validation data???
 
 	Mat train_pred, train_pred_32S;
 	train_pred = (conf_train > 0) / 255;
 	train_pred.convertTo(train_pred_32S, CV_32S);
 	train_pred_32S = (train_pred_32S * 2) - 1; //convert {0,1} to {-1,1} to match labels vector
+
+	DEBUG_HERE();
 
 	double train_true2 = sum((train_pred_32S == labels) / 255)[0];
 	double train_pct2 = (train_true2 / (double) train_pred_32S.rows) * 100.0;
@@ -550,28 +574,43 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 	model.b = b;
 	model.c = C;
 
-	Mat W_rect(_model_size.height, _model_size.width, CV_32F);
-	W_rect.data = W.data;
-	W_rect = W_rect.clone();
+	DEBUG_HERE();
 
 	//assert((int) W.total() == _model_size.area());
 	//assert((int) W.total() == W_rect.total());
 
 	// Show the model
 	cout << "showing model" << endl;
-	normalize(W_rect, W_rect, 255, 0, NORM_MINMAX);
 
-	Mat W_img;
-	W_rect.convertTo(W_img, CV_8U);
 	if (_use_hog)
 	{
-		//imshow("Model", FeatureHOG<float>::visualize(W_rect));
+		Mat W_rect(_hog_model_size.height, _hog_model_size.width * FeatureHOG<float>::DEPTH, CV_32F);
+
+		cout << "rectangle size:" << W_rect.cols << "x" << W_rect.rows << endl;
+		cout << "data size: " << W.cols << "x" << W.rows << endl;
+
+		W_rect.data = W.data;
+		W_rect = W_rect.clone();
+
+		//Mat weight_img = FeatureHOG<float>::visualize(W_rect);
+
+		imshow("Model", FeatureHOG<float>::visualize(W_rect));
 	} 
-	else 
+	else
+	{
+		Mat W_rect(_model_size.height, _model_size.width, CV_32F);
+		W_rect.data = W.data;
+		W_rect = W_rect.clone();
+
+		normalize(W_rect, W_rect, 255, 0, NORM_MINMAX);
+
+		Mat W_img;
+		W_rect.convertTo(W_img, CV_8U);
 		imshow("Model", W_img);
+	}
 	cout << "End of training phase!" << endl;
-	cout << "Press a key to continue" << endl;
-	waitKey();
+	//cout << "Press a key to continue" << endl;
+	//waitKey();
 }
 
 /*! @brief creates a feature pyramid of several layers containing
@@ -722,7 +761,6 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 		 *  +------------------------------------------------------------+
 		 */
 
-		Size _hog_model_size(_model_size.width / FeatureHOG<float>::CELL_SIZE, _model_size.height / FeatureHOG<float>::CELL_SIZE);
 		int w, h;
 		if (_use_hog && !_eval_everywhere)
 		{
@@ -848,7 +886,13 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 					Mat sub = features(Rect(Point(x, y), _hog_model_size));
 					
 					Mat sub1D = sub.clone().reshape(1, 1);
-					
+
+					//DEBUG_SHOW(_hog_model_size.width);
+					//DEBUG_SHOW(_hog_model_size.height);
+					//DEBUG_SHOW(_hog_model_size.height * _hog_model_size.width * FeatureHOG<float>::DEPTH);
+					//DEBUG_SHOW(sub1D.total());
+					//
+					//
 					detect.at<float>(i) = -model.svm->predict(sub1D, true); // svm->predict inverses the scores...
 					i++;
 				}
@@ -1054,6 +1098,10 @@ void Detector::run()
 	readNegData(neg_train, neg_train_data);
 	/////////////////////////////////////////////////////////////////////////////
 
+	cout << "model size: " << _model_size.width << "x" << _model_size.height << endl;
+	_hog_model_size = Size(_model_size.width / FeatureHOG<float>::CELL_SIZE + FeatureHOG<float>::CELL_SIZE % 2, _model_size.height / FeatureHOG<float>::CELL_SIZE + FeatureHOG<float>::CELL_SIZE % 2);
+	cout << "hog model size: " << _hog_model_size.width << "x" << _hog_model_size.height << endl;
+
 	cout << "training images have been read." << endl;
 
 	/////////////////////////// Whitening transformation ////////////////////////
@@ -1131,8 +1179,8 @@ void Detector::run()
 	imshow("Neg examples", neg_tmp_sz_im_canvas);
 	imshow("Pos mean image", _pos_sum8U);
 	imshow("Neg mean image", _neg_sum8U);
-	cout << "Press a key to continue" << endl;
-	waitKey();
+	//cout << "Press a key to continue" << endl;
+	//waitKey();
 	namedWindow("Model", CV_WINDOW_KEEPRATIO);
 
 	Mat val_labels(pos_val_data.rows, 1, CV_32S, Scalar::all(1));

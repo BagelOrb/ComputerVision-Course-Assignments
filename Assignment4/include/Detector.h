@@ -130,6 +130,7 @@ class Detector
 	const double _gt_accuracy;							// Accuracy threshold for determining true positive ground truth overlap
 
 	cv::Size _model_size;										// Template model Width x Height
+	cv::Size _hog_model_size;									// Template hog model width x height
 
 	cv::Mat _neg_sum8U, _pos_sum8U, _pos_sumF; // Mean image representations (pos image, neg image and pos float)
 
