@@ -99,7 +99,7 @@
 			<smallestImageModelSizeFactor>4</smallestImageModelSizeFactor>
 		</pyramid>
 		<hog>
-			<use_hog>0</use_hog>
+			<use_hog>1</use_hog>
 			<eval_everywhere>0</eval_everywhere>
 			<texture>0.2357</texture>
 			<truncation>0.2</truncation>
