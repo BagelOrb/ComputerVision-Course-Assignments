@@ -38,7 +38,12 @@ For testing we used the following settings:
 <images amount="1000" factor="10" width="20">
 <features equalize="1" whiten="0">
 
+In file [report/c_param_settings_score.csv] we report the performance on the validation set for different settings of the C parameter. 
+See [report/c_param_performance.pdf] for a graph of these values (on a logarithmic scale of C!).
 
+The best performing value of C was 0.004, giving a performance of 98.9738% on the validation data. The actual optimal setting of C may lie as far as .001 away from this value.
+
+Note that for different numbers of positive and negative images, the C parameter needs te be tuned differently! However, we were unable to implement a fancy search algorithm to search the whole parameter space. That would fall outside the scope of this assignment.
 
 Note: Because in the provided config file the C parameter was set to 1000, we started looking for the optimal C parameter in that order of magnitude, and found that all values of C lead to the same performance. Thinking it was an implementation mistake by your hand we kept the parameter set at 1000 throughout the tests. It was only after we had performed all tests that we again looked into the C parameter and realized that for large datasets the value should be well below 1.
 
@@ -55,7 +60,7 @@ Whitening removes the covariances between pixels so that neighboring pixels won'
 This nulls the effect of vignetting for example; darker image corners will not be taken into account when trying to classify an image as a face or not.
 
 
-
+===========
 
 
 5.b 
@@ -68,8 +73,29 @@ Per layer of the pyramid, we could rotate the entire image around multiple times
 5.c 
 Q: Generate detection results (images with detection boxes) for all test images not using the pyramid and using the pyramid. That's 2 result images per test image should be handed in. Name the files clearly (eg.: result_pixelmodel_nopyramid_img1.jpg), or put them in your report with a clear caption. 
 A:
+See report/[x]
+where [x] =
+result_hogmodel_pyramid_img1.png
+result_hogmodel_pyramid_img2.png
+result_hogmodel_pyramid_img3.png
+result_hogmodel_pyramid_img4.png
+result_hogmodel_pyramid_img5.png
+result_hogmodel_pyramid_img6.png
+result_pixelmodel_nopyramid_img1.png
+result_pixelmodel_nopyramid_img2.png
+result_pixelmodel_nopyramid_img3.png
+result_pixelmodel_nopyramid_img4.png
+result_pixelmodel_nopyramid_img5.png
+result_pixelmodel_nopyramid_img6.png
+result_pixelmodel_pyramid_img1.png
+result_pixelmodel_pyramid_img2.png
+result_pixelmodel_pyramid_img3.png
+result_pixelmodel_pyramid_img4.png
+result_pixelmodel_pyramid_img5.png
+result_pixelmodel_pyramid_img6.png
 
 
+===========
 
 
 6.e
@@ -82,13 +108,6 @@ A:
 	
 	
 
-6f
-Q: Report the impact on the performance of the test images.
-A: i: See 5c (with pyramid, with HOG)
-ii: 
-
-HOG, with pyramid
-=======
 6.f 
 Q: Report the impact on the performance of the test images.
 :
@@ -100,7 +119,7 @@ see 5.c
 6.f.ii
 Q: Report the Average Precision (see point 7) for the test image that came with ground truth data annotated in config.xml. Give the AP-score for the pixel model without the feature pyramid, the pixel model with the feature pyramid and the HOG model with the feature pyramid. Also hand in the optimal settings used to train each of these models.
 A:
-see data\compare_PR_normal_pyramid_hog\[x]
+see report\compare_PR_normal_pyramid_hog\[x]
 where [x] = 
 pr_img1_hogmodel_pyramid.pdf
 pr_img1_pixelmodel_nopyramid.pdf
@@ -114,10 +133,12 @@ The caption of the plots give the area under the curve.
 HOG features seem to have a negative effect on the detection performance. Perhaps this is due to the fact that the exact location of the detected face cannot relyable be reconstructed, since multiple pixels are contained in each cell.
 Also using a pyramid seems to have a negative effect on the detection performance. This might be due to the fact that all faces in the images were of similar size.
 
+===========
+
 7.b
 Q: Put the Precision/Recall curves of your models for img1.jpg in your report (or add (an) image(s) of the graphs to your archive).
 A:
-
+see 6.f.ii
 
 
 7.c

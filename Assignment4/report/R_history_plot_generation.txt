@@ -1,0 +1,153 @@
+require("flux");
+Loading required package: flux
+Loading required package: caTools
+This is flux 0.2-2
+Warning messages:
+1: package ‘flux’ was built under R version 2.15.3 
+2: package ‘caTools’ was built under R version 2.15.3 
+> wd("C:\Users\TK\Documents\Computer Vision\ComputerVision-Course-Assignments\Assignment4\data")
+Error: '\U' used without hex digits in character string starting "C:\U"
+> wd("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment4\\data")
+Error: could not find function "wd"
+> setwd("C:\\Users\\TK\\Documents\\Computer Vision\\ComputerVision-Course-Assignments\\Assignment4\\data")
+> img1_normal = read.csv("pr_img1_normal.csv")
+> img1_normal
+          X0     X0.1
+1  1.0000000 0.142857
+2  1.0000000 0.142857
+3  1.0000000 0.142857
+4  1.0000000 0.142857
+5  1.0000000 0.142857
+6  1.0000000 0.142857
+7  1.0000000 0.142857
+8  1.0000000 0.142857
+9  1.0000000 0.214286
+10 1.0000000 0.214286
+11 1.0000000 0.285714
+12 1.0000000 0.285714
+13 1.0000000 0.285714
+14 1.0000000 0.285714
+15 1.0000000 0.357143
+16 1.0000000 0.357143
+17 1.0000000 0.357143
+18 1.0000000 0.357143
+19 0.8333330 0.357143
+20 0.7142860 0.357143
+21 0.6250000 0.357143
+22 0.4545450 0.357143
+23 0.5000000 0.428571
+24 0.5000000 0.428571
+25 0.5000000 0.500000
+26 0.5000000 0.500000
+27 0.3888890 0.500000
+28 0.3684210 0.500000
+29 0.3636360 0.571429
+30 0.3076920 0.571429
+31 0.2666670 0.571429
+32 0.2500000 0.571429
+33 0.2222220 0.571429
+34 0.2000000 0.571429
+35 0.2045450 0.642857
+36 0.1800000 0.642857
+37 0.1698110 0.642857
+38 0.1551720 0.642857
+39 0.1551720 0.642857
+40 0.1475410 0.642857
+41 0.1562500 0.714286
+42 0.1408450 0.714286
+43 0.1351350 0.714286
+44 0.1250000 0.714286
+45 0.1204820 0.714286
+46 0.1111110 0.714286
+47 0.1010100 0.714286
+48 0.0961538 0.714286
+49 0.0961538 0.714286
+50 0.0917431 0.714286
+> plot(im1_normal)
+Error in plot(im1_normal) : object 'im1_normal' not found
+> plot(img1_normal)
+> lines(img1_normal)
+> plot(img1_normal, xlab="Precision", ylab="Recall")
+> lines(img1_normal)
+> plot(img1_normal[1], img1_normal[0], xlab="Precision", ylab="Recall")
+Error in stripchart.default(x1, ...) : invalid plotting method
+> plot(img1_normal[1], img1_normal[2], xlab="Precision", ylab="Recall")
+Error in stripchart.default(x1, ...) : invalid plotting method
+> plot(img1_normal[[1]], img1_normal[[2]], xlab="Precision", ylab="Recall")
+> plot(img1_normal[[2]], img1_normal[[1]], xlab="Precision", ylab="Recall")
+> plot(img1_normal[[2]], img1_normal[[1]], ylab="Precision", xlab="Recall")
+> lines(img1_normal[[2]], img1_normal[[1]])
+> auc(img1_normal[[2]], img1_normal[[1]])
+[1] 0.3355338
+> img1_normal_auc = auc(img1_normal[[2]], img1_normal[[1]])
+> plot(img1_normal[[2]], img1_normal[[1]], ylab="Precision", xlab="Recall", main = img1_normal_auc)
+> lines(img1_normal[[2]], img1_normal[[1]])
+> plot(img1_normal[[2]], img1_normal[[1]], ylab="Precision", xlab="Recall", main = "AUC="+img1_normal_auc)
+Error in "AUC=" + img1_normal_auc : 
+  non-numeric argument to binary operator
+> plot(img1_normal[[2]], img1_normal[[1]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_normal_auc))
+> lines(img1_normal[[2]], img1_normal[[1]])
+> concat(img1_normal, c(1,0))
+Error: could not find function "concat"
+> img1_normal = read.csv("pr_img1_normal.csv")
+> plot(img1_normal[[2]], img1_normal[[1]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_normal_auc))
+> lines(img1_normal[[2]], img1_normal[[1]])
+> img1_normal_auc = auc(img1_normal[[2]], img1_normal[[1]])
+> plot(img1_normal[[2]], img1_normal[[1]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_normal_auc))
+> lines(img1_normal[[2]], img1_normal[[1]])
+> img1_normal = read.csv("pr_img1_normal.csv")
+> img1_normal_auc = auc(img1_normal[[2]], img1_normal[[1]])
+> plot(img1_normal[[2]], img1_normal[[1]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_normal_auc))
+> lines(img1_normal[[2]], img1_normal[[1]])
+> 
+> img1_pyramid = read.csv("pr_img1_normal.csv")
+> plot(img1_pyramid[[3]], img1_pyramid[[2]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_normal_auc))
+Error in .subset2(x, i, exact = exact) : subscript out of bounds
+> img1_pyramid = read.csv("pr_img1_pyramid.csv")
+> img1_pyramid_auc = auc(img1_pyramid[[3]], img1_pyramid[[2]])
+> plot(img1_pyramid[[3]], img1_pyramid[[2]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_pyramid_auc))
+> lines(img1_pyramid[[3]], img1_pyramid[[2]])
+> img1_pyramid = read.csv("pr_img1_pyramid.csv")
+> img1_pyramid_auc = auc(img1_pyramid[[3]], img1_pyramid[[2]])
+> plot(img1_pyramid[[3]], img1_pyramid[[2]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_pyramid_auc))
+> lines(img1_pyramid[[3]], img1_pyramid[[2]])
+> 
+> img1_hog_pyramid = read.csv("pr_img1_hog_pyramid.csv")
+> img1_hog_pyramid_auc = auc(img1_hog_pyramid[[3]], img1_hog_pyramid[[2]])
+> plot(img1_hog_pyramid[[3]], img1_hog_pyramid[[2]], ylab="Precision", xlab="Recall", main = paste("AUC=",img1_hog_pyramid_auc))
+> lines(img1_hog_pyramid[[3]], img1_hog_pyramid[[2]])
+> 
+> img2_normal = read.csv("pr_img2_normal.csv")
+> img1_hog_pyramid_auc = auc(img1_hog_pyramid[[3]], img2_normal2_normal[[2]])
+
+> img2_normal_auc = auc(img2_normal[[3]], img2_normal[[2]])
+> plot(img2_normal[[3]], img2_normal[[2]], ylab="Precision", xlab="Recall", main = paste("AUC=",img2_normal_auc))
+> lines(img2_normal[[3]], img2_normal[[2]])
+> 
+> img2_pyramid = read.csv("pr_img2_pyramid.csv")
+> img2_pyramid_auc = auc(img2_pyramid[[3]], img2_pyramid[[2]])
+> plot(img2_pyramid[[3]], img2_pyramid[[2]], ylab="Precision", xlab="Recall", main = paste("AUC=",img2_pyramid_auc))
+> lines(img2_pyramid[[3]], img2_pyramid[[2]])
+> 
+> img2_hog_pyramid = read.csv("pr_img2_hog_pyramid.csv")
+> img2_hog_pyramid_auc = auc(img2_hog_pyramid[[3]], img2_hog_pyramid[[2]])
+> plot(img2_hog_pyramid[[3]], img2_hog_pyramid[[2]], ylab="Precision", xlab="Recall", main = paste("AUC=",img2_hog_pyramid_auc))
+> lines(img2_hog_pyramid[[3]], img2_hog_pyramid[[2]])
+> 
+> 
+> c = read.csv("c_param_settings_validation_score.csv")
+> plot(c)
+> lines(c)
+> plot(c[[2]])
+> lines(c[[2]])
+> plot(c[[2]], log="x")
+> plot(c, log="x")
+> plot(c, log="x", xlab = "C", ylab="performace")
+> plot(c, log="x", xlab = "C", ylab="performace", main="performance as function on the C parameter of the SVM")
+> plot(c, log="x", xlab = "C", ylab="performace", main="performance as function of the C parameter of the SVM")
+> lines(c)
+> c = read.csv("c_param_settings_validation_score.csv")
+> plot(c, log="x", xlab = "C", ylab="performace", main="performance as function of the C parameter of the SVM")
+> lines(c)
+> setwd("..\\report")
+> 
