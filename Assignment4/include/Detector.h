@@ -98,6 +98,8 @@ class Detector
 	typedef std::vector<std::string> Strings;
 	typedef std::vector<cv::Rect> Rects;
 
+	double C;								// (TK) C parameter of SVM
+
 	const int _seed;                        // Randomizing seed
 
 	const bool _eval_everywhere;			// (TK) whether we evaluate the HOG features at each pixel location or perform the HOG transformation to the image once (and iterator over HOG feature positions)

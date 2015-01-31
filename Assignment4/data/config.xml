@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings seed="50">
 	<query_image>data/img5.jpg</query_image>
-	<images amount="400" factor="8" width="20">
+	<images amount="100" factor="2" width="20">
 		<examples size="400" />
 		<pos>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->
@@ -86,7 +86,7 @@
 			<epsilon>0.000001</epsilon>
 		</params>
 	</svm>
-	<features equalize="1" whiten="1">
+	<features equalize="1" whiten="0">
 		<crop>
 			<x1>80</x1>
 			<x2>80</x2>
@@ -94,12 +94,12 @@
 			<y2>70</y2>
 		</crop>
 		<pyramid>
-			<height>8</height>
+			<height>1</height>
 			<downscale_factor>1.189207115</downscale_factor> <!-- =sqrt(sqrt(2)) -->
 			<smallestImageModelSizeFactor>4</smallestImageModelSizeFactor>
 		</pyramid>
 		<hog>
-			<use_hog>1</use_hog>
+			<use_hog>0</use_hog>
 			<eval_everywhere>0</eval_everywhere>
 			<texture>0.2357</texture>
 			<truncation>0.2</truncation>

@@ -384,7 +384,7 @@ void Detector::train(const Mat &train_data, const Mat &train_labels, Model &mode
 
 	if(model.svm == nullptr) model.svm = std::make_shared<MySVM>();			// Initialize new SVM if necessary
 
-	const double C = Detector::cfg()->getValue<double>("settings/svm/params/C");
+	
 	cout << endl << "line:" << __LINE__ << ") C: " << C << endl;
 
 	Mat data;
@@ -1197,34 +1197,41 @@ void Detector::run()
 	/////////////////////////////////////////////////////////////////////////////
 
 	//////////////////// Test model from mean of images /////////////////////////
-	//dont care
+	//we actually don't need to compute this
 	//Mat alt_pred = (val_data * _pos_sumF.t() > 0) / 255;
 	//double alt_true = alt_pred.size().height - sum((alt_pred == val_gnd) / 255)[0];
 	//double alt_pct = (alt_true / (double) alt_pred.size().height) * 100.0;
 	//cout << "Validation correct with mean model: " << alt_pct << "%" << endl;
 	/////////////////////////////////////////////////////////////////////////////
 
-	/////////////////////////////// Train SVM ///////////////////////////////////
-	Model model;														// initialize a new model
+	double c_settings[] = { 0.5, 1, 2, 50, 100, 1000 };
 
-	Mat train_data;
-	train_data.push_back(_do_whitening ? whitened_pos_data : pos_train_data);
-	train_data.push_back(_do_whitening ? whitened_neg_data : neg_train_data);
+	for (int c_setting = 0; c_setting < 6; c_setting++)
+	{
+		/////////////////////////////// Train SVM ///////////////////////////////////
+		Model model;														// initialize a new model
 
-	Mat pos_labels = Mat(pos_train_data.rows, 1, CV_32S, Scalar::all(1));
-	Mat neg_labels = Mat(neg_train_data.rows, 1, CV_32S, Scalar::all(-1));
+		Mat train_data;
+		train_data.push_back(_do_whitening ? whitened_pos_data : pos_train_data);
+		train_data.push_back(_do_whitening ? whitened_neg_data : neg_train_data);
 
-	Mat train_labels;
-	train_labels.push_back(pos_labels);
-	train_labels.push_back(neg_labels);
+		Mat pos_labels = Mat(pos_train_data.rows, 1, CV_32S, Scalar::all(1));
+		Mat neg_labels = Mat(neg_train_data.rows, 1, CV_32S, Scalar::all(-1));
 
-	train(train_data, train_labels, model);		// train it based on pos/neg train data
-	/////////////////////////////////////////////////////////////////////////////
-	cout << "training finished. start testing" << endl;
+		Mat train_labels;
+		train_labels.push_back(pos_labels);
+		train_labels.push_back(neg_labels);
 
-	/*
-	 * Do validation of SVM on validation data
-	 */
+
+		//C = Detector::cfg()->getValue<double>("settings/svm/params/C");
+		C = c_settings[c_setting];
+		train(train_data, train_labels, model);		// train it based on pos/neg train data
+		/////////////////////////////////////////////////////////////////////////////
+		cout << "training finished. start testing" << endl;
+
+		/*
+		 * Do validation of SVM on validation data
+		 */
 
 		// DONE: Compute the confidence values for training and validation as the distances
 		// between the sample vectors X and weight vector W, using bias b:
@@ -1270,11 +1277,12 @@ void Detector::run()
 		Mat val_gnd = (val_labels > 0);
 
 		double val_true = sum((val_pred == val_gnd) / 255)[0];
-		double val_pct = (val_true / (double) val_pred.rows) * 100.0;
+		double val_pct = (val_true / (double)val_pred.rows) * 100.0;
 
 		cout << __LINE__ << "\tSVM Validation correct: " << val_pct << "%" << endl;
 
-
+	}
+	exit(0);
 	////////////////////////////// Test on real image ///////////////////////////
 		//for (int img_file = 1; img_file < 7; img_file++)
 		{
