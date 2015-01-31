@@ -1,0 +1,16 @@
+Notes
+- People images removed from VOC data set using code
+- Ground truth added for img2
+
+Questions
+4.a.i: What is "linear" about a lSVM? The hyperplane is linear. In a linear SVM, a hyperplane is constructed that splits the high-dimensional vector space exactly into two subspaces in an aim to capture the vectors of exactly one class in one subspace, with the highest margin.
+4.b [Validatie conf--geen validatie ???]
+4.c The model is a representation of the hyperplane, which by nature is the border between the positive and negative class i.e. the border between a face and not a face. It slightly resembles a face because it defines the furthest a face can be from looking like a face to still be classified as a face.
+4.d.i The c-parameter specifies the penalty when the hyperplane is such that some training vectors are in the wrong subspace. Such a situation is inevitable when there exists no linear border between the vectors of each class.
+4.d.ii TODO (implement validation first)
+4.d.iii Whiten breaks the code??? It is supposed to TODO. Equalize improves TODO. This is good for performance because TODO
+
+5.b Per layer of the pyramid, we could rotate the entire image around multiple times by a certain interval of degrees by which 360 is divisible, such as 36. The rotation needed to match one of these images would be up to 10 times smaller than the rotation needed to match the original image, which could hopefully be overcome by the model by itself if the interval is small enough. 
+5.c see 7
+
+6e	TODO (implement validation first)

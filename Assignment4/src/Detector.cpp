@@ -1081,10 +1081,10 @@ void Detector::run()
 
 	vector<string> pos_train(pos_files.begin(), pos_files.begin() + _pos_amount);
 	vector<string> pos_val(pos_files.begin() + _pos_amount,
-			pos_files.begin() + MIN(2 * _pos_amount, (int ) pos_files.size() - _pos_amount));
+			pos_files.begin() + MIN(2 * _pos_amount, (int) pos_files.size())); //Fixed bug
 	vector<string> neg_train(neg_files.begin(), neg_files.begin() + neg_amount);
 	vector<string> neg_val(neg_files.begin() + neg_amount,
-			neg_files.begin() + MIN(2 * neg_amount, (int ) neg_files.size() - neg_amount));
+			neg_files.begin() + MIN(2 * neg_amount, (int) neg_files.size())); //Fixed bug
 
 	cout << "Positive images used:" << pos_train.size() << ", validation:" << pos_val.size() << endl;
 	cout << "Negative images used:" << neg_train.size() << ", validation:" << neg_val.size() << endl; 
