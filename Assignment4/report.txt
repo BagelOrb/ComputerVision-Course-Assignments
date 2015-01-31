@@ -133,6 +133,11 @@ The caption of the plots give the area under the curve.
 HOG features seem to have a negative effect on the detection performance. Perhaps this is due to the fact that the exact location of the detected face cannot relyable be reconstructed, since multiple pixels are contained in each cell.
 Also using a pyramid seems to have a negative effect on the detection performance. This might be due to the fact that all faces in the images were of similar size.
 
+The configs are here:
+config_hogmodel_pyramid.xml
+config_pixelmodel_nopyramid.xml
+config_pixelmodel_pyramid.xml
+
 ===========
 
 7.b
