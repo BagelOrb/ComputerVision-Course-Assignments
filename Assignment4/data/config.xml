@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings seed="50">
 	<query_image>data/img5.jpg</query_image>
-	<images amount="100" factor="2" width="20">
+	<images amount="1000" factor="10" width="20">
 		<examples size="400" />
 		<pos>
 			<path regx=".*"><!-- last character of the path should be a slash '/'! -->

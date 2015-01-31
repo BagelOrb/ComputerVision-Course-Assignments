@@ -1204,9 +1204,9 @@ void Detector::run()
 	//cout << "Validation correct with mean model: " << alt_pct << "%" << endl;
 	/////////////////////////////////////////////////////////////////////////////
 
-	double c_settings[] = { 0.5, 1, 2, 50, 100, 1000 };
+	double c_settings[] = { 0.001, 0.002, 0.003, 0.004, 0.005, 0.006, .007, .008, .009, .01 };
 
-	for (int c_setting = 0; c_setting < 6; c_setting++)
+	for (int c_setting = 0; c_setting < 10; c_setting++)
 	{
 		/////////////////////////////// Train SVM ///////////////////////////////////
 		Model model;														// initialize a new model
@@ -1283,6 +1283,7 @@ void Detector::run()
 
 	}
 	exit(0);
+	/*
 	////////////////////////////// Test on real image ///////////////////////////
 		//for (int img_file = 1; img_file < 7; img_file++)
 		{
@@ -1416,6 +1417,7 @@ void Detector::run()
 			/////////////////////////////////////////////////////////////////////////////
 
 		}
+	*/
 }
 
 } /* namespace nl_uu_science_gmt */

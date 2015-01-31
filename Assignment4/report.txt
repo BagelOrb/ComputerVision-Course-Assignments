@@ -35,7 +35,13 @@ The c-parameter specifies the penalty of training vectors being on the wrong sid
 4.d.ii 
 Q: Find the optimal value for C, when using all the training images (or as many as fit in your computer's memory if you run into memory problems!). 
 A:
-TODO (implement validation first)
+For testing we used the following settings:
+<images amount="1000" factor="10" width="20">
+<features equalize="1" whiten="0">
+
+
+
+Note: Because in the provided config file the C parameter was set to 1000, we started looking for the optimal C parameter in that order of magnitude, and found that all values of C lead to the same performance. Thinking it was an implementation mistake by your hand we kept the parameter set at 1000 throughout the tests. It was only after we had performed all tests that we again looked into the C parameter and realized that for large datasets the value should be well below 1.
 
 
 
