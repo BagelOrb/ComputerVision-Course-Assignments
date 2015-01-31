@@ -913,7 +913,7 @@ void Detector::getResponses(const Mat &image, const Model &model, Responses &res
 			{
 
 				int hog_progress_now = i * 100 / sub_windows.rows;
-				if (hog_progress_now / 2 > hog_progress / 2)
+				if (hog_progress_now >= hog_progress + 20)
 				{
 					hog_progress = hog_progress_now;
 					cout << hog_progress << "%" << endl;
